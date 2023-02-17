@@ -9,7 +9,7 @@ export default function loading() {
          alignItems="center"
          minHeight="100vh"
         >
-            <CircularProgress />
+            <CircularProgress style={{'color': 'orange'}}/>
         </Box>
         
     );
