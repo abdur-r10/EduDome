@@ -10,10 +10,10 @@ const StudentUI = lazy(() => import('./UIs/StudentUI'));
 
 /* 
 sampleData = {
-  {fname: 'Parent', lname: 'One' , email: 'parent1@hotmail.com' , password: 'aaa', role: 'parent'},
-  {fname: 'Student', lname: 'One' , email: 'student1@hotmail.com' , password: 'aaa', role: 'student'},
-  {fname: 'Teacher', lname: 'One' , email: 'teacher1@hotmail.com' , password: 'aaa', role: 'teacher'},
-  {fname: 'Admin', lname: 'One' , email: 'admin1@hotmail.com' , password: 'aaa', role: 'admin'},
+  {id: 'p1' fname: 'Parent', lname: 'One' , email: 'parent1@hotmail.com' , password: 'aaa', role: 'parent'},
+  {id: 's1' fname: 'Student', lname: 'One' , email: 'student1@hotmail.com' , password: 'aaa', role: 'student'},
+  {id: 't1' fname: 'Teacher', lname: 'One' , email: 'teacher1@hotmail.com' , password: 'aaa', role: 'teacher'},
+  {id: 'a1' fname: 'Admin', lname: 'One' , email: 'admin1@hotmail.com' , password: 'aaa', role: 'admin'},
 }
 */
 
