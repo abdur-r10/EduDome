@@ -44,38 +44,41 @@ sampleData = {
 const lowSeverityStyle = {
     'padding': '20px',
     'margin': '5px',
-    'background-color': '#2196F3',
+    'backgroundColor': '#2196F3',
     'color': 'white',
 }
 
 const mediumSeverityStyle = {
     'padding': '20px',
     'margin': '5px',
-    'background-color': '#ff9800',
+    'backgroundColor': '#ff9800',
     'color': 'white',
 }
 
 const highSeverityStyle = {
     'padding': '20px',
     'margin': '5px',
-    'background-color': '#f44336',
+    'backgroundColor': '#f44336',
     'color': 'white',
 }
 
-const NotificationCenter = () => {
+const NotificationCentre = () => {
   return (
-    <Box sx={{border: '2px solid black', overflow: 'auto', height: '300px', width: '500px'}}>
+    <Box sx={{border: '2px solid black', overflow: 'auto', height: '300px', width: '700px', resize: 'both', minWidth: '550px', maxWidth: '1000px', minHeight: '300px', maxHeight: '600px' }}>
         <div style={lowSeverityStyle}>
+        <strong>20/02/2023</strong><br/>
         <strong>Heading 1</strong> <br/>
         This is a low severity notification example sabfhdsbvfjhsdvhf chdsbvfjhdsbvhfvbgsd jcbgdsjkfbkjhdebfkjhsda jksbjksdbjkrbgfkrdjsgfbkjrsdfbgkjsdfbgksdf bdjkgbsdfkjgbjkfrsdgbjkfdsbg dbsfjkgsdjkgbjksdbg 
         </div>
 
         <div style={mediumSeverityStyle}>
-        <strong>Heading 2</strong> <br/>
+        <strong>21/02/2023</strong><br/>
+        <strong>Heading 2</strong><br/>
         This is a medium severity notification example sabfhdsbvfjhsdvhf chdsbvfjhdsbvhfvbgsd jcbgdsjkfbkjhdebfkjhsda jksbjksdbjkrbgfkrdjsgfbkjrsdfbgkjsdfbgksdf bdjkgbsdfkjgbjkfrsdgbjkfdsbg dbsfjkgsdjkgbjksdbg 
         </div>
 
         <div style={highSeverityStyle}>
+        <strong>22/02/2023</strong><br/>
         <strong>Heading 3</strong> <br/>
         This is a high severity notification example sabfhdsbvfjhsdvhf chdsbvfjhdsbvhfvbgsd jcbgdsjkfbkjhdebfkjhsda jksbjksdbjkrbgfkrdjsgfbkjrsdfbgkjsdfbgksdf bdjkgbsdfkjgbjkfrsdgbjkfdsbg dbsfjkgsdjkgbjksdbg 
         </div>
@@ -83,4 +86,4 @@ const NotificationCenter = () => {
   )
 }
 
-export default NotificationCenter
+export default NotificationCentre

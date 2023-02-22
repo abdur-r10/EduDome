@@ -1,78 +1,10 @@
-import React from 'react'
-// import TableSortLabel from "@mui/material"
-// import { Table } from "@mui/material";
-// import { TableBody } from "@mui/material";
-// import { TableCell } from "@mui/material";
-// import { TableContainer } from "@mui/material";
-// import { TableHead } from "@mui/material";
-// import { TableRow } from "@mui/material";
-// import { TablePagination } from "@mui/material";
-// import { TableFooter } from '@mui/material'
-// import { Paper } from "@mui/material";
-// import { Typography } from '@mui/material'
-import { Box } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import { styled } from '@mui/material';
+import React, { useState } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
+import { Box } from '@mui/system';
+
 
 
 /* 
-homeworkData = {{
-    id: 'homework1'
-    from: t1
-    to: s1
-    title: 'Example Homework1'
-    description: 'complete the document attached'
-    document: 'some document'
-    date set: 2023-02-20
-    due: 2023-02-27
-    deletion date: 2023-03-06
-},
-{
-    id: 'homework1'
-    from: t1
-    to: s1
-    title: 'Example Homework2'
-    description: 'complete the document attached'
-    document: 'some document'
-    date set: 2023-02-20
-    due: 2023-02-27
-    deletion date: 2023-03-06
-},
-{
-    id: 'homework1'
-    from: t1
-    to: s1
-    title: 'Example Homework3'
-    description: 'complete the document attached'
-    document: 'some document'
-    date set: 2023-02-20
-    due: 2023-02-27
-    deletion date: 2023-03-06
-},
-{
-    id: 'homework1'
-    from: t1
-    to: s1
-    title: 'Example Homework4'
-    description: 'complete the document attached'
-    document: 'some document'
-    date set: 2023-02-20
-    due: 2023-02-27
-    deletion date: 2023-03-06
-}}
-
-
-
-key display date set, hw heading, hw description, documents attached, date due
-*/
-
-const homeworkStyle = {
-    'padding': '20px',
-    'margin': '20px',
-    'background-color': '#04AA6D',
-    'color': 'white',
-}
-
 const data = [
     {
         'id': 'homework1',
@@ -186,120 +118,215 @@ const data = [
     }]
 
 
+
+const homeworkStyle = {
+    'padding': '20px',
+    'margin': '20px',
+    'background-color': '#04AA6D',
+    'color': 'white',
+    }
+
+key display date set, hw heading, hw description, documents attached, date due
+*/
+
+
+
+const columns = [
+  { id: 'date_set', label: 'Date set' },
+  { id: 'from', label: 'From' },
+  { id: 'title', label: 'Title' },
+  { id: 'description', label: 'Description' },
+  { id: 'document', label: 'Documents' },
+  { id: 'due', label: 'Date Due' },
+];
+
 const HomeworkCentre = () => {
 
-
-    //date set, hw title, hw description, documents attached, date due
-    const columns = [
-        {   
-            field: 'date_set', 
-            headerName: 'Date Set', 
-            type: 'date',
-            width: 150,
-            headerAlign: 'center',
-            align: 'center',
-            wrap: true
+    const data = [
+        {
+            'id': 'homework1',
+            'from': 't1',
+            'to': 's1',
+            'title': 'Example Homework1',
+            'description': 'Vestibulum sit amet dui commodo, lacinia ex eu, vestibulum odio. Suspendisse potenti.',
+            'document': 'some document',
+            'date_set': '2023-02-01',
+            'due': '2023-02-27',
+            'deletion_date': '2023-03-06',
         },
         {
-            field: 'title',
-            headerName: 'Title',
-            sortable: false,
-            width: 150,
-            headerAlign: 'center',
-            align: 'center',
-            wrap: true,
+            'id': 'homework2',
+            'from': 't1',
+            'to': 's1',
+            'title': 'Example Homework2',
+            'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo turpis non leo venenatis tristique.',
+            'document': 'some document',
+            'date_set': '2023-02-02',
+            'due': '2023-02-27',
+            'deletion_date': '2023-03-06',
         },
         {
-            field: 'description',
-            headerName: 'Description',
-            sortable: false,
-            width: 150,
-            headerAlign: 'center',
-            align: 'center',
-            wrap: true,
+            'id': 'homework3',
+            'from': 't1',
+            'to': 's1',
+            'title': 'Example Homework3',
+            'description': 'Sed feugiat laoreet mi, sed ornare nibh gravida a.',
+            'document': 'some document',
+            'date_set': '2023-02-03',
+            'due': '2023-02-27',
+            'deletion_date': '2023-03-06',
         },
         {
-            field: 'document',
-            headerName: 'Documents',
-            sortable: false,
-            width: 150,
-            headerAlign: 'center',
-            align: 'center',
-            wrap: true
+            'id': 'homework4',
+            'from': 't1',
+            'to': 's1',
+            'title': 'Example Homework4',
+            'description': 'Phasellus euismod tellus nec ex lobortis, sit amet elementum nisl fermentum.',
+            'document': 'some document',
+            'date_set': '2023-02-04',
+            'due': '2023-02-27',
+            'deletion_date': '2023-03-06',
         },
         {
-            field: 'due',
-            headerName: 'Date Due',
-            type: 'date',
-            width: 150,
-            headerAlign: 'center',
-            align: 'center',
-            wrap: true
+            'id': 'homework5',
+            'from': 't1',
+            'to': 's1',
+            'title': 'Example Homework5',
+            'description': 'Nulla nec faucibus mauris, sed vestibulum diam.',
+            'document': 'some document',
+            'date_set': '2023-02-05',
+            'due': '2023-02-27',
+            'deletion_date': '2023-03-06',
+        },
+        {
+            'id': 'homework6',
+            'from': 't1',
+            'to': 's1',
+            'title': 'Example Homework6',
+            'description': 'Maecenas tristique, odio quis malesuada commodo, sapien orci imperdiet nibh, sed lobortis enim velit quis nisi.',
+            'document': 'some document',
+            'date_set': '2023-02-06',
+            'due': '2023-02-27',
+            'deletion_date': '2023-03-06',
+        },
+        {
+            'id': 'homework7',
+            'from': 't1',
+            'to': 's1',
+            'title': 'Example Homework7',
+            'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            'document': 'some document',
+            'date_set': '2023-02-07',
+            'due': '2023-02-27',
+            'deletion_date': '2023-03-06',
+        },
+        {
+            'id': 'homework8',
+            'from': 't1',
+            'to': 's1',
+            'title': 'Example Homework8',
+            'description': 'It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+            'document': 'some document',
+            'date_set': '2023-02-08',
+            'due': '2023-02-27',
+            'deletion_date': '2023-03-06',
+        },
+        {
+            'id': 'homework9',
+            'from': 't1',
+            'to': 's1',
+            'title': 'Example Homework9',
+            'description': 'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+            'document': 'some document',
+            'date_set': '2023-02-09',
+            'due': '2023-02-31',
+            'deletion_date': '2023-03-06',
+        },
+        {
+            'id': 'homework10',
+            'from': 't1',
+            'to': 's1',
+            'title': 'Example Homework10',
+            'description': 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+            'document': 'some document',
+            'date_set': '2023-02-10',
+            'due': '2023-02-27',
+            'deletion_date': '2023-03-06',
         }
     ]
 
-
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(4);
+    const [orderBy, setOrderBy] = useState('date_set');
+    const [order, setOrder] = useState('desc');
+  
+    const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+    };
+  
+    const handleChangeRowsPerPage = (event) => {
+      setRowsPerPage(+event.target.value);
+      setPage(0);
+    };
+  
+    const handleSort = (columnId) => {
+      if (orderBy === columnId) {
+        setOrder(order === 'desc' ? 'asc' : 'desc');
+      } else {
+        setOrderBy(columnId);
+        setOrder('desc');
+      }
+    };
+  
+    const sortedData = data.sort((a, b) => {
+        const orderValue = order === 'desc' ? -1 : 1;
+        if (orderBy === 'date_set' || orderBy === 'due') {
+          if (a[orderBy] < b[orderBy]) {
+            return -1 * orderValue;
+          }
+          if (a[orderBy] > b[orderBy]) {
+            return 1 * orderValue;
+          }
+          return 0;
+        }
+        return 0;
+      });
+  
+    const tableRows = sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+      <TableRow key={row.id}>
+        {columns.map((column) => (
+          <TableCell key={column.id}>{row[column.id]}</TableCell>
+        ))}
+      </TableRow>
+    ));
+  
     return (
-        <Box sx={{border: '5px solid #04AA6D', overflow: 'auto', height: '322px', width: '800px'}}>
-            <DataGrid
-            rows={data}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            columnBuffer={10}
-            sx={{ flexWrap: 'nowrap' }}
-          />
-        </Box>
-  )
-}
+    <Box sx={{ border: '2px solid #04AA6D', overflow: 'auto', height: '300px', width: '700px', resize: 'both', minWidth: '550px', maxWidth: '1000px', minHeight: '300px', maxHeight: '600px' }}>
+        <TableContainer component={Paper}>
+          <Table aria-label="simple table" stickyHeader>
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell sx={column.id !== 'description' ? { width: '200px' } : {width: '500px'}} key={column.id} onClick={() => handleSort(column.id)}>
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+          <TableBody>{tableRows}</TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[4, 8, 12]}
+        component="div"
+        count={data.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Box>
+  );
+};
 
-export default HomeworkCentre
-
-//! Pagination
-//! Sorting
-//!!!!!!USE TABLE RATHER THAN DATAGRID
-
-/*
-<TableContainer component={Paper}>
-     <Table aria-label="simple table" stickyHeader>
-       <TableHead>
-         <TableRow>
-           <TableCell>Date Set</TableCell>
-           <TableCell align="left">From</TableCell>
-           <TableCell align="right">Title</TableCell>
-           <TableCell align="right">Description</TableCell>
-           <TableCell align="right">Documents</TableCell>
-           <TableCell align="right">Date Due</TableCell>
-         </TableRow>
-       </TableHead>
-       <TableBody>
-         {data.map((row) => (
-           <TableRow key={row.id} style={homeworkStyle}>
-             <TableCell component="th" scope="row" sortDirection={orderBy === headCell.id ? order : 'asc'}>
-               {row.date_set}
-             </TableCell>
-             <TableCell align="left">{row.from}</TableCell>
-             <TableCell align="right">{row.title}</TableCell>
-             <TableCell align="right">{row.description}</TableCell>
-             <TableCell align="right">{row.document}</TableCell>
-             <TableCell align="right">{row.due}</TableCell>
-           </TableRow>
-         ))}
-       </TableBody>
-
-       <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[4,8, { value: -1, label: 'All' }]}
-              colSpan={3}
-              count={data.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </TableRow>
-        </TableFooter>
-     </Table>
-   </TableContainer>
-*/
+export default HomeworkCentre;
