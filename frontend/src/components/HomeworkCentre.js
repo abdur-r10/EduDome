@@ -3,134 +3,6 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { Box } from '@mui/system';
 
 
-
-/* 
-const data = [
-    {
-        'id': 'homework1',
-        'from': 't1',
-        'to': 's1',
-        'title': 'Example Homework1',
-        'description': 'complete the document attached',
-        'document': 'some document',
-        'date_set': '2023-02-20',
-        'due': '2023-02-27',
-        'deletion_date': '2023-03-06',
-    },
-    {
-        'id': 'homework2',
-        'from': 't1',
-        'to': 's1',
-        'title': 'Example Homework2',
-        'description': 'complete the document attached',
-        'document': 'some document',
-        'date_set': '2023-02-20',
-        'due': '2023-02-27',
-        'deletion_date': '2023-03-06',
-    },
-    {
-        'id': 'homework3',
-        'from': 't1',
-        'to': 's1',
-        'title': 'Example Homework3',
-        'description': 'complete the document attached',
-        'document': 'some document',
-        'date_set': '2023-02-20',
-        'due': '2023-02-27',
-        'deletion_date': '2023-03-06',
-    },
-    {
-        'id': 'homework4',
-        'from': 't1',
-        'to': 's1',
-        'title': 'Example Homework4',
-        'description': 'complete the document attached',
-        'document': 'some document',
-        'date_set': '2023-02-20',
-        'due': '2023-02-27',
-        'deletion_date': '2023-03-06',
-    },
-    {
-        'id': 'homework5',
-        'from': 't1',
-        'to': 's1',
-        'title': 'Example Homework5',
-        'description': 'complete the document attached',
-        'document': 'some document',
-        'date_set': '2023-02-20',
-        'due': '2023-02-27',
-        'deletion_date': '2023-03-06',
-    },
-    {
-        'id': 'homework6',
-        'from': 't1',
-        'to': 's1',
-        'title': 'Example Homework6',
-        'description': 'complete the document attached',
-        'document': 'some document',
-        'date_set': '2023-02-20',
-        'due': '2023-02-27',
-        'deletion_date': '2023-03-06',
-    },
-    {
-        'id': 'homework7',
-        'from': 't1',
-        'to': 's1',
-        'title': 'Example Homework7',
-        'description': 'complete the document attached',
-        'document': 'some document',
-        'date_set': '2023-02-20',
-        'due': '2023-02-27',
-        'deletion_date': '2023-03-06',
-    },
-    {
-        'id': 'homework8',
-        'from': 't1',
-        'to': 's1',
-        'title': 'Example Homework8',
-        'description': 'complete the document attached',
-        'document': 'some document',
-        'date_set': '2023-02-20',
-        'due': '2023-02-27',
-        'deletion_date': '2023-03-06',
-    },
-    {
-        'id': 'homework9',
-        'from': 't1',
-        'to': 's1',
-        'title': 'Example Homework9',
-        'description': 'complete the document attached',
-        'document': 'some document',
-        'date_set': '2023-02-20',
-        'due': '2023-02-27',
-        'deletion_date': '2023-03-06',
-    },
-    {
-        'id': 'homework10',
-        'from': 't1',
-        'to': 's1',
-        'title': 'Example Homework10',
-        'description': 'complete the document attached',
-        'document': 'some document',
-        'date_set': '2023-02-20',
-        'due': '2023-02-27',
-        'deletion_date': '2023-03-06',
-    }]
-
-
-
-const homeworkStyle = {
-    'padding': '20px',
-    'margin': '20px',
-    'background-color': '#04AA6D',
-    'color': 'white',
-    }
-
-key display date set, hw heading, hw description, documents attached, date due
-*/
-
-
-
 const columns = [
   { id: 'date_set', label: 'Date set' },
   { id: 'from', label: 'From' },
@@ -255,10 +127,10 @@ const HomeworkCentre = () => {
         }
     ]
 
+    //-------------------------PAGE PAGINATION FUNCTION-------------------------
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(4);
-    const [orderBy, setOrderBy] = useState('date_set');
-    const [order, setOrder] = useState('desc');
+    
   
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -268,7 +140,10 @@ const HomeworkCentre = () => {
       setRowsPerPage(+event.target.value);
       setPage(0);
     };
-  
+
+    //-------------------------DATE SORT FUNCTION------------------------------
+    const [orderBy, setOrderBy] = useState('date_set');
+    const [order, setOrder] = useState('desc');
     const handleSort = (columnId) => {
       if (orderBy === columnId) {
         setOrder(order === 'desc' ? 'asc' : 'desc');
@@ -281,19 +156,32 @@ const HomeworkCentre = () => {
     const sortedData = data.sort((a, b) => {
         const orderValue = order === 'desc' ? -1 : 1;
         if (orderBy === 'date_set' || orderBy === 'due') {
-          if (a[orderBy] < b[orderBy]) {
+            if (a[orderBy] < b[orderBy]) {
             return -1 * orderValue;
-          }
-          if (a[orderBy] > b[orderBy]) {
+            }
+            if (a[orderBy] > b[orderBy]) {
             return 1 * orderValue;
-          }
-          return 0;
+            }
+            return 0;
         }
         return 0;
-      });
+    });
+
+      //-----------------------ROW HIGHLIGHT ON CLICK FUNCTION----------------
+    const [selectedRows, setSelectedRows] = useState([]);
+
+    const handleRowClick = (row) => {
+    if (selectedRows.includes(row.id)) {
+        setSelectedRows(selectedRows.filter((id) => id !== row.id));
+    } else {
+        setSelectedRows([...selectedRows, row.id]);
+    }
+    };
+      //----------------------------------------------------------------------
+
   
     const tableRows = sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-      <TableRow key={row.id}>
+      <TableRow key={row.id} sx={{ backgroundColor: selectedRows.includes(row.id) ? 'lightgray' : 'white' }} onClick={() => handleRowClick(row)}>
         {columns.map((column) => (
           <TableCell key={column.id}>{row[column.id]}</TableCell>
         ))}

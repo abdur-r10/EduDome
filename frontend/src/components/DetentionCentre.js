@@ -9,85 +9,101 @@ const columns = [
     { id: 'reason', label: 'Reason' },
     { id: 'duration', label: 'Duration' },
     { id: 'room', label: 'Room' },
-  ];
+];
   
   const DetentionCentre = () => {
   
-      const data = [
-          {
-            'id': 'detention1',
-            'from': 't1',
-            'to': 's1',
-            'date': '2023-02-18',
-            'reason': 'Bad Behaviour - Vestibulum sit amet dui commodo, lacinia ex eu, vestibulum odio. Suspendisse potenti.',
-            'time': '14:30',
-            'duration': '1hr',
-            'room': 'Lunch Hall',
-            'attended': 'No',
-          },
-          {
-            'id': 'detention2',
-            'from': 't1',
-            'to': 's1',
-            'date': '2023-02-19',
-            'reason': 'No Homework - Vestibulum sit amet dui commodo, lacinia ex eu, vestibulum odio. Suspendisse potenti.',
-            'time': '14:30',
-            'duration': '1hr',
-            'room': 'F10',
-            'attended': 'No',
-        },
-        {
-            'id': 'detention3',
-            'from': 't1',
-            'to': 's1',
-            'date': '2023-02-20',
-            'reason': 'Other - Vestibulum sit amet dui commodo, lacinia ex eu, vestibulum odio. Suspendisse potenti.',
-            'time': '8:30',
-            'duration': '30min',
-            'room': 'S24',
-            'attended': 'No',
-        }
-      ]
+    const data = [
+      {
+        'id': 'detention1',
+        'from': 't1',
+        'to': 's1',
+        'date': '2023-02-18',
+        'reason': 'Bad Behaviour - Vestibulum sit amet dui commodo, lacinia ex eu, vestibulum odio. Suspendisse potenti.',
+        'time': '14:30',
+        'duration': '1hr',
+        'room': 'Lunch Hall',
+        'attended': 'No'
+      },
+      {
+        'id': 'detention2',
+        'from': 't1',
+        'to': 's1',
+        'date': '2023-02-19',
+        'reason': 'No Homework - Vestibulum sit amet dui commodo, lacinia ex eu, vestibulum odio. Suspendisse potenti.',
+        'time': '14:30',
+        'duration': '1hr',
+        'room': 'F10',
+        'attended': 'No'
+      },
+      {
+        'id': 'detention3',
+        'from': 't1',
+        'to': 's1',
+        'date': '2023-02-20',
+        'reason': 'Other - Vestibulum sit amet dui commodo, lacinia ex eu, vestibulum odio. Suspendisse potenti.',
+        'time': '8:30',
+        'duration': '30min',
+        'room': 'S24',
+        'attended': 'No'
+      }
+    ]
   
-      const [page, setPage] = useState(0);
-      const [rowsPerPage, setRowsPerPage] = useState(4);
-      const [orderBy, setOrderBy] = useState('date_set');
-      const [order, setOrder] = useState('desc');
+    //-------------------------PAGE PAGINATION FUNCTION-------------------------
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(4);
     
-      const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-      };
-    
-      const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-      };
-    
-      const handleSort = (columnId) => {
-        if (orderBy === columnId) {
-          setOrder(order === 'desc' ? 'asc' : 'desc');
-        } else {
-          setOrderBy(columnId);
-          setOrder('desc');
-        }
-      };
-    
-      const sortedData = data.sort((a, b) => {
-          const orderValue = order === 'desc' ? -1 : 1;
-          if (orderBy === 'date') {
-            if (a[orderBy] < b[orderBy]) {
-              return -1 * orderValue;
-            }
-            if (a[orderBy] > b[orderBy]) {
-              return 1 * orderValue;
-            }
-            return 0;
+  
+    const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+    };
+  
+    const handleChangeRowsPerPage = (event) => {
+      setRowsPerPage(+event.target.value);
+      setPage(0);
+    };
+
+    //-------------------------DATE SORT FUNCTION------------------------------
+    const [orderBy, setOrderBy] = useState('date_set');
+    const [order, setOrder] = useState('desc');
+    const handleSort = (columnId) => {
+      if (orderBy === columnId) {
+        setOrder(order === 'desc' ? 'asc' : 'desc');
+      } else {
+        setOrderBy(columnId);
+        setOrder('desc');
+      }
+    };
+  
+    const sortedData = data.sort((a, b) => {
+        const orderValue = order === 'desc' ? -1 : 1;
+        if (orderBy === 'date') {
+          if (a[orderBy] < b[orderBy]) {
+            return -1 * orderValue;
+          }
+          if (a[orderBy] > b[orderBy]) {
+            return 1 * orderValue;
           }
           return 0;
-        });
+        }
+        return 0;
+    });
+
+      //-----------------------ROW HIGHLIGHT ON CLICK FUNCTION----------------
+      const [selectedRows, setSelectedRows] = useState([]);
+
+      const handleRowClick = (row) => {
+        if (selectedRows.includes(row.id)) {
+          setSelectedRows(selectedRows.filter((id) => id !== row.id));
+        } else {
+          setSelectedRows([...selectedRows, row.id]);
+        }
+      };
+      //----------------------------------------------------------------------
+        
     
       const tableRows = sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-        <TableRow key={row.id}>
+        <TableRow key={row.id} sx={{ backgroundColor: selectedRows.includes(row.id) ? 'lightgray' : 'white' }} onClick={() => handleRowClick(row)}>
           {columns.map((column) => (
             <TableCell key={column.id}>{row[column.id]}</TableCell>
           ))}
