@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
 const columns = [
@@ -112,12 +112,13 @@ const columns = [
     
       return (
       <Box sx={{ border: '2px solid red', overflow: 'auto', height: '300px', width: '700px', resize: 'both', minWidth: '550px', maxWidth: '1000px', minHeight: '300px', maxHeight: '600px'}}>
+          <Typography variant="h6" align="center">Detention Centre</Typography>
           <TableContainer component={Paper}>
-            <Table aria-label="simple table" stickyHeader>
-              <TableHead>
+            <Table aria-label="simple table" stickyHeader sx={{ border: '1px solid gray' }}>
+              <TableHead >
                 <TableRow>
                   {columns.map((column) => (
-                    <TableCell sx={column.id !== 'reason' ? { width: '200px' } : {width: '500px'}} key={column.id} onClick={() => handleSort(column.id)}>
+                    <TableCell sx={column.id !== 'reason' ? { width: '200px' } : {width: '500px'} } key={column.id} onClick={() => handleSort(column.id)}>
                       {column.label}
                     </TableCell>
                   ))}

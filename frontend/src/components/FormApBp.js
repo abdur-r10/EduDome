@@ -111,7 +111,7 @@ const FormApBp = () => {
     ));
   
     return (
-    <Box sx={{ border: '2px solid blue', overflow: 'auto', height: '200px', width: '700px', resize: 'both', minWidth: '550px', maxWidth: '1000px', minHeight: '200px', maxHeight: '600px' }}>
+    <Box sx={{ border: '2px solid blue', overflow: 'auto', height: '200px', width: '700px', resize: 'vertical', minHeight: '200px', maxHeight: '600px' }}>
         <TableContainer component={Paper}>
           <Table aria-label="simple table" stickyHeader>
             <TableHead>

@@ -64,7 +64,7 @@ const highSeverityStyle = {
 
 const NotificationCentre = () => {
   return (
-    <Box sx={{border: '2px solid black', overflow: 'auto', height: '300px', width: '700px', resize: 'both', minWidth: '550px', maxWidth: '1000px', minHeight: '300px', maxHeight: '600px' }}>
+    <Box sx={{border: '2px solid black', overflow: 'auto', height: '300px', width: '700px', resize: 'vertical', minHeight: '300px', maxHeight: '600px' }}>
         <div style={lowSeverityStyle}>
         <strong>20/02/2023</strong><br/>
         <strong>Heading 1</strong> <br/>
