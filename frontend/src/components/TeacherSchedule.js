@@ -85,7 +85,7 @@ const TeacherSchedule = () => {
         const minute = date.getUTCMinutes();
         if ((hour === 12 && minute >= 30 && minute < 45) || (hour === 10 && minute >= 10 && minute < 30)) {
           return (
-            <div style={{ height: 30, backgroundColor: "black", color: "white", textAlign:'center' }}>
+            <div style={{ height: 22, backgroundColor: "black", color: "white", textAlign:'center' }}>
               {hour === 12 && minute >= 30 && minute < 45 ? "Lunch 12:30pm - 1:15pm" : "Break 10:10am - 10:30am"}
             </div>
           );
@@ -118,7 +118,7 @@ const TeacherSchedule = () => {
                   dayHeaderFormat: 'ddd DD/MM/YYYY'
                   // other view-specific options here
             }}}
-            height={'600px'}
+            height={'auto'}
             slotLabelContent={customSlotLabelContent} // set custom slot label content
             slotLaneContent={customSlotLaneContent} // set custom slot lane content
             eventContent={customEventContent}

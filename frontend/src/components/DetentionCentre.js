@@ -11,7 +11,7 @@ const columns = [
     { id: 'room', label: 'Room' },
 ];
   
-  const DetentionCentre = () => {
+  const DetentionCentre = ({popup}) => {
   
     const data = [
       {
@@ -89,29 +89,28 @@ const columns = [
         return 0;
     });
 
-      //-----------------------ROW HIGHLIGHT ON CLICK FUNCTION----------------
-      const [selectedRows, setSelectedRows] = useState([]);
+    //-----------------------ROW HIGHLIGHT ON CLICK FUNCTION----------------
+    const [selectedRows, setSelectedRows] = useState([]);
 
-      const handleRowClick = (row) => {
-        if (selectedRows.includes(row.id)) {
-          setSelectedRows(selectedRows.filter((id) => id !== row.id));
-        } else {
-          setSelectedRows([...selectedRows, row.id]);
-        }
-      };
-      //----------------------------------------------------------------------
-        
-    
-      const tableRows = sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-        <TableRow key={row.id} sx={{ backgroundColor: selectedRows.includes(row.id) ? 'lightgray' : 'white' }} onClick={() => handleRowClick(row)}>
-          {columns.map((column) => (
-            <TableCell key={column.id}>{row[column.id]}</TableCell>
-          ))}
-        </TableRow>
-      ));
+    const handleRowClick = (row) => {
+      if (selectedRows.includes(row.id)) {
+        setSelectedRows(selectedRows.filter((id) => id !== row.id));
+      } else {
+        setSelectedRows([...selectedRows, row.id]);
+      }
+    };
+
+    //--------------------ELEMENT TO DISPLAY TABLE ROWS----------------
+    const tableRows = sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+      <TableRow key={row.id} sx={{ backgroundColor: selectedRows.includes(row.id) ? 'lightgray' : 'white' }} onClick={() => handleRowClick(row)}>
+        {columns.map((column) => (
+          <TableCell key={column.id}>{row[column.id]}</TableCell>
+        ))}
+      </TableRow>
+    ));
     
       return (
-      <Box sx={{ border: '5px solid red', overflow: 'auto', height: '300px', width:'735px', resize: 'both', minWidth: '550px', maxWidth: '1000px', minHeight: '300px', maxHeight: '600px'}}>
+      <Box sx={{ border: '5px solid red', overflow: 'auto', height: popup ? '500px': '300px', width: popup ? '1000px' : '722px', resize: popup ? '' : 'vertical', minHeight: '300px', maxHeight: '500px'}}>
           <Typography variant="h6" align="center">Detention Centre</Typography>
           <TableContainer component={Paper}>
             <Table aria-label="simple table" stickyHeader sx={{ border: '1px solid gray' }}>

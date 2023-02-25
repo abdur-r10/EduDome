@@ -12,7 +12,7 @@ const columns = [
   { id: 'due', label: 'Date Due' },
 ];
 
-const HomeworkCentre = () => {
+const HomeworkCentre = ({popup}) => {
 
     const data = [
         {
@@ -189,7 +189,7 @@ const HomeworkCentre = () => {
     ));
   
     return (
-    <Box sx={{ border: '5px solid #04AA6D', overflow: 'auto', height: '300px', width: '735px', resize: 'both', minWidth: '550px', maxWidth: '1000px', minHeight: '300px', maxHeight: '600px' }}>
+    <Box sx={{ border: '5px solid #04AA6D', overflow: 'auto', height: popup ? '500px': '300px', width: popup ? '1000px' : '722px', resize: popup ? '' : 'vertical', minHeight: '300px', maxHeight: '500px'}}>
         <Typography variant="h6" align="center">Homework Centre</Typography>
         <TableContainer component={Paper}>
           <Table aria-label="simple table" stickyHeader sx={{ border: '1px solid gray' }}>
