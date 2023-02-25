@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Box } from '@mui/system';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, Typography } from '@mui/material';
 
 const columns = [
     { id: 'date', label: 'Date' },
@@ -13,7 +13,7 @@ const columns = [
   //if ap highlight green if bp highlight red
   //once teacher clicks on it we want him to be able to see the details
 
-const FormApBp = () => {
+const FormApBp = ({popup}) => {
     const data = [
         {
             'id': 'AP1',
@@ -111,7 +111,8 @@ const FormApBp = () => {
     ));
   
     return (
-    <Box sx={{ border: '2px solid blue', overflow: 'auto', height: '200px', width: '700px', resize: 'vertical', minHeight: '200px', maxHeight: '600px' }}>
+    <Box sx={{ border: '2px solid blue', overflow: 'auto', height: popup ? '500px': '200px', width: popup ? '1000px' : '700px', resize: popup ? '' : 'vertical', minHeight: '200px', maxHeight: '600px' }}>
+        <Typography variant="h6" align="center">Form AP/BP</Typography>
         <TableContainer component={Paper}>
           <Table aria-label="simple table" stickyHeader>
             <TableHead>

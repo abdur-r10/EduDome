@@ -1,5 +1,7 @@
 import React from 'react'
 import { Box } from '@mui/system'
+import { Typography } from '@mui/material'
+
 
 
 //!MAKE AN API CALL TO SQL DATA FOR NOTIFICATIONS
@@ -62,9 +64,10 @@ const highSeverityStyle = {
     'color': 'white',
 }
 
-const NotificationCentre = () => {
+const NotificationCentre = ({popup}) => {
   return (
-    <Box sx={{border: '2px solid black', overflow: 'auto', height: '300px', width: '700px', resize: 'vertical', minHeight: '300px', maxHeight: '600px' }}>
+    <Box sx={{border: '2px solid black', overflow: 'auto', height: popup ? '500px': '300px', width: popup ? '1000px' : '700px', resize: popup ? '' : 'vertical', minHeight: '300px', maxHeight: '500px' }}>
+        <Typography variant="h6" align="center">Notification Centre</Typography>
         <div style={lowSeverityStyle}>
         <strong>20/02/2023</strong><br/>
         <strong>Heading 1</strong> <br/>

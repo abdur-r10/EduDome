@@ -189,7 +189,7 @@ const HomeworkCentre = () => {
     ));
   
     return (
-    <Box sx={{ border: '2px solid #04AA6D', overflow: 'auto', height: '300px', width: '700px', resize: 'both', minWidth: '550px', maxWidth: '1000px', minHeight: '300px', maxHeight: '600px' }}>
+    <Box sx={{ border: '5px solid #04AA6D', overflow: 'auto', height: '300px', width: '735px', resize: 'both', minWidth: '550px', maxWidth: '1000px', minHeight: '300px', maxHeight: '600px' }}>
         <Typography variant="h6" align="center">Homework Centre</Typography>
         <TableContainer component={Paper}>
           <Table aria-label="simple table" stickyHeader sx={{ border: '1px solid gray' }}>

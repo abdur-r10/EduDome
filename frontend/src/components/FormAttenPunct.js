@@ -2,7 +2,7 @@ import React from "react";
 import { Chart } from "react-google-charts";
 import { Box } from "@mui/system";
 
-const FormAttenPunct = () => {
+const FormAttenPunct = ({popup}) => {
   const data = [
     ["Attendance and Punctuality", "Present", "Late", "Auth. Absence", "Unauth. Absence"],
     ["", 82.32, 10.00, 5.60, 2.08],
@@ -39,7 +39,7 @@ const FormAttenPunct = () => {
   };
 
   return (
-    <Box sx={{ border: '2px solid orange', overflow: 'auto', height: '305px', width: '700px'}}>
+    <Box sx={{ border: '2px solid orange', overflow: 'auto', height: popup ? '500px': '305px', width: popup ? '1000px' : '700px'}}>
     <Chart
       width={"100%"}
       height={300}
