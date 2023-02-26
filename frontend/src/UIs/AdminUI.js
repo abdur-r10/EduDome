@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Grid } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 import { Link } from 'react-router-dom';
 import UserAppBar from '../components/UserAppBar';
 
@@ -29,7 +29,7 @@ export default function AdminUI() {
   return (
   <div style={{ marginTop: '10px'}}>
     <UserAppBar user={'admin'}/>
-    <Grid container xs={6} spacing={2} marginTop='50px' marginLeft='25%'alignItems="center" justifyContent="center" sx={{rowGap: 2}}>
+    <Grid container xs={6} item spacing={2} marginTop='50px' marginLeft='25%'alignItems="center" justifyContent="center" sx={{rowGap: 2, columnGap: 2}}>
       {displayOptions}
     </Grid>
   </div>
