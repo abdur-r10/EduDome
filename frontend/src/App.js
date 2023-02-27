@@ -3,6 +3,7 @@ import { Suspense, lazy } from 'react'
 import { Box } from '@mui/material'
 import LogInPage from './pages/LogInPage';
 import Loading from './components/Loading';
+import EditStaffInfo from './pages/EditStaffInfo';
 
 const AdminUI = lazy(() => import ('./UIs/AdminUI'));
 const TeacherUI = lazy(() => import('./UIs/TeacherUI'));
@@ -17,6 +18,14 @@ sampleData = {
 }
 */
 
+//!USe this when creating login option
+// const [user, setUser] = useState(null);
+
+//  Set the user state when the user logs in
+//   const handleLogin = (user) => {
+//     setUser(user);
+//   };
+
 function App() {
   return (
     <Box>
@@ -24,10 +33,11 @@ function App() {
       <BrowserRouter>
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path='/' element={<LogInPage />}/>
+            <Route path='/' element={<LogInPage /*onLogin={handleLogin}*//>}/>
             <Route path='/admin/dashboard' element={<AdminUI />}/>
             <Route path='/teacher/dashboard' element={<TeacherUI />}/>
             <Route path='/student/dashboard' element={<StudentUI />}/>
+            <Route path='/editStaffInfo' element={<EditStaffInfo />}/>
           </Routes>
         </Suspense>
       </BrowserRouter>
@@ -37,3 +47,27 @@ function App() {
 }
 
 export default App;
+
+/*
+THESE PATHS SHOULD BE PRIVATISED TO ONLY THE ADMIN
+path='${adminID}/parents-evening'
+path='${adminID}/edit-student-info'
+path='${adminID}/send-email'
+path='${adminID}/edit-staff-info'
+path='${adminID}/edit-schedules'
+
+THESE SHOULD BE FOR TEACHERS AND ADMINS (MAYBE)
+path='${userID}/adjust-register'
+path='${userID}/create-notifications'
+
+
+{adminMenuOptions.map(({key,link,componentName}) => (
+<Route key={key} path={link} render={() => (
+    user && user.role === 'admin'  ? (
+      React.createElement(componentName, { user })
+    ) : (
+      <Redirect to="/" />
+    )
+  )} />
+))}
+*/

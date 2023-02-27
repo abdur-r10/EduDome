@@ -2,6 +2,15 @@ import React from 'react'
 import { Paper, Grid, TextField, Button, Typography } from '@mui/material'
 import Logo from '../utils/EduDome-1.png';
 
+/*
+//!USE THIS FOR WHEN HANDLING LOGGING IN
+
+function handleLoginFormSubmit(event) {
+  event.preventDefault();
+  const user = { username: 'admin', role: 'admin' }; //this is just an example we want to make an API call to get the user info and set the user as appropriate
+  onLogin(user); // Call the onLogin prop from App.js with the user object
+}
+*/
 
 export default function LogInPage() {
     const containerStyle = {
