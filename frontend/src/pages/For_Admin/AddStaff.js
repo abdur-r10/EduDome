@@ -32,6 +32,8 @@ const AddStaff = () => {
     middleName: "",
     lastName: "",
     mobileNumber: "",
+    telephoneNumber: "",
+    address: "",
     email: "",
     emergencyContactName: "",
     emergencyContactNumber: "",
@@ -134,6 +136,27 @@ const AddStaff = () => {
             value={formData.mobileNumber}
             onChange={handleInputChange}
           />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="telephoneNumber"
+            name="telephoneNumber"
+            label="Telephone number"
+            fullWidth
+            value={formData.telephoneNumber}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+                  <TextField
+                    required
+                    id="address"
+                    name="address"
+                    label="Address"
+                    fullWidth
+                    value={formData.address}
+                    onChange={handleInputChange}
+                  />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField

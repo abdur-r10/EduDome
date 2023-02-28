@@ -1,5 +1,5 @@
 export function generatePassword(n) {
-    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // the characters to use in the password
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.?/!#%&+-"; // the characters to use in the password
 
     let password = "";
   
