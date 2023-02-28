@@ -3,7 +3,7 @@ import { Suspense, lazy } from 'react'
 import { Box } from '@mui/material'
 import LogInPage from './pages/LogInPage';
 import Loading from './components/Loading';
-import EditStaffInfo from './pages/EditStaffInfo';
+import AddStaff from './pages/For_Admin/AddStaff';
 
 const AdminUI = lazy(() => import ('./UIs/AdminUI'));
 const TeacherUI = lazy(() => import('./UIs/TeacherUI'));
@@ -37,7 +37,7 @@ function App() {
             <Route path='/admin/dashboard' element={<AdminUI />}/>
             <Route path='/teacher/dashboard' element={<TeacherUI />}/>
             <Route path='/student/dashboard' element={<StudentUI />}/>
-            <Route path='/editStaffInfo' element={<EditStaffInfo />}/>
+            <Route path='/addStaff' element={<AddStaff/>}/>
           </Routes>
         </Suspense>
       </BrowserRouter>

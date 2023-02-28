@@ -10,8 +10,9 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system"
-import { generatePassword } from "../utils/generatePassword"; // a function that generates a random password
-import { schoolAddress, schoolNumber } from "../utils/schoolInfo";
+import { generatePassword } from "../../utils/generatePassword"; // a function that generates a random password
+import { schoolAddress, schoolNumber } from "../../utils/schoolInfo";
+import UserAppBar from "../../components/UserAppBar";
 
 const useStyles = styled((theme) => ({
   formControl: {
@@ -23,7 +24,7 @@ const useStyles = styled((theme) => ({
   },
 }));
 
-const EditStaffInfo = () => {
+const AddStaff = () => {
   const classes = useStyles();
   const [formData, setFormData] = useState({
     title: "",
@@ -63,18 +64,23 @@ const EditStaffInfo = () => {
   };
 
   return (
+    <div>
+    <UserAppBar user={'admin'} />
+
+    
     <form onSubmit={handleFormSubmit}>
       <Typography variant="h6" gutterBottom>
         Create Staff
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} width='100px'>
+        <Grid item xs={12} sm={6}>
           <FormControl className={classes.formControl} >
             <InputLabel id="title-label">Title</InputLabel>
             <Select
               labelId="title-label"
               id="title"
               name="title"
+              style={{minWidth: 120}}
               value={formData.title}
               onChange={handleInputChange}
             >
@@ -259,10 +265,11 @@ const EditStaffInfo = () => {
                 </Grid>
               </Grid>
             </form>
+            </div>
           );
         };
         
-        export default EditStaffInfo;
+        export default AddStaff;
         
 
 

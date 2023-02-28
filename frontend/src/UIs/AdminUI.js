@@ -1,39 +1,62 @@
-import React from 'react'
-import { Button, Grid } from '@mui/material'
+import React, { useState } from 'react';
+import { Button, Grid, Menu, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { adminMenuOptions } from '../utils/menuOptions';
 import UserAppBar from '../components/UserAppBar';
 
-const options = [
-  {key: 1, name: 'Adjust registers', colour: '#1b5e20', link: '/adjust-registers' }, 
-  {key: 2, name: 'Create Notifications', colour: '#e65100', link: '/create-notifications' }, 
-  {key: 3, name: 'Start/Stop Parents Evening', colour: '#1b5e20', link: '/parents-evening' }, 
-  {key: 4, name: 'Add/Remove/Edit Student Info', colour: '#e65100', link: '/edit-student-info' }, 
-  {key: 5, name: 'Send Email/Text/Report to parents', colour: '#1b5e20', link: '/send-email' }, 
-  {key: 6, name: 'Add/Remove/Edit Teacher Info', colour: '#e65100', link: '/edit-teacher-info' }, 
-  {key: 7, name: 'Create/Edit Schedules', colour: '#1b5e20', link: '/edit-schedules' }, 
-  {key: 8, name: 'Add/Remove/Edit Admin Info', colour: '#e65100', link: '/edit-admin-info' }
-]
-
-const displayOptions = options.map(({ key, name, colour, link }) => (
-<Grid key={key} item xs={6} container sx={{ justifyContent: 'center', alignItems: 'center' }}>
-  <Link to={link}>
-  <Button variant="contained" style={{background: colour}}>
-    {name}
-  </Button>
-  </Link>
-</Grid>
-))
-
-
 export default function AdminUI() {
+
+  const [anchorEls, setAnchorEls] = useState(Array(adminMenuOptions.length).fill(null));
+
+
+  const handleClick = (event, index) => {
+    const newAnchorEls = [...anchorEls];
+    newAnchorEls[index] = event.currentTarget;
+    setAnchorEls(newAnchorEls);
+  };
+
+  const handleClose = (index) => {
+    const newAnchorEls = [...anchorEls];
+    newAnchorEls[index] = null;
+    setAnchorEls(newAnchorEls);
+  };
+
+  const displayOptions = adminMenuOptions.map(({ key, name, colour, options }, index) => {
+    if(name !== 'Back To Dashboard') {
+    return (
+      <Grid key={key} item xs={6} container sx={{ justifyContent: 'center', alignItems: 'center' }}>
+        <Button
+          aria-controls={`menu-${key}`}
+          aria-haspopup="true"
+          variant="contained"
+          style={{ background: colour }}
+          onClick={(event) => handleClick(event, index)}
+        >
+          {name}
+        </Button>
+        <Menu id={`menu-${key}`} anchorEl={anchorEls[index]} open={Boolean(anchorEls[index])} onClose={() => handleClose(index)}>
+          {options.map(({ name: optionName, link }) => (
+            <MenuItem key={link} onClick={() => handleClose(index)}>
+              <Link to={link}>{optionName}</Link>
+            </MenuItem>
+          ))}
+        </Menu>
+      </Grid>
+    )}
+  });
+
   return (
-  <div style={{ marginTop: '10px'}}>
-    <UserAppBar user={'admin'}/>
-    <Grid container xs={6} item spacing={2} marginTop='50px' marginLeft='25%'alignItems="center" justifyContent="center" sx={{rowGap: 2, columnGap: 2}}>
-      {displayOptions}
-    </Grid>
-  </div>
-  )
+    <div style={{ marginTop: '10px' }}>
+      <UserAppBar user={'admin'} />
+      <Grid container xs={6} item spacing={2} marginTop="50px" marginLeft="25%" alignItems="center" justifyContent="center" sx={{ rowGap: 2, columnGap: 2 }}>
+        {displayOptions}
+      </Grid>
+    </div>
+  );
 }
+
+
+
+
 
 //!!ADD A SEARCH BAR FOR ADMIN TO SEARCH VIA TEACHER OR STUDENT

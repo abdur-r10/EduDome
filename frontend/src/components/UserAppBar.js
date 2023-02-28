@@ -37,17 +37,24 @@ const UserAppBar = ({ user }) => {
   };
 
 
-  const showMenu = location.pathname !== '/admin/dashboards' && user === 'admin';
+  const showMenu = location.pathname !== '/admin/dashboard' && user === 'admin';
 
-  const displayMenuItems = adminMenuOptions.map(({ key, name, colour, link }) => {
-    if (location.pathname !== link) {
+  const displayMenuItems = adminMenuOptions.map(({ key, name, link, options }) => {
       return (
-        <MenuItem key={key} component="a" href={link} onClick={handleMenuClose}>
-          {name}
-        </MenuItem>
+        <div key={key}>
+          {options.map(({ name: optionName, link: optionLink }) => {
+            if(location.pathname !== optionLink){
+              return (
+                <MenuItem key={optionLink} component="a" href={optionLink} onClick={handleMenuClose}>
+                  {optionName}
+                </MenuItem>
+              )
+            }
+            return null
+          }
+          )}
+        </div>
       );
-    }
-    return null;
   });
 
   return (
