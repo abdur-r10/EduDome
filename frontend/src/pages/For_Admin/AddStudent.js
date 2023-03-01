@@ -1,26 +1,37 @@
 import React, { useState } from "react";
-import { TextField, Button, Select, MenuItem, FormControl, InputLabel, FormHelperText, IconButton, FormControlLabel, Checkbox } from "@mui/material";
+import { Grid, Typography, TextField, Button, Select, MenuItem, FormControl, InputLabel, FormHelperText, IconButton, FormControlLabel, Checkbox } from "@mui/material";
 import { generatePassword } from "../../utils/generatePassword"; // a function that generates a random password
 import { styled } from "@mui/system"
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
-const useStyles = styled((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-}));
+
+const StyledFormControl = styled(FormControl)({
+    margin: (theme) => theme.spacing(1),
+    minWidth: '120px',
+    width: '100%',
+  });
+  
+  const StyledSelect = styled(Select)({
+    marginTop: (theme) => theme.spacing(2),
+  });
+  
+  const StyledButton = styled(Button)({
+    margin: (theme) => theme.spacing(1),
+  });
+  
+//   const StyledFormGroup = styled(FormGroup)({
+//     display: 'flex',
+//     flexDirection: 'row',
+//     gap: '8px',
+//     alignItems: 'center',
+//     marginBottom: (theme) => theme.spacing(2),
+//   });
+  
 
 const AddStudent= () => {
-  const classes = useStyles();
+  //const classes = useStyles();
   const [formData, setFormData] = useState({
     firstName: "",
     middleName: "",
@@ -83,21 +94,21 @@ const AddStudent= () => {
   };
 
   const handleParentFirstLineOfContactChange = (event, index) => {
-  const { name, value } = event.target;
-  setFormData((prevFormData) => ({
-    ...prevFormData,
-    parents: prevFormData.parents.map((parent, i) => {
-      if (i === index) {
-        return {
-          ...parent,
-          firstLineOfContact: value
-        };
-      } else {
-        return parent;
-      }
-    })
-  }));
-};
+    const { checked } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      parents: prevFormData.parents.map((parent, i) => {
+        if (i === index) {
+          return {
+            ...parent,
+            firstLineOfContact: checked
+          };
+        } else {
+          return parent;
+        }
+      })
+    }));
+  };
 
   const handleAddParent = () => {
     setFormData((prevFormData) => ({
@@ -154,7 +165,12 @@ const AddStudent= () => {
 
 return (
 <form onSubmit={handleFormSubmit}>
-  <div className={classes.formGroup}>
+    <Typography variant="h6" gutterBottom>
+        Create Student
+    </Typography>
+<Grid container spacing={3}>
+<Grid item xs={12} sm={6}>
+  <StyledFormControl>
     <TextField
       label="First Name"
       name="firstName"
@@ -175,8 +191,10 @@ return (
       onChange={handleInputChange}
       required
     />
-  </div>
-  <div className={classes.formGroup}>
+  </StyledFormControl>
+  </Grid>
+  <Grid item xs={12} sm={6}>
+  <StyledFormControl>
     <TextField
       label="Join Date"
       name="joinDate"
@@ -185,9 +203,9 @@ return (
       onChange={handleInputChange}
       required
     />
-    <FormControl className={classes.formControl}>
+    <StyledFormControl>
       <InputLabel>Year Group</InputLabel>
-      <Select
+      <StyledSelect
         name="yearGroup"
         value={formData.yearGroup}
         onChange={handleInputChange}
@@ -200,11 +218,14 @@ return (
         <MenuItem value={11}>11</MenuItem>
         <MenuItem value={12}>12</MenuItem>
         <MenuItem value={13}>13</MenuItem>
-      </Select>
+      </StyledSelect>
       <FormHelperText>Select the student's year group</FormHelperText>
-    </FormControl>
-  </div>
-  <div className={classes.formGroup}>
+    </StyledFormControl>
+  </StyledFormControl>
+  </Grid>
+
+  <Grid item xs={12} sm={6}>
+  <StyledFormControl>
     <TextField
       label="Email"
       name="email"
@@ -223,16 +244,18 @@ return (
         readOnly: true,
       }}
     />
-    <Button
+    <StyledButton
       variant="outlined"
       color="primary"
-      className={classes.button}
       onClick={handlePasswordGeneration}
     >
       Generate Password
-    </Button>
-  </div>
-  <div className={classes.formGroup}>
+    </StyledButton>
+  </StyledFormControl>
+  </Grid>
+  
+  <Grid item xs={12} sm={6}>
+  <StyledFormControl>
     <TextField
       label="Date of Birth"
       name="dateOfBirth"
@@ -250,8 +273,12 @@ return (
       onChange={handleInputChange}
       required
     />
-  </div>
-  <div className={classes.formGroup}>
+  </StyledFormControl>
+  </Grid>
+
+  <Grid item xs={12} sm={6}>
+  <StyledFormControl>
+    <Typography pb='15px'>Upload image</Typography>
     <input
       accept="image/*"
       type="file"
@@ -262,23 +289,25 @@ return (
         }))
       }
     />
-  </div>
-  <div className={classes.formGroup}>
-    <Button
+  </StyledFormControl>
+  </Grid>
+
+  <Grid item xs={12} sm={6}>
+  <StyledFormControl>
+    <StyledButton
       variant="contained"
       color="primary"
-      className={classes.button}
       onClick={handleAddParent}
     >
       Add Parent/Carer
-    </Button>
+    </StyledButton>
     {formData.parents.map((parent, index) => (
-      <div key={index} className={classes.formGroup}>
+      <StyledFormControl>
         <h4>Parent/Carer {index + 1}</h4>
-        <div className={classes.formGroup}>
-          <FormControl className={classes.formControl}>
+        <StyledFormControl>
+          <StyledFormControl>
             <InputLabel>Title</InputLabel>
-            <Select
+            <StyledSelect
               name="title"
               value={parent.title}
               onChange={(event) => handleParentInputChange(event, index)}
@@ -287,9 +316,9 @@ return (
               <MenuItem value="Mrs">Mrs</MenuItem>
               <MenuItem value="Ms">Ms</MenuItem>
               <MenuItem value="Dr">Dr</MenuItem>
-            </Select>
+            </StyledSelect>
             <FormHelperText>Select the parent's title</FormHelperText>
-          </FormControl>
+          </StyledFormControl>
           <TextField
             label="First Name"
             name="firstName"
@@ -304,8 +333,8 @@ return (
             onChange={(event) => handleParentInputChange(event, index)}
             required
           />
-        </div>
-        <div className={classes.formGroup}>
+        </StyledFormControl>
+        <StyledFormControl>
           <TextField
             label="Email"
             name="email"
@@ -323,9 +352,9 @@ return (
             required
           />
 
-<FormControl className={classes.formControl}>
+<StyledFormControl>
 <InputLabel>Relation to Student</InputLabel>
-<Select
+<StyledSelect
 name="relationToChild"
 value={parent.relationToChild}
 onChange={(event) => handleParentInputChange(event, index)}
@@ -337,8 +366,8 @@ required
 <MenuItem value="Step-Father">Step-Father</MenuItem>
 <MenuItem value="Step-Mother">Step-Mother</MenuItem>
 <MenuItem value="Guardian">Guardian</MenuItem>
-</Select>
-</FormControl>
+</StyledSelect>
+</StyledFormControl>
 
 <FormControlLabel
   control={
@@ -358,19 +387,18 @@ required
     >
     <DeleteIcon />
     </IconButton>
-</div>
-</div>
+</StyledFormControl>
+</StyledFormControl>
 ))}
     
 
-    <Button
+    <StyledButton
   variant="contained"
   color="primary"
-  className={classes.button}
   onClick={handleAddEmergencyContact}
 >
   Add Emergency Contact
-</Button>
+</StyledButton>
 {formData.emergencyContacts.map((contact, index) => (
   <div key={index}>
     <h4>Emergency Contact {index + 1}</h4>
@@ -398,7 +426,7 @@ required
 
 <IconButton
     onClick={() => handleRemoveEmergencyContact(index)}
-    aria-label="remove parent"
+    aria-label="remove emergency contact"
     >
     <DeleteIcon />
     </IconButton>
@@ -406,15 +434,18 @@ required
 ))}
 
 
-    </div>
-  <Button
+    </StyledFormControl>
+    </Grid>
+    <Grid item xs={12} sm={6}>
+  <StyledButton
     variant="contained"
     color="primary"
     type="submit"
-    className={classes.button}
   >
     Add Student
-  </Button>
+  </StyledButton>
+  </Grid>
+  </Grid>
 </form>
 );
 };
