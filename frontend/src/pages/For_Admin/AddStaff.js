@@ -9,38 +9,27 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { styled } from "@mui/system"
 import { generatePassword } from "../../utils/generatePassword"; // a function that generates a random password
 import { schoolAddress, schoolNumber } from "../../utils/schoolInfo";
 import UserAppBar from "../../components/UserAppBar";
 
-const useStyles = styled((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-}));
 
-const AddStaff = () => {
-  const classes = useStyles();
+const AddStaff = ({ staff }) => {
   const [formData, setFormData] = useState({
-    title: "",
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    mobileNumber: "",
-    telephoneNumber: "",
-    address: "",
-    email: "",
-    emergencyContactName: "",
-    emergencyContactNumber: "",
-    emergencyContactAddress: "",
-    staffImage: null,
-    staffEmail: "",
-    password: "",
+    title: staff ? staff.title : "",
+    firstName: staff ? staff.firstName : "",
+    middleName: staff ? staff.middleName : "",
+    lastName: staff ? staff.lastName : "",
+    mobileNumber: staff ? staff.mobileNumber : "",
+    telephoneNumber: staff ? staff.telephoneNumber : "",
+    address: staff ? staff.address : "",
+    email: staff ? staff.email : "",
+    emergencyContactName: staff ? staff.emergencyContactName : "",
+    emergencyContactNumber: staff ? staff.emergencyContactNumber : "",
+    emergencyContactAddress: staff ? staff.emergencyContactAddress : "",
+    staffImage: staff ? staff.title : null,
+    staffEmail: staff ? staff.title : "",
+    password: staff ? staff.title : "",
   });
 
   const handleInputChange = (event) => {
@@ -63,6 +52,7 @@ const AddStaff = () => {
     event.preventDefault();
     // TODO: handle form submission logic here (make api call to create staff in DB)
     // TODO: make sure it checks first if the staff email address already exists
+    //if chnages are made it should save them think of that logic
   };
 
   return (
@@ -76,7 +66,7 @@ const AddStaff = () => {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <FormControl className={classes.formControl} >
+          <FormControl >
             <InputLabel id="title-label">Title</InputLabel>
             <Select
               labelId="title-label"
@@ -246,7 +236,6 @@ const AddStaff = () => {
                   <Button
                     variant="contained"
                     color="primary"
-                    className={classes.button}
                     onClick={handlePasswordGeneration}
                   >
                     Generate Password
@@ -281,7 +270,6 @@ const AddStaff = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    className={classes.button}
                   >
                     Save
                   </Button>

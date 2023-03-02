@@ -5,6 +5,8 @@ import LogInPage from './pages/LogInPage';
 import Loading from './components/Loading';
 import AddStaff from './pages/For_Admin/AddStaff';
 import AddStudent from './pages/For_Admin/AddStudent';
+import EditStudent from './pages/For_Admin/EditStudent';
+import EditStaff from './pages/For_Admin/EditStaff';
 
 const AdminUI = lazy(() => import ('./UIs/AdminUI'));
 const TeacherUI = lazy(() => import('./UIs/TeacherUI'));
@@ -38,8 +40,10 @@ function App() {
             <Route path='/admin/dashboard' element={<AdminUI />}/>
             <Route path='/teacher/dashboard' element={<TeacherUI />}/>
             <Route path='/student/dashboard' element={<StudentUI />}/>
-            <Route path='/addStaff' element={<AddStaff/>}/>
-            <Route path='/addStudent' element={<AddStudent/>}/>
+            <Route path='/addStaff' element={<AddStaff />}/>
+            <Route path='/editStaff' element={<EditStaff />}/>
+            <Route path='/addStudent' element={<AddStudent />}/>
+            <Route path='/editStudent' element={<EditStudent />}/>
           </Routes>
         </Suspense>
       </BrowserRouter>

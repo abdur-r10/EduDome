@@ -21,31 +21,22 @@ const StyledFormControl = styled(FormControl)({
     margin: (theme) => theme.spacing(1),
   });
   
-//   const StyledFormGroup = styled(FormGroup)({
-//     display: 'flex',
-//     flexDirection: 'row',
-//     gap: '8px',
-//     alignItems: 'center',
-//     marginBottom: (theme) => theme.spacing(2),
-//   });
-  
 
-const AddStudent= () => {
+const AddStudent= ({ student }) => {
   //const classes = useStyles();
   const [formData, setFormData] = useState({
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    joinDate: new Date().toISOString().slice(0, 10),
-    yearGroup: "",
-    email: "",
-    password: "",
-    dateOfBirth: "",
-    address: "",
-    studentImage: null,
-    parents: [],
-    emergencyContacts: [],
-    firstLineOfContact: "",
+    firstName: student ? student.firstName : "",
+    middleName: student ? student.middleName: "",
+    lastName: student ? student.lastName: "",
+    joinDate: student ? student.joinDate: new Date().toISOString().slice(0, 10),
+    yearGroup: student ? student.yearGroup: "",
+    email: student ? student.email: "",
+    password: student ? student.password: "",
+    dateOfBirth: student ? student.dateOfBirth: "",
+    address: student ? student.address: "",
+    studentImage: student ? student.studentImage: null,
+    parents: student ? student.parents: [],
+    emergencyContacts: student ? student.emergencyContacts: []
   });
 
   const handlePasswordGeneration = () => {
@@ -95,6 +86,7 @@ const AddStudent= () => {
 
   const handleParentFirstLineOfContactChange = (event, index) => {
     const { checked } = event.target;
+    console.log(event)
     setFormData((prevFormData) => ({
       ...prevFormData,
       parents: prevFormData.parents.map((parent, i) => {
@@ -125,6 +117,7 @@ const AddStudent= () => {
           telephoneNumber: "",
           mobileNumber: "",
           address: formData.address,
+          firstLineOfContact: false
         },
       ],
     }));
@@ -302,7 +295,7 @@ return (
       Add Parent/Carer
     </StyledButton>
     {formData.parents.map((parent, index) => (
-      <StyledFormControl>
+      <StyledFormControl key={index}>
         <h4>Parent/Carer {index + 1}</h4>
         <StyledFormControl>
           <StyledFormControl>
@@ -327,6 +320,12 @@ return (
             required
           />
           <TextField
+            label="Middle Name"
+            name="middleName"
+            value={parent.middleName}
+            onChange={(event) => handleParentInputChange(event, index)}
+          />
+          <TextField
             label="Last Name"
             name="lastName"
             value={parent.lastName}
@@ -344,10 +343,26 @@ return (
             required
           />
           <TextField
-            label="Phone Number"
-            name="phoneNumber"
+            label="Mobile Number"
+            name="mobileNumber"
             type="tel"
-            value={parent.phoneNumber}
+            value={parent.mobileNumber}
+            onChange={(event) => handleParentInputChange(event, index)}
+            required
+          />
+          <TextField
+            label="Telephone Number"
+            name="telephoneNumber"
+            type="tel"
+            value={parent.telephoneNumber}
+            onChange={(event) => handleParentInputChange(event, index)}
+          />
+          <TextField
+            label="Address"
+            name="address"
+            multiline
+            rows={4}
+            value={parent.address}
             onChange={(event) => handleParentInputChange(event, index)}
             required
           />
@@ -449,7 +464,6 @@ required
 </form>
 );
 };
-
 
 
 export default AddStudent
