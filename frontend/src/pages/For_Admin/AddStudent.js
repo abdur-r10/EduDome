@@ -3,6 +3,7 @@ import { Grid, Typography, TextField, Button, Select, MenuItem, FormControl, Inp
 import { generatePassword } from "../../utils/generatePassword"; // a function that generates a random password
 import { styled } from "@mui/system"
 import DeleteIcon from '@mui/icons-material/Delete';
+import {useLocation} from 'react-router-dom';
 
 
 
@@ -22,8 +23,10 @@ const StyledFormControl = styled(FormControl)({
   });
   
 
-const AddStudent= ({ student }) => {
-  //const classes = useStyles();
+const AddStudent= () => {
+    const location = useLocation();
+    console.log(location.state.student)
+    const student = location.state.student
   const [formData, setFormData] = useState({
     firstName: student ? student.firstName : "",
     middleName: student ? student.middleName: "",

@@ -12,9 +12,15 @@ import {
 import { generatePassword } from "../../utils/generatePassword"; // a function that generates a random password
 import { schoolAddress, schoolNumber } from "../../utils/schoolInfo";
 import UserAppBar from "../../components/UserAppBar";
+import {useLocation} from 'react-router-dom';
 
 
-const AddStaff = ({ staff }) => {
+
+const AddStaff = () => {
+  const location = useLocation();
+  console.log(location.state.staff)
+  const staff = location.state.staff
+
   const [formData, setFormData] = useState({
     title: staff ? staff.title : "",
     firstName: staff ? staff.firstName : "",

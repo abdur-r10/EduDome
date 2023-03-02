@@ -38,7 +38,7 @@ function SearchBar({handleSearch}) {
   const isSearchEnabled = Object.values(searchQuery).some((value) => value !== '');
 
   return (
-    <SearchContainer>
+    <SearchContainer sx={{justifyContent: 'center', alignItems: 'center'}}>
       <TextField
         name="firstName"
         label="First Name"
@@ -68,6 +68,7 @@ function SearchBar({handleSearch}) {
         startIcon={<SearchIcon />}
         onClick={() => {handleSearch(searchQuery)}}
         disabled={!isSearchEnabled}
+        sx={{minWidth: '95px'}}
       >
         Search
       </Button>
