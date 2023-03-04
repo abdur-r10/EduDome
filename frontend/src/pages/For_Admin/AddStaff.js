@@ -13,15 +13,19 @@ import { generatePassword } from "../../utils/generatePassword"; // a function t
 import { schoolAddress, schoolNumber } from "../../utils/schoolInfo";
 import UserAppBar from "../../components/UserAppBar";
 import {useLocation} from 'react-router-dom';
+import { generateId } from "../../utils/generateUUID";
+
 
 
 
 const AddStaff = () => {
   const location = useLocation();
-  console.log(location.state.staff)
-  const staff = location.state.staff
+  const staff = location.state ? location.state.staff : null
+  
+  console.log(staff)
 
   const [formData, setFormData] = useState({
+    id: staff ? staff.id : generateId('staff'),
     title: staff ? staff.title : "",
     firstName: staff ? staff.firstName : "",
     middleName: staff ? staff.middleName : "",
@@ -54,11 +58,19 @@ const AddStaff = () => {
     }));
   };
 
-  const handleFormSubmit = (event) => {
+  const handleAddStaffToDB = (event) => {
     event.preventDefault();
+    console.log(formData)
     // TODO: handle form submission logic here (make api call to create staff in DB)
     // TODO: make sure it checks first if the staff email address already exists
     //if chnages are made it should save them think of that logic
+    //!could make handleAddStaffToDB and handleEditStaffInDB by checking in backend if ID exists then save the changes if the ID doesn't exist then add the staff to DB
+  };
+
+  const handleEditStaffInDB = (event) => {
+    event.preventDefault();
+    console.log(formData)
+    // TODO: handle form submission logic here (make api call to edit staff in DB)
   };
 
   return (
@@ -66,9 +78,9 @@ const AddStaff = () => {
     <UserAppBar user={'admin'} />
 
     
-    <form onSubmit={handleFormSubmit}>
-      <Typography variant="h6" gutterBottom>
-        Create Staff
+    <form>
+      <Typography variant="h6" gutterBottom m='20px 10px'>
+        {staff ? 'Edit Staff' : 'Create Staff'}
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
@@ -272,13 +284,23 @@ const AddStaff = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Button
+                  {staff ?
+                   <Button
+                   type="submit"
+                   variant="contained"
+                   color="primary"
+                   onClick={(e) => handleEditStaffInDB(e)}
+                 >
+                   Save changes
+                 </Button>
+                   : <Button
                     type="submit"
                     variant="contained"
                     color="primary"
+                    onClick={(e) => handleAddStaffToDB(e)}
                   >
-                    Save
-                  </Button>
+                    Add Staff
+                  </Button>}
                 </Grid>
               </Grid>
             </form>

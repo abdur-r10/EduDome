@@ -4,6 +4,7 @@ import { generatePassword } from "../../utils/generatePassword"; // a function t
 import { styled } from "@mui/system"
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useLocation} from 'react-router-dom';
+import { generateId } from "../../utils/generateUUID";
 
 
 
@@ -25,9 +26,13 @@ const StyledFormControl = styled(FormControl)({
 
 const AddStudent= () => {
     const location = useLocation();
-    console.log(location.state.student)
-    const student = location.state.student
+    const student = location.state ? location.state.student : null
+
+    console.log(student)
+
+
   const [formData, setFormData] = useState({
+    id: student ? student.id : generateId('pupil'),
     firstName: student ? student.firstName : "",
     middleName: student ? student.middleName: "",
     lastName: student ? student.lastName: "",
@@ -111,6 +116,7 @@ const AddStudent= () => {
       parents: [
         ...prevFormData.parents,
         {
+          id: generateId('guardian'),  
           title: "",
           firstName: "",
           middleName: "",
@@ -154,15 +160,21 @@ const AddStudent= () => {
     }));
   }
 
-    const handleFormSubmit = (event) => {
+    const handleAddStudentToDB = (event) => {
+        event.preventDefault();
+        console.log(formData);
+        //!could make handleAddStudentToDB and handleEditStudentInDB by checking in backend if ID exists then save the changes if the ID doesn't exist then add the student to DB
+    };
+
+    const handleEditStudentInDB = (event) => {
         event.preventDefault();
         console.log(formData);
     };
 
 return (
-<form onSubmit={handleFormSubmit}>
-    <Typography variant="h6" gutterBottom>
-        Create Student
+<form>
+    <Typography variant="h6" gutterBottom m='20px 10px'>
+        {student ? 'Edit Student' : 'Create Student'}
     </Typography>
 <Grid container spacing={3}>
 <Grid item xs={12} sm={6}>
@@ -455,13 +467,23 @@ required
     </StyledFormControl>
     </Grid>
     <Grid item xs={12} sm={6}>
+  {student ? 
   <StyledButton
     variant="contained"
     color="primary"
     type="submit"
+    onClick={(e) => handleAddStudentToDB(e)}
+    >
+    Save Changes
+    </StyledButton>
+  : <StyledButton
+    variant="contained"
+    color="primary"
+    type="submit"
+    onClick={(e) => handleEditStudentInDB(e)}
   >
     Add Student
-  </StyledButton>
+  </StyledButton>}
   </Grid>
   </Grid>
 </form>

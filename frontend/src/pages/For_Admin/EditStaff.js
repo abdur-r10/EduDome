@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import SearchBar from '../../components/SearchBar';
+import SearchBar from '../../components/StaffOrStudentSearchBar';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import UserAppBar from "../../components/UserAppBar";
 
 
 
@@ -59,6 +60,7 @@ const EditStaff = () => {
 
   return (
     <div>
+       <UserAppBar user={'admin'} />
        <SearchBar handleSearch={handleSearch} />
       {results.length > 0 && 
       <Table>

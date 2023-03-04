@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState} from 'react'
 import { AppBar, Box, Toolbar, Typography, IconButton, MenuItem, Menu } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -8,9 +8,13 @@ import  { adminMenuOptions }  from '../utils/menuOptions';
 
 
 const UserAppBar = ({ user }) => {
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [hamburgerAnchorEl, setHamburgerAnchorEl] = React.useState(null);
+  const [auth, setAuth] = useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [hamburgerAnchorEl, setHamburgerAnchorEl] = useState(null);
+  const [showSubmenu, setShowSubmenu] = useState(false);
+  const [submenuOptions, setSubmenuOptions] = useState([]);
+
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -36,6 +40,16 @@ const UserAppBar = ({ user }) => {
     setHamburgerAnchorEl(null);
   };
 
+  const handleOptionClick = (options) => {
+    setShowSubmenu(true);
+    setSubmenuOptions(options);
+  };
+
+  const handleBackClick = () => {
+    setShowSubmenu(false);
+    setSubmenuOptions([]);
+  };
+
 
   const showMenu = location.pathname !== '/admin/dashboard' && user === 'admin';
 
@@ -58,7 +72,7 @@ const UserAppBar = ({ user }) => {
   });
 
   return (
-     <Box sx={{ width: '100%' }}>
+     <Box sx={{ width: '100%', mb:'20px' }}>
       <AppBar position="static">
         <Toolbar>
           {showMenu && (
