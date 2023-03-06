@@ -29,6 +29,7 @@ const EditStaff = () => {
     staffImage: null,
     staffEmail: "ZillaA@hotmail.com",
     password: "123aBCd",
+    assignedToRoom: 'S5'
     }]
    
    */

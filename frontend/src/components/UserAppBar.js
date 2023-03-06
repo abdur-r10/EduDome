@@ -1,5 +1,7 @@
 import React, { useState} from 'react'
-import { AppBar, Box, Toolbar, Typography, IconButton, MenuItem, Menu } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, IconButton, MenuItem, Menu, List, ListItem, Collapse } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -11,8 +13,7 @@ const UserAppBar = ({ user }) => {
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const [hamburgerAnchorEl, setHamburgerAnchorEl] = useState(null);
-  const [showSubmenu, setShowSubmenu] = useState(false);
-  const [submenuOptions, setSubmenuOptions] = useState([]);
+  const [nestedMenuStates, setNestedMenuStates] = useState(new Array(adminMenuOptions.length).fill(false));
 
 
   const location = useLocation();
@@ -21,7 +22,7 @@ const UserAppBar = ({ user }) => {
   const handleLogout = () => {
     setAuth(false);
     handleMenuClose();
-    navigate('/'); // This line redirects to the home page
+    navigate('/');
   };
 
   const handleUserMenu = (event) => {
@@ -40,36 +41,58 @@ const UserAppBar = ({ user }) => {
     setHamburgerAnchorEl(null);
   };
 
-  const handleOptionClick = (options) => {
-    setShowSubmenu(true);
-    setSubmenuOptions(options);
-  };
+  const handleClick = (index) => {
+    const newStates = [...nestedMenuStates];
+    newStates[index] = !newStates[index];
+    setNestedMenuStates(newStates);
+  }
 
-  const handleBackClick = () => {
-    setShowSubmenu(false);
-    setSubmenuOptions([]);
-  };
+  
 
 
   const showMenu = location.pathname !== '/admin/dashboard' && user === 'admin';
 
-  const displayMenuItems = adminMenuOptions.map(({ key, name, link, options }) => {
-      return (
-        <div key={key}>
-          {options.map(({ name: optionName, link: optionLink }) => {
-            if(location.pathname !== optionLink){
-              return (
-                <MenuItem key={optionLink} component="a" href={optionLink} onClick={handleMenuClose}>
-                  {optionName}
-                </MenuItem>
-              )
-            }
-            return null
-          }
-          )}
-        </div>
-      );
-  });
+  const displayMenuItems = adminMenuOptions.map(({ key, name, link, options }, index) => {
+  const showNestedMenu = nestedMenuStates[index];
+  if (link === '/admin/dashboard') { // if Back to Dashboard link
+    return (
+      <div key={key}>
+        <ListItem button component="a" href={link} onClick={handleMenuClose}>
+          {name}
+        </ListItem>
+      </div>
+    );
+  } else { // if other links with nested options
+    return (
+      <div key={key}>
+        <ListItem button onClick={() => handleClick(index)} style={{ paddingLeft: '2rem' }}>
+          {name}
+          {showNestedMenu ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        </ListItem>
+        <Collapse in={showNestedMenu} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {options.map(({ name: optionName, link: optionLink }) => {
+              if (options) {
+                if(location.pathname !== optionLink){ //show links to all pages apart from current page
+                  return (
+                    <MenuItem key={optionLink} component="a" href={optionLink} onClick={handleMenuClose} style={{ paddingLeft: '2rem', backgroundColor: 'lightgray', fontWeight: 'bold' }}>
+                      {optionName}
+                    </MenuItem>
+                  );
+                }
+                return null //don't show the link to the current page
+                
+                
+              }
+              return null
+            })}
+          </List>
+        </Collapse>
+      </div>
+    );
+  }
+});
+
 
   return (
      <Box sx={{ width: '100%', mb:'20px' }}>

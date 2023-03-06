@@ -5,8 +5,8 @@ export const adminMenuOptions = [
     {key: 4, name: 'Add/Remove/Edit Student Info', colour: '#e65100', link: '/edit-student-info', componentName: 'EditStudentInfo', options: [{name: 'Add Student', link:'/addStudent'}, {name: 'Edit or Remove Student', link:'/editStudent'}] }, 
     {key: 5, name: 'Send Message to Parents', colour: '#1b5e20', link: '/send-email', componentName: 'SendEmails', options: [{name: 'Send Text', link:'/sendTextToParent'}, {name: 'Send Email', link:'/sendEmailToParent'}, {name: 'Send Letter', link:'/sendLetterToParents'}] }, 
     {key: 6, name: 'Add/Remove/Edit Staff Info', colour: '#e65100', link: '/edit-staff-info', componentName: 'EditStaffInfo', options: [{name: 'Add Staff', link:'/addStaff'}, {name: 'Edit or Remove Staff', link:'/editStaff'}] }, 
-    {key: 7, name: 'Create/Edit Schedules', colour: '#1b5e20', link: '/edit-schedules', componentName: 'EditSchedules', options: [{name: 'Create or Edit Rooms', link:'/editRooms'}, {name: 'Create or Edit Classes', link:'/editClasses'}, {name: 'Create Timetables', link:'/createTimetables'}, {name: 'Edit Timetables', link: '/editTimetables'}] },
+    {key: 7, name: 'Create/Edit Schedules', colour: '#1b5e20', link: '/edit-schedules', componentName: 'EditSchedules', options: [{name: 'Create Classes', link:'/createClasses'}, {name: 'Edit Classes', link:'/editClasses'}, {name: 'Create Timetables', link:'/createTimetables'}, {name: 'Edit Timetables', link: '/editTimetables'}] },
     {key: 8, name: 'Add/Remove/Edit Room', colour: '#e65100', link: '/edit-room-info', componentName: 'EditRoomInfo', options: [{name: 'Add Room', link:'/addRoom'}, {name: 'Edit or Remove Room', link:'/editRoom'}] },  
-    {key: 9, name: 'Back To Dashboard', colour: '#1b5e20', link: '/admin/dashboard', componentName: 'AdminUI', options: [{name: 'Back To Dashboard', link:'/admin/dashboard'}] }
+    {key: 9, name: 'Back To Dashboard', colour: '#1b5e20', link: '/admin/dashboard', componentName: 'AdminUI' }
   ]
 

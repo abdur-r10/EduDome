@@ -5,8 +5,7 @@ import { styled } from "@mui/system"
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useLocation} from 'react-router-dom';
 import { generateId } from "../../utils/generateUUID";
-
-
+import UserAppBar from "../../components/UserAppBar";
 
 
 const StyledFormControl = styled(FormControl)({
@@ -28,7 +27,7 @@ const AddStudent= () => {
     const location = useLocation();
     const student = location.state ? location.state.student : null
 
-    console.log(student)
+    //console.log(student)
 
 
   const [formData, setFormData] = useState({
@@ -43,9 +42,9 @@ const AddStudent= () => {
     dateOfBirth: student ? student.dateOfBirth: "",
     address: student ? student.address: "",
     studentImage: student ? student.studentImage: null,
-    parents: student ? student.parents: [],
-    emergencyContacts: student ? student.emergencyContacts: []
+    contacts: student ? student.contacts : {guardians: [], emergencyContacts: []}
   });
+
 
   const handlePasswordGeneration = () => {
     const generatedPassword = generatePassword(7); 
@@ -63,58 +62,50 @@ const AddStudent= () => {
     }));
   };
 
-  const handleParentInputChange = (event, index) => {
+  
+  const handleContactInputChange = (event, index, typeOfContact) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => {
-      const parents = [...prevFormData.parents];
-      parents[index][name] = value;
+      const contacts = {...prevFormData.contacts};
+      contacts[typeOfContact][index][name] = value;
       return {
         ...prevFormData,
-        parents: parents,
+        contacts: contacts,
+      };
+    });
+  };
+  
+  const handleGuardianFirstLineOfContactChange = (event, index) => {
+    const { checked } = event.target;
+  
+    setFormData((prevFormData) => {
+      const newGuardians = prevFormData.contacts.guardians.map((guardian, i) => {
+        if (i === index) {
+          return {
+            ...guardian,
+            firstLineOfContact: checked
+          };
+        } else {
+          return guardian;
+        }
+      });
+  
+      const newContacts = {
+        ...prevFormData.contacts,
+        guardians: newGuardians
+      };
+  
+      return {
+        ...prevFormData,
+        contacts: newContacts
       };
     });
   };
 
-  const handleEmergencyContactInputChange = (event, index) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      emergencyContacts: prevFormData.emergencyContacts.map((contact, i) => {
-        if (i === index) {
-          return {
-            ...contact,
-            [name]: value
-          };
-        } else {
-          return contact;
-        }
-      })
-    }));
-  };
-
-  const handleParentFirstLineOfContactChange = (event, index) => {
-    const { checked } = event.target;
-    console.log(event)
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      parents: prevFormData.parents.map((parent, i) => {
-        if (i === index) {
-          return {
-            ...parent,
-            firstLineOfContact: checked
-          };
-        } else {
-          return parent;
-        }
-      })
-    }));
-  };
-
-  const handleAddParent = () => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      parents: [
-        ...prevFormData.parents,
+  const handleAddGuardian = () => {
+    setFormData((prevFormData) => {
+      const newGuardian = [
+        ...prevFormData.contacts.guardians,
         {
           id: generateId('guardian'),  
           title: "",
@@ -127,58 +118,101 @@ const AddStudent= () => {
           mobileNumber: "",
           address: formData.address,
           firstLineOfContact: false
-        },
-      ],
-    }));
-  };
-
-  const handleAddEmergencyContact = () => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      emergencyContacts: [
-        ...prevFormData.emergencyContacts,
-        {
-          name: "",
-          relationship: "",
-          telephoneNumber: ""
         }
       ]
-    }));
+
+      const newContacts = {
+        ...prevFormData.contacts,
+        guardians: newGuardian
+      }
+      
+      return {
+        ...prevFormData,
+        contacts: newContacts
+      }
+
+    });
+  };
+  
+  const handleAddEmergencyContact = () => {
+    setFormData((prevFormData) => {
+      const newEmergencyContact = [
+        ...prevFormData.contacts.emergencyContacts,
+        {  
+          name: '',
+          relationship: '',
+          telephoneNumber: ''
+        }
+      ]
+
+      const newContacts = {
+        ...prevFormData.contacts,
+        emergencyContacts: newEmergencyContact
+      }
+      
+      return {
+        ...prevFormData,
+        contacts: newContacts
+      }
+
+    });
   };
 
-  const handleRemoveEmergencyContact = (indexToRemove) => {
+  const handleRemoveContact = (indexToRemove, typeOfContact) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      emergencyContacts: prevFormData.emergencyContacts.filter((_, index) => index !== indexToRemove),
+      contacts: {
+        ...prevFormData.contacts,
+        [typeOfContact]: prevFormData.contacts[typeOfContact].filter((_, index) => index !== indexToRemove),
+      }
     }));
-  }
+  };
+  
+  const handleAddStudentToDB = (event) => {
+      event.preventDefault();
+      console.log(formData);
+      //!could make handleAddStudentToDB and handleEditStudentInDB by checking in backend if ID exists then save the changes if the ID doesn't exist then add the student to DB
+  };
 
-  const handleRemoveParent = (indexToRemove) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      parents: prevFormData.parents.filter((_, index) => index !== indexToRemove),
-    }));
-  }
+  const handleEditStudentInDB = (event) => {
+      event.preventDefault();
+      console.log(formData);
+  };
 
-    const handleAddStudentToDB = (event) => {
-        event.preventDefault();
-        console.log(formData);
-        //!could make handleAddStudentToDB and handleEditStudentInDB by checking in backend if ID exists then save the changes if the ID doesn't exist then add the student to DB
-    };
-
-    const handleEditStudentInDB = (event) => {
-        event.preventDefault();
-        console.log(formData);
-    };
+  const handleRemoveStudentFromDB = () => {
+    //!Logic for removing student in backend from DB
+    //!Should also confirm if this is what user wants to do
+  };
+    
 
 return (
+  <div>
+    <UserAppBar user={'admin'}/>
 <form>
     <Typography variant="h6" gutterBottom m='20px 10px'>
-        {student ? 'Edit Student' : 'Create Student'}
+        {student ? 'Edit or Remove Student' : 'Create Student'}
     </Typography>
+    {student && <StyledButton
+      variant="contained"
+      color="error"
+      onClick={handleRemoveStudentFromDB}
+      sx={{mb: '20px'}}
+    >
+      Remove Student
+    </StyledButton>}
 <Grid container spacing={3}>
 <Grid item xs={12} sm={6}>
   <StyledFormControl>
+  <TextField
+      label="ID"
+      name="id"
+      value={formData.id}
+      onChange={handleInputChange}
+      required
+      InputProps={{
+        readOnly: true,
+      }}
+    />
     <TextField
       label="First Name"
       name="firstName"
@@ -305,46 +339,46 @@ return (
     <StyledButton
       variant="contained"
       color="primary"
-      onClick={handleAddParent}
+      onClick={handleAddGuardian}
     >
-      Add Parent/Carer
+      Add Guardian
     </StyledButton>
-    {formData.parents.map((parent, index) => (
+    {formData.contacts.guardians.map((guardian, index) => (
       <StyledFormControl key={index}>
-        <h4>Parent/Carer {index + 1}</h4>
+        <h4>Guardian {index + 1}</h4>
         <StyledFormControl>
           <StyledFormControl>
             <InputLabel>Title</InputLabel>
             <StyledSelect
               name="title"
-              value={parent.title}
-              onChange={(event) => handleParentInputChange(event, index)}
+              value={guardian.title}
+              onChange={(event) => handleContactInputChange(event, index, 'guardians')}
               required        >
               <MenuItem value="Mr">Mr</MenuItem>
               <MenuItem value="Mrs">Mrs</MenuItem>
               <MenuItem value="Ms">Ms</MenuItem>
               <MenuItem value="Dr">Dr</MenuItem>
             </StyledSelect>
-            <FormHelperText>Select the parent's title</FormHelperText>
+            <FormHelperText>Select the guardian's title</FormHelperText>
           </StyledFormControl>
           <TextField
             label="First Name"
             name="firstName"
-            value={parent.firstName}
-            onChange={(event) => handleParentInputChange(event, index)}
+            value={guardian.firstName}
+            onChange={(event) => handleContactInputChange(event, index, 'guardians')}
             required
           />
           <TextField
             label="Middle Name"
             name="middleName"
-            value={parent.middleName}
-            onChange={(event) => handleParentInputChange(event, index)}
+            value={guardian.middleName}
+            onChange={(event) => handleContactInputChange(event, index, 'guardians')}
           />
           <TextField
             label="Last Name"
             name="lastName"
-            value={parent.lastName}
-            onChange={(event) => handleParentInputChange(event, index)}
+            value={guardian.lastName}
+            onChange={(event) => handleContactInputChange(event, index, 'guardians')}
             required
           />
         </StyledFormControl>
@@ -353,32 +387,32 @@ return (
             label="Email"
             name="email"
             type="email"
-            value={parent.email}
-            onChange={(event) => handleParentInputChange(event, index)}
+            value={guardian.email}
+            onChange={(event) => handleContactInputChange(event, index, 'guardians')}
             required
           />
           <TextField
             label="Mobile Number"
             name="mobileNumber"
             type="tel"
-            value={parent.mobileNumber}
-            onChange={(event) => handleParentInputChange(event, index)}
+            value={guardian.mobileNumber}
+            onChange={(event) => handleContactInputChange(event, index, 'guardians')}
             required
           />
           <TextField
             label="Telephone Number"
             name="telephoneNumber"
             type="tel"
-            value={parent.telephoneNumber}
-            onChange={(event) => handleParentInputChange(event, index)}
+            value={guardian.telephoneNumber}
+            onChange={(event) => handleContactInputChange(event, index, 'guardians')}
           />
           <TextField
             label="Address"
             name="address"
             multiline
             rows={4}
-            value={parent.address}
-            onChange={(event) => handleParentInputChange(event, index)}
+            value={guardian.address}
+            onChange={(event) => handleContactInputChange(event, index, 'guardians')}
             required
           />
 
@@ -386,8 +420,8 @@ return (
 <InputLabel>Relation to Student</InputLabel>
 <StyledSelect
 name="relationToChild"
-value={parent.relationToChild}
-onChange={(event) => handleParentInputChange(event, index)}
+value={guardian.relationToChild}
+onChange={(event) => handleContactInputChange(event, index, 'guardians')}
 required
 >
 
@@ -402,8 +436,8 @@ required
 <FormControlLabel
   control={
     <Checkbox
-      checked={parent.firstLineOfContact}
-      onChange={(event) => handleParentFirstLineOfContactChange(event, index)}
+      checked={guardian.firstLineOfContact}
+      onChange={(event) => handleGuardianFirstLineOfContactChange(event, index)}
       name="firstLineOfContact"
       color="primary"
     />
@@ -412,7 +446,7 @@ required
 />
 
     <IconButton
-    onClick={() => handleRemoveParent(index)}
+    onClick={() => handleRemoveContact(index, 'guardians')}
     aria-label="remove parent"
     >
     <DeleteIcon />
@@ -429,33 +463,33 @@ required
 >
   Add Emergency Contact
 </StyledButton>
-{formData.emergencyContacts.map((contact, index) => (
+{formData.contacts.emergencyContacts.map((contact, index) => (
   <div key={index}>
     <h4>Emergency Contact {index + 1}</h4>
     <TextField
       label="Name"
       name="name"
       value={contact.name}
-      onChange={(event) => handleEmergencyContactInputChange(event, index)}
+      onChange={(event) => handleContactInputChange(event, index, 'emergencyContacts')}
       required
     />
     <TextField
       label="Relationship"
       name="relationship"
       value={contact.relationship}
-      onChange={(event) => handleEmergencyContactInputChange(event, index)}
+      onChange={(event) => handleContactInputChange(event, index, 'emergencyContacts')}
       required
     />
     <TextField
       label="Telephone Number"
       name="telephoneNumber"
       value={contact.telephoneNumber}
-      onChange={(event) => handleEmergencyContactInputChange(event, index)}
+      onChange={(event) => handleContactInputChange(event, index, 'emergencyContacts')}
       required
     />
 
 <IconButton
-    onClick={() => handleRemoveEmergencyContact(index)}
+    onClick={() => handleRemoveContact(index, 'emergencyContacts')}
     aria-label="remove emergency contact"
     >
     <DeleteIcon />
@@ -487,30 +521,9 @@ required
   </Grid>
   </Grid>
 </form>
+</div>
 );
 };
 
 
 export default AddStudent
-
-/* 
-sampleData = {
-    id: generate ID,
-    user: student,
-    Parent/Carer: {id: generate ID, user: parent, parent of: ID of child, title, fname, mname, lname, email, Phone no., Mobile no., address},
-    first line of contact: ,
-    fname: ,
-    mname: ,
-    lname: ,
-    join date: ,
-    formId: ,
-    leave date: ,
-    status: ,
-    year group : ,
-    email: ,
-    password: ,
-    DOB: ,
-    student image ,
-    address: ,
-}
-*/

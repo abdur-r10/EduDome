@@ -23,6 +23,72 @@ const AddStaff = () => {
   const staff = location.state ? location.state.staff : null
   
   console.log(staff)
+  //! use useEffect to make call to get room data and somehow cache it 
+  const [roomData, setRoomData] = useState([
+    {id: 'F1', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F2', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F3', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F4', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F5', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F6', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F7', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F8', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F9', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F10', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S1', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S2', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S3', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S4', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S5', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S6', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S7', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S8', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S9', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S10', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T1', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T2', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T3', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T4', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T5', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T6', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T7', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T8', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T9', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T10', maxCapacity: '30', type: 'Classroom'}
+  ])
+
+  /* sampleRoomData = [
+    {id: 'F1', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F2', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F3', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F4', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F5', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F6', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F7', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F8', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F9', maxCapacity: '30', type: 'Classroom'},
+    {id: 'F10', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S1', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S2', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S3', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S4', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S5', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S6', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S7', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S8', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S9', maxCapacity: '30', type: 'Classroom'},
+    {id: 'S10', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T1', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T2', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T3', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T4', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T5', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T6', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T7', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T8', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T9', maxCapacity: '30', type: 'Classroom'},
+    {id: 'T10', maxCapacity: '30', type: 'Classroom'}
+  ] */
 
   const [formData, setFormData] = useState({
     id: staff ? staff.id : generateId('staff'),
@@ -40,6 +106,7 @@ const AddStaff = () => {
     staffImage: staff ? staff.title : null,
     staffEmail: staff ? staff.title : "",
     password: staff ? staff.title : "",
+    assignedToRoom: staff ? staff.assignedToRoom : ''
   });
 
   const handleInputChange = (event) => {
@@ -73,11 +140,30 @@ const AddStaff = () => {
     // TODO: handle form submission logic here (make api call to edit staff in DB)
   };
 
+  const handleRemoveStaffFromDB = () => {
+    //!Logic for removing student in backend from DB
+    //!Should also confirm if this is what user wants to do
+  };
+
+
+  const selectRoom = roomData.map((room) => {
+    return(
+      <MenuItem key={room.id} value={room.id}>{room.id}</MenuItem>
+    )
+  })
+
   return (
     <div>
     <UserAppBar user={'admin'} />
 
-    
+    {staff && <Button
+      variant="contained"
+      color="error"
+      onClick={handleRemoveStaffFromDB}
+      sx={{mb: '20px'}}
+    >
+      Remove Staff
+    </Button>}
     <form>
       <Typography variant="h6" gutterBottom m='20px 10px'>
         {staff ? 'Edit Staff' : 'Create Staff'}
@@ -87,6 +173,7 @@ const AddStaff = () => {
           <FormControl >
             <InputLabel id="title-label">Title</InputLabel>
             <Select
+              required
               labelId="title-label"
               id="title"
               name="title"
@@ -259,6 +346,21 @@ const AddStaff = () => {
                     Generate Password
                   </Button>
                 </Grid>
+
+                <Grid item xs={2} sm={2}>
+                <InputLabel id="assign-a-room-label">Assign A Room</InputLabel>
+                <Select
+                  labelId="assign-a-room-label"
+                  id="assignedToRoom"
+                  name="assignedToRoom"
+                  style={{minWidth: 120}}
+                  value={formData.assignedToRoom}
+                  onChange={handleInputChange}
+                >
+                  {selectRoom}
+                </Select>
+                </Grid>
+
                 <Grid item xs={12}>
                   <TextField
                     id="schoolAddress"

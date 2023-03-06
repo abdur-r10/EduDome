@@ -11,7 +11,56 @@ const EditStudent = () => {
   const navigate = useNavigate()
 
 
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState([{
+    id: 1,
+    firstName:  "Abz",
+    middleName: "Abdi",
+    lastName: "Abdi",
+    joinDate: '2023-10-01',
+    yearGroup: 7,
+    email: "something@hotmail.com",
+    password: "9PLAced",
+    dateOfBirth: "2001-01-01",
+    address: "3 something Road",
+    studentImage: null,
+    contacts: {guardians: [
+      {
+        id: 'G67hlp8',
+        title: "Mr",
+        firstName: "A",
+        middleName: "A",
+        lastName: "A",
+        relationToChild: "Father",
+        email: "a@hotmail.com",
+        telephoneNumber: "911",
+        mobileNumber: "911",
+        address: "3 something Road",
+        firstLineOfContact: true
+      },
+      {
+        id: 'G40pp5o',
+        title: "Mrs",
+        firstName: "B",
+        middleName: "B",
+        lastName: "B",
+        relationToChild: "Mother",
+        email: "b@hotmail.com",
+        telephoneNumber: "911",
+        mobileNumber: "911",
+        address: "3 something Road",
+        firstLineOfContact: false
+      }
+    ]
+    ,
+    emergencyContacts: [
+      {
+        name: "Random Person",
+        relationship: "Aunty",
+        telephoneNumber: "911"
+      }
+    ]
+    }
+    }]);
   /*
   sampleResults = [{
     id: 1,
@@ -25,7 +74,7 @@ const EditStudent = () => {
     dateOfBirth: "2001-01-01",
     address: "3 something Road",
     studentImage: null,
-    parents: [
+    contacts: {guardians: [
       {
         title: "Mr",
         firstName: "A",
@@ -50,7 +99,8 @@ const EditStudent = () => {
         address: "3 something Road",
         firstLineOfContact: false
       }
-    ],
+    ]
+    ,
     emergencyContacts: [
       {
         name: "Random Person",
@@ -58,7 +108,7 @@ const EditStudent = () => {
         telephoneNumber: "911"
       }
     ]
-    }]
+    }
   */
 
   const handleSearch = (searchQuery) => {
