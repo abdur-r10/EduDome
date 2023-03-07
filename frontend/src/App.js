@@ -3,16 +3,17 @@ import { Suspense, lazy } from 'react'
 import { Box } from '@mui/material'
 import LogInPage from './pages/LogInPage';
 import Loading from './components/Loading';
-import AddStaff from './pages/For_Admin/AddStaff';
-import AddStudent from './pages/For_Admin/AddStudent';
-import EditStudent from './pages/For_Admin/EditStudent';
-import EditStaff from './pages/For_Admin/EditStaff';
-import AddRoom from './pages/For_Admin/AddRoom';
-import EditRoom from './pages/For_Admin/EditRoom';
+
 
 const AdminUI = lazy(() => import ('./UIs/AdminUI'));
 const TeacherUI = lazy(() => import('./UIs/TeacherUI'));
 const StudentUI = lazy(() => import('./UIs/StudentUI'));
+const AddStaff = lazy(() => import('./pages/For_Admin/AddStaff'));
+const EditStaff = lazy(() => import('./pages/For_Admin/EditStaff'));
+const AddStudent = lazy(() => import('./pages/For_Admin/AddStudent'));
+const EditStudent = lazy(() => import('./pages/For_Admin/EditStudent'));
+const AddRoom = lazy(() => import('./pages/For_Admin/AddRoom'));
+const EditRoom = lazy(() => import('./pages/For_Admin/EditRoom'));
 
 /* 
 sampleData = {

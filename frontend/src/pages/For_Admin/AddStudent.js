@@ -336,12 +336,23 @@ return (
 
   <Grid item xs={12} sm={6}>
   <StyledFormControl>
+    {/!* WORKING ON THIS */}
     <StyledButton
       variant="contained"
       color="primary"
       onClick={handleAddGuardian}
     >
-      Add Guardian
+      Add Existing Guardian
+    </StyledButton>
+    {/!* WORKING ON THIS */}
+
+
+    <StyledButton
+      variant="contained"
+      color="primary"
+      onClick={handleAddGuardian}
+    >
+      Add New Guardian
     </StyledButton>
     {formData.contacts.guardians.map((guardian, index) => (
       <StyledFormControl key={index}>
