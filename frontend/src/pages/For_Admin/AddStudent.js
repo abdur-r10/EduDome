@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {useLocation} from 'react-router-dom';
 import { generateId } from "../../utils/generateUUID";
 import UserAppBar from "../../components/UserAppBar";
+import GuardianSearchPopUp from "../../components/GuardianSearchPopUp";
 
 
 const StyledFormControl = styled(FormControl)({
@@ -26,6 +27,24 @@ const StyledFormControl = styled(FormControl)({
 const AddStudent= () => {
     const location = useLocation();
     const student = location.state ? location.state.student : null
+    const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+    const [selectedParent, setSelectedGuardian] = useState(null);
+
+    const handlePopUpOpen = () => {
+      setIsPopUpVisible(true);
+    };
+
+    const handlePopUpClose = () => {
+      setIsPopUpVisible(false);
+    };
+
+    const handleGuardianSelect = (guardian) => {
+      setSelectedGuardian(guardian);
+      setIsPopUpVisible(false);
+      // TODO: Do something with selected parent data
+      handleAddGuardian(guardian)
+      console.log(guardian)
+    };
 
     //console.log(student)
 
@@ -40,6 +59,7 @@ const AddStudent= () => {
     email: student ? student.email: "",
     password: student ? student.password: "",
     dateOfBirth: student ? student.dateOfBirth: "",
+    postcode: student ? student.postcode : "",
     address: student ? student.address: "",
     studentImage: student ? student.studentImage: null,
     contacts: student ? student.contacts : {guardians: [], emergencyContacts: []}
@@ -102,22 +122,23 @@ const AddStudent= () => {
     });
   };
 
-  const handleAddGuardian = () => {
+  const handleAddGuardian = (guardian) => {
     setFormData((prevFormData) => {
       const newGuardian = [
         ...prevFormData.contacts.guardians,
         {
-          id: generateId('guardian'),  
-          title: "",
-          firstName: "",
-          middleName: "",
-          lastName: "",
-          relationToChild: "",
-          email: "",
-          telephoneNumber: "",
-          mobileNumber: "",
-          address: formData.address,
-          firstLineOfContact: false
+          id: guardian ? guardian.id : generateId('guardian'),  
+          title: guardian ? guardian.title : "",
+          firstName: guardian ? guardian.firstName : "",
+          middleName: guardian ? guardian.middleName : "",
+          lastName: guardian ? guardian.lastName : "",
+          relationToChild: guardian ? guardian.relationToChild : "",
+          email: guardian ? guardian.email : "",
+          telephoneNumber: guardian ? guardian.telephoneNumber : "",
+          mobileNumber: guardian ? guardian.mobileNumber : "",
+          postcode: guardian ? guardian.postcode : formData.postcode,
+          address: guardian ? guardian.address : formData.address,
+          firstLineOfContact: guardian ? guardian.firstLineOfContact : false
         }
       ]
 
@@ -307,6 +328,14 @@ return (
       required
     />
     <TextField
+      label="Postcode"
+      name="postcode"
+      rows={4}
+      value={formData.postcode}
+      onChange={handleInputChange}
+      required
+    />
+    <TextField
       label="Address"
       name="address"
       multiline
@@ -336,15 +365,25 @@ return (
 
   <Grid item xs={12} sm={6}>
   <StyledFormControl>
-    {/!* WORKING ON THIS */}
     <StyledButton
       variant="contained"
       color="primary"
-      onClick={handleAddGuardian}
+      onClick={handlePopUpOpen}
     >
       Add Existing Guardian
     </StyledButton>
-    {/!* WORKING ON THIS */}
+
+    {isPopUpVisible && (
+        <div>
+          <Button onClick={handlePopUpClose}>Close Pop-Up</Button>
+          <GuardianSearchPopUp onGuardianSelect={handleGuardianSelect} />
+        </div>
+      )}
+      {selectedParent && (
+        <div>
+          {/* Display selected parent data */}
+        </div>
+      )}
 
 
     <StyledButton
@@ -416,6 +455,14 @@ return (
             type="tel"
             value={guardian.telephoneNumber}
             onChange={(event) => handleContactInputChange(event, index, 'guardians')}
+          />
+          <TextField
+            label="Postcode"
+            name="postcode"
+            rows={4}
+            value={guardian.postcode}
+            onChange={(event) => handleContactInputChange(event, index, 'guardians')}
+            required
           />
           <TextField
             label="Address"

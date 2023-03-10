@@ -98,6 +98,7 @@ const AddStaff = () => {
     lastName: staff ? staff.lastName : "",
     mobileNumber: staff ? staff.mobileNumber : "",
     telephoneNumber: staff ? staff.telephoneNumber : "",
+    postcode: staff ? staff.postcode : "",
     address: staff ? staff.address : "",
     email: staff ? staff.email : "",
     emergencyContactName: staff ? staff.emergencyContactName : "",
@@ -130,7 +131,7 @@ const AddStaff = () => {
     console.log(formData)
     // TODO: handle form submission logic here (make api call to create staff in DB)
     // TODO: make sure it checks first if the staff email address already exists
-    //if chnages are made it should save them think of that logic
+    //if chnages are made it should save them (think of that logic)
     //!could make handleAddStaffToDB and handleEditStaffInDB by checking in backend if ID exists then save the changes if the ID doesn't exist then add the staff to DB
   };
 
@@ -242,195 +243,184 @@ const AddStaff = () => {
             onChange={handleInputChange}
           />
         </Grid>
-        <Grid item xs={12}>
-                  <TextField
-                    required
-                    id="address"
-                    name="address"
-                    label="Address"
-                    fullWidth
-                    value={formData.address}
-                    onChange={handleInputChange}
-                  />
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="postcode"
+            name="postcode"
+            label="Postcode"
+            fullWidth
+            value={formData.postcode}
+            onChange={handleInputChange}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-                    required
-                    id="email"
-                    name="email"
-                    label="Email"
-                    fullWidth
-                    value={formData.email}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    id="emergencyContactName"
-                    name="emergencyContactName"
-                    label="Emergency contact name"
-                    fullWidth
-                    value={formData.emergencyContactName}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    id="emergencyContactNumber"
-                    name="emergencyContactNumber"
-                    label="Emergency contact number"
-                    fullWidth
-                    value={formData.emergencyContactNumber}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    id="emergencyContactAddress"
-                    name="emergencyContactAddress"
-                    label="Emergency contact address"
-                    fullWidth
-                    value={formData.emergencyContactAddress}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="staffImage"
-                    name="staffImage"
-                    label="Staff image"
-                    type="file"
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    onChange={(event) =>
-                      setFormData((prevFormData) => ({
-                        ...prevFormData,
-                        staffImage: event.target.files[0],
-                      }))
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    id="staffEmail"
-                    name="staffEmail"
-                    label="Staff email"
-                    fullWidth
-                    value={formData.staffEmail}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="password"
-                    name="password"
-                    label="Password"
-                    fullWidth
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handlePasswordGeneration}
-                  >
-                    Generate Password
-                  </Button>
-                </Grid>
+            required
+            id="address"
+            name="address"
+            label="Address"
+            fullWidth
+            value={formData.address}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="email"
+            name="email"
+            label="Email"
+            fullWidth
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="emergencyContactName"
+            name="emergencyContactName"
+            label="Emergency contact name"
+            fullWidth
+            value={formData.emergencyContactName}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="emergencyContactNumber"
+            name="emergencyContactNumber"
+            label="Emergency contact number"
+            fullWidth
+            value={formData.emergencyContactNumber}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="emergencyContactAddress"
+            name="emergencyContactAddress"
+            label="Emergency contact address"
+            fullWidth
+            value={formData.emergencyContactAddress}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            id="staffImage"
+            name="staffImage"
+            label="Staff image"
+            type="file"
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(event) =>
+              setFormData((prevFormData) => ({
+                ...prevFormData,
+                staffImage: event.target.files[0],
+              }))
+            }
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="staffEmail"
+            name="staffEmail"
+            label="Staff email"
+            fullWidth
+            value={formData.staffEmail}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="password"
+            name="password"
+            label="Password"
+            fullWidth
+            value={formData.password}
+            onChange={handleInputChange}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handlePasswordGeneration}
+          >
+            Generate Password
+          </Button>
+        </Grid>
 
-                <Grid item xs={2} sm={2}>
-                <InputLabel id="assign-a-room-label">Assign A Room</InputLabel>
-                <Select
-                  labelId="assign-a-room-label"
-                  id="assignedToRoom"
-                  name="assignedToRoom"
-                  style={{minWidth: 120}}
-                  value={formData.assignedToRoom}
-                  onChange={handleInputChange}
-                >
-                  {selectRoom}
-                </Select>
-                </Grid>
+        <Grid item xs={2} sm={2}>
+        <InputLabel id="assign-a-room-label">Assign A Room</InputLabel>
+        <Select
+          labelId="assign-a-room-label"
+          id="assignedToRoom"
+          name="assignedToRoom"
+          style={{minWidth: 120}}
+          value={formData.assignedToRoom}
+          onChange={handleInputChange}
+        >
+          {selectRoom}
+        </Select>
+        </Grid>
 
-                <Grid item xs={12}>
-                  <TextField
-                    id="schoolAddress"
-                    name="schoolAddress"
-                    label="School Address"
-                    fullWidth
-                    value={schoolAddress}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="schoolNumber"
-                    name="schoolNumber"
-                    label="School Number"
-                    fullWidth
-                    value={schoolNumber}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  {staff ?
-                   <Button
-                   type="submit"
-                   variant="contained"
-                   color="primary"
-                   onClick={(e) => handleEditStaffInDB(e)}
-                 >
-                   Save changes
-                 </Button>
-                   : <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    onClick={(e) => handleAddStaffToDB(e)}
-                  >
-                    Add Staff
-                  </Button>}
-                </Grid>
-              </Grid>
-            </form>
-            </div>
-          );
-        };
+        <Grid item xs={12}>
+          <TextField
+            id="schoolAddress"
+            name="schoolAddress"
+            label="School Address"
+            fullWidth
+            value={schoolAddress}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            id="schoolNumber"
+            name="schoolNumber"
+            label="School Number"
+            fullWidth
+            value={schoolNumber}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          {staff ?
+            <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={(e) => handleEditStaffInDB(e)}
+          >
+            Save changes
+          </Button>
+            : <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={(e) => handleAddStaffToDB(e)}
+          >
+            Add Staff
+          </Button>}
+        </Grid>
+      </Grid>
+    </form>
+  </div>
+  );
+};
         
-        export default AddStaff;
+export default AddStaff;
         
-
-
-/*
-sampleTeacherData = {
-    id: default,
-    user: teacher,
-    formID: from list of form classes,
-    Subjects Taugh: from list of subjects,
-    Level: gcse, a-level, both,
-    Classroom: n/a or from list of rooms,
-    Classes Taught: from list of classes,
-    Role: subject/suply,
-}
-*/
-
-/* 
-sampleAdminData = {
-    id: default,
-    user: admin,
-    role: register/notifications/fees/data etc
-}
-*/

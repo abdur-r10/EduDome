@@ -11,7 +11,25 @@ const EditStaff = () => {
   const navigate = useNavigate()
 
 
-  const [results, setResults] = useState([])
+  const [results, setResults] = useState([{
+    id: 1,
+    title: "Mr",
+    firstName: "Abz",
+    middleName: "Zilla",
+    lastName: "Killa",
+    mobileNumber: "911",
+    telephoneNumber: "119",
+    postcode: 'CD34EF',
+    address: "64 Zoo Lane",
+    email: "a@hotmail.com",
+    emergencyContactName: "Billy Boi",
+    emergencyContactNumber: "911",
+    emergencyContactAddress: "50 zoo lane",
+    staffImage: null,
+    staffEmail: "ZillaA@hotmail.com",
+    password: "123aBCd",
+    assignedToRoom: 'S5'
+    }])
 
   /** sampleResults = [{
     id: 1,
@@ -21,6 +39,7 @@ const EditStaff = () => {
     lastName: "Killa",
     mobileNumber: "911",
     telephoneNumber: "119",
+    postcode: 'CD34EF',
     address: "64 Zoo Lane",
     email: "a@hotmail.com",
     emergencyContactName: "Billy Boi",
