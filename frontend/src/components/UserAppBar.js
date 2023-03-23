@@ -5,15 +5,23 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useLocation, useNavigate } from 'react-router-dom';
-import  { adminMenuOptions }  from '../utils/menuOptions';
+import  { adminMenuOptions, teacherMenuOptions, guardianMenuOptions, studentMenuOptions }  from '../utils/menuOptions';
 
 
 
 const UserAppBar = ({ user }) => {
+
+  const menuOptions = {
+    admin: adminMenuOptions,
+    teacher: teacherMenuOptions,
+    guardian: guardianMenuOptions,
+    student: studentMenuOptions
+  }
+
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const [hamburgerAnchorEl, setHamburgerAnchorEl] = useState(null);
-  const [nestedMenuStates, setNestedMenuStates] = useState(new Array(adminMenuOptions.length).fill(false));
+  const [nestedMenuStates, setNestedMenuStates] = useState(new Array(menuOptions[user].length).fill(false));
 
 
   const location = useLocation();
@@ -49,15 +57,15 @@ const UserAppBar = ({ user }) => {
 
   
 
+//show menu everywhere apart from admin dashboard
+  const showMenu = (location.pathname !== '/admin/dashboard') && (user === 'admin' || 'teacher' || 'guardian' || 'student');
 
-  const showMenu = location.pathname !== '/admin/dashboard' && user === 'admin';
-
-  const displayMenuItems = adminMenuOptions.map(({ key, name, link, options }, index) => {
+  const displayMenuItems = menuOptions[user].map(({ key, name, link, options }, index) => {
   const showNestedMenu = nestedMenuStates[index];
-  if (link === '/admin/dashboard') { // if Back to Dashboard link
+  if (options === undefined) { // if no options (don't want nested)
     return (
       <div key={key}>
-        <ListItem button component="a" href={link} onClick={handleMenuClose}>
+        <ListItem component="a" href={link} onClick={handleMenuClose} style={{ color: 'black' }}>
           {name}
         </ListItem>
       </div>
@@ -65,17 +73,18 @@ const UserAppBar = ({ user }) => {
   } else { // if other links with nested options
     return (
       <div key={key}>
-        <ListItem button onClick={() => handleClick(index)} style={{ paddingLeft: '2rem' }}>
+        <ListItem button onClick={() => handleClick(index)} style={{ paddingLeft: '2rem', color: 'black' }}>
           {name}
           {showNestedMenu ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </ListItem>
+         
         <Collapse in={showNestedMenu} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {options.map(({ name: optionName, link: optionLink }) => {
               if (options) {
                 if(location.pathname !== optionLink){ //show links to all pages apart from current page
                   return (
-                    <MenuItem key={optionLink} component="a" href={optionLink} onClick={handleMenuClose} style={{ paddingLeft: '2rem', backgroundColor: 'lightgray', fontWeight: 'bold' }}>
+                    <MenuItem key={optionLink} component="a" href={optionLink} onClick={handleMenuClose} style={{ paddingLeft: '2rem', backgroundColor: 'lightgray', fontWeight: 'bold', color: 'black'}}>
                       {optionName}
                     </MenuItem>
                   );
@@ -88,6 +97,7 @@ const UserAppBar = ({ user }) => {
             })}
           </List>
         </Collapse>
+
       </div>
     );
   }

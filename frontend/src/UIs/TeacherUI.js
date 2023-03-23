@@ -8,6 +8,7 @@ import NotificationCentre from '../components/NotificationCenter'
 import FormApBp from '../components/FormApBp'
 import FormAttenPunct from '../components/FormAttenPunct'
 import TeacherSchedule from '../components/TeacherSchedule'
+import UserAppBar from '../components/UserAppBar';
 
 export default function TeacherUI() {
   //-----------------------STATE FOR POPUPS---------------
@@ -38,10 +39,11 @@ export default function TeacherUI() {
 
   return (
   <Grid container spacing={2} minWidth='1445px'>
+    <UserAppBar user={'teacher'}/>
 
     {/**----------------------------------------------------------SCHEDULE------------------------------------------------------------ */}
     <Grid item xs={6} container sx={{ justifyContent: 'center', alignItems: 'center' }}>
-      <Box sx={{ border: '5px solid black', padding: '8px', borderRadius: '4px', overflow: 'auto', resize: 'vertical', height: '600px', maxHeight: '970px', width: '722px' }}>
+      <Box sx={{ border: '5px solid black', padding: '8px', borderRadius: '4px', overflow: 'auto', resize: 'vertical', height: '600px', minHeight: '600px', maxHeight: '970px', width: '722px' }}>
         <TeacherSchedule />
       </Box>
     </Grid>
@@ -49,7 +51,7 @@ export default function TeacherUI() {
     {/**---------------------------------------------------NOTIFICATION AND FORM STATS----------------------------------------------------- */}
 
     <Grid item xs={6} container sx={{ justifyContent: 'center', alignItems: 'center' }}>
-      <Box sx={{ border: '5px solid black', padding: '8px', borderRadius: '4px', overflow: 'auto', resize: 'vertical', height: '600px', maxHeight: '970px', width: '722px'}}>
+      <Box sx={{ border: '5px solid black', padding: '8px', borderRadius: '4px', overflow: 'auto', resize: 'vertical', height: '600px', minHeight: '600px', maxHeight: '970px', width: '722px'}}>
         <Button variant="contained" onClick={handleNotificationPopupToggle}><OpenInFullIcon/></Button>
           <NotificationCentre popup={false}/>
           <br />

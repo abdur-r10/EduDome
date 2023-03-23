@@ -8,5 +8,19 @@ export const adminMenuOptions = [
     {key: 7, name: 'Create/Edit Schedules', colour: '#1b5e20', link: '/edit-schedules', componentName: 'EditSchedules', options: [{name: 'Create Classes', link:'/createClasses'}, {name: 'Edit Classes', link:'/editClasses'}, {name: 'Create Timetables', link:'/createTimetables'}, {name: 'Edit Timetables', link: '/editTimetables'}] },
     {key: 8, name: 'Add/Remove/Edit Room', colour: '#e65100', link: '/edit-room-info', componentName: 'EditRoomInfo', options: [{name: 'Add Room', link:'/addRoom'}, {name: 'Edit or Remove Room', link:'/editRoom'}] },  
     {key: 9, name: 'Back To Dashboard', colour: '#1b5e20', link: '/admin/dashboard', componentName: 'AdminUI' }
-  ]
+]
+
+export const teacherMenuOptions = [
+    {key: 1, name: 'Request to create notification', colour: '#1b5e20', link: '/request-to-create-notification', componentName: 'RequestToCreateNotification'},
+    {key: 2, name: 'Request to message Guardians', colour: '#e65100', link: '/request-to-message-guardians', componentName: 'RequestToMessageGuardians'},
+    {key: 3, name: 'Search For Teacher', colour: '#1b5e20', link: '/search-for-teacher', componentName: 'SearchForTeacher'},
+    {key: 4, name: 'Search For Student', colour: '#1b5e20', link: '/search-for-sudent', componentName: 'SearchForSudent'},
+    {key: 5, name: 'Parents Evening Schedule', colour: '#1b5e20', link: '/parents-evening-schedule', componentName: 'ParentsEveningSchedule'},
+    {key: 6, name: 'Back To Dashboard', colour: '#1b5e20', link: '/teacher/dashboard', componentName: 'TeacherUi' }
+]
+
+
+export const guardianMenuOptions = []
+
+export const studentMenuOptions = []
 
