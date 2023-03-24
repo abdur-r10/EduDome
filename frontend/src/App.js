@@ -14,6 +14,8 @@ const AddStudent = lazy(() => import('./pages/For_Admin/AddStudent'));
 const EditStudent = lazy(() => import('./pages/For_Admin/EditStudent'));
 const AddRoom = lazy(() => import('./pages/For_Admin/AddRoom'));
 const EditRoom = lazy(() => import('./pages/For_Admin/EditRoom'));
+const CreateNotification = lazy(() => import('./pages/For_Teacher/CreateNotification'))
+const MessageGuardian = lazy(() => import('./pages/For_Teacher/MessageGuardian'))
 
 /* 
 sampleData = {
@@ -49,11 +51,12 @@ function App() {
             <Route path='/editStudent' element={<EditStudent />}/>
             <Route path='/addRoom' element={<AddRoom />}/>
             <Route path='/editRoom' element={<EditRoom />}/>
+            <Route path='/request-to-create-notification' element={<CreateNotification />}/>
+            <Route path='/request-to-message-guardian' element={<MessageGuardian />}/>
           </Routes>
         </Suspense>
       </BrowserRouter>
     </Box>
-    
   );
 }
 

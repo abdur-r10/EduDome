@@ -10,6 +10,9 @@ import FormAttenPunct from '../components/FormAttenPunct'
 import TeacherSchedule from '../components/TeacherSchedule'
 import UserAppBar from '../components/UserAppBar';
 
+
+//! Make API Call to get Homework, Detention, Form AP/BP, Form Atten/Punct, Notifications, timetable
+
 export default function TeacherUI() {
   //-----------------------STATE FOR POPUPS---------------
   const [notificationPopupOpen, setNotificationPopupOpen] = useState(false);
