@@ -11,7 +11,7 @@ export const adminMenuOptions = [
 ]
 
 export const teacherMenuOptions = [
-    {key: 1, name: 'Create notification', colour: '#1b5e20', link: '/request-to-create-notification', componentName: 'CreateNotification'},
+    {key: 1, name: 'Create and track notifications', colour: '#1b5e20', link: '/create-and-track-notifications', componentName: 'CreateAndTrackNotifications'},
     {key: 2, name: 'Send Message To Guardian', colour: '#e65100', link: '/request-to-message-guardian', componentName: 'MessageGuardian'},
     {key: 3, name: 'Search For Teacher', colour: '#1b5e20', link: '/search-for-teacher', componentName: 'SearchForTeacher'},
     {key: 4, name: 'Search For Student', colour: '#1b5e20', link: '/search-for-sudent', componentName: 'SearchForSudent'},

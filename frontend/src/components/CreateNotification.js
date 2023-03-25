@@ -2,27 +2,47 @@ import React, { useState } from 'react'
 import { Grid, Box, Button, InputLabel, TextareaAutosize, TextField, Checkbox, FormHelperText, FormControlLabel, FormLabel, FormGroup, FormControl, Select, MenuItem } from '@mui/material'
 
 const sampleTeacherData = ['teacher1', 'teacher2', 'teacher3']
-const sampleStudentData = ['class1', 'class2', 'class3']
+const sampleClassData = ['class1', 'class2', 'class3']
 
 const CreateNotification = () => {
-  const [dateToActivate, setDateToActivate] = useState('');
+    const [dateToActivate, setDateToActivate] = useState('');
   const [dateToDelete, setDateToDelete] = useState('');
-  const [teachers, setTeachers] = useState({
-    teacher1: false,
-    teacher2: false,
-    teacher3: false,
-  });
-  const [classes, setClasses] = useState({
-    class1: false,
-    class2: false,
-    class3: false,
-  });
+  const [teachers, setTeachers] = useState(
+    sampleTeacherData.reduce((acc, curr) => {
+    acc[curr] = false;
+    return acc;
+  }, {})
+  );
+
+  const [classes, setClasses] = useState(
+    sampleClassData.reduce((acc, curr) => {
+    acc[curr] = false;
+    return acc;
+  }, {})
+  );
+
   const [severity, setSeverity] = useState('');
   const [message, setMessage] = React.useState('');
 
+  function getTomorrowDate() {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow.toISOString().slice(0, 10);
+  }
+  
+  function getThreeDaysFromDateToActivate(date) {
+    const currentDay = new Date(date);
+    const nextDay = new Date(currentDay);
+    nextDay.setDate(nextDay.getDate() + 3);
+    return nextDay.toISOString().slice(0, 10);
+  }
 
   const handleDateToActivateChange = (event) => {
-    setDateToActivate(event.target.value);
+    const selectedDate = event.target.value;
+    setDateToActivate(selectedDate);
+    const nextDay = getThreeDaysFromDateToActivate(selectedDate);
+    setDateToDelete(nextDay);
   };
   
   const handleDateToDeleteChange = (event) => {
@@ -50,16 +70,38 @@ const CreateNotification = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log({
+      dateToActivate,
+      dateToDelete,
+      teachers,
+      classes,
+      severity,
+      message
+    })
     // handle form submission logic here
   };
 
+  const displayTeacherOptions = sampleTeacherData.map((item) => 
+  <FormControlLabel
+    key={item}
+    control={<Checkbox checked={teachers.item} onChange={handleTeacherChange} name={item} />}
+    label={item}
+  />
+  )
+
+  const displayClassOptions = sampleClassData.map((item) => 
+  <FormControlLabel
+    key={item}
+    control={<Checkbox checked={classes.item} onChange={handleClassChange} name={item} />}
+    label={item}
+  />
+  )
 
   return (
-  <Grid container spacing={2}>
-  <Grid item xs={6}>
-    <Box>
+    <Box width='98%'>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
+          {/** DATE TO ACTIVATE INPUT */}
           <Grid item xs={12} sm={6}>
             <TextField
               id="dateToActivate"
@@ -70,10 +112,15 @@ const CreateNotification = () => {
               InputLabelProps={{
                 shrink: true,
               }}
+              inputProps={{
+                min: new Date().toISOString().slice(0, 10), //minimum is set to tomorrows date
+              }}
               fullWidth
               required
             />
           </Grid>
+
+          {/** DATE TO DELETE INPUT */}
           <Grid item xs={12} sm={6}>
             <TextField
               id="dateToDelete"
@@ -84,72 +131,74 @@ const CreateNotification = () => {
               InputLabelProps={{
                 shrink: true,
               }}
+              inputProps={{
+                min: dateToActivate ? getThreeDaysFromDateToActivate(dateToActivate) : getTomorrowDate(), // set the min date to the next day of dateToActivate if it has been selected, otherwise set it to tomorrow's date
+              }}
               fullWidth
               required
             />
           </Grid>
 
+          {/** TEACHERS AND CLASSES CHECKBOX SELECT */}
           <Grid item xs={12} sm={6}>
-            <FormControl component="fieldset" className={classes.formControl}>
+            <FormControl component="fieldset" className={classes.formControl} required>
               <FormLabel component="legend">To</FormLabel>
               <Grid container spacing={2} alignItems="center">
                 <Grid item>
                   <FormGroup>
                     <FormHelperText>Select Teacher(s)</FormHelperText>
-                    <FormControlLabel
-                      control={<Checkbox checked={teachers.teacher1} onChange={handleTeacherChange} name="teacher1" />}
-                      label="Teacher 1"
-                    />
-                    <FormControlLabel
-                      control={<Checkbox checked={teachers.teacher2} onChange={handleTeacherChange} name="teacher2" />}
-                      label="Teacher 2"
-                    />
-                    <FormControlLabel
-                      control={<Checkbox checked={teachers.teacher3} onChange={handleTeacherChange} name="teacher3" />}
-                      label="Teacher 3"
-                    />
+                    {displayTeacherOptions}
                   </FormGroup>
                 </Grid>
                 <Grid item>
                   <FormGroup>
                     <FormHelperText>Select Class(es)</FormHelperText>
-                    <FormControlLabel
-                      control={<Checkbox checked={classes.class1} onChange={handleClassChange} name="class1" />}
-                      label="Class 1"
-                    />
-                    <FormControlLabel
-                      control={<Checkbox checked={classes.class2} onChange={handleClassChange} name="class2" />}
-                      label="Class 2"
-                    />
-                    <FormControlLabel
-                      control={<Checkbox checked={classes.class3} onChange={handleClassChange} name="class3" />}
-                      label="Class 3"
-                    />
+                    {displayClassOptions}
                   </FormGroup>
                 </Grid>
               </Grid>
             </FormControl>
           </Grid>
-
+          
+          {/** SEVERITY DROP DOWN SELECT */}
           <Grid item xs={12} sm={6}>
             <InputLabel id="severity-label">Severity</InputLabel>
-            <Select  sx={{width: '150px'}} value={severity} onChange={handleSeverityChange}>
+            <Select  
+              sx={{width: '150px'}} 
+              value={severity} 
+              onChange={handleSeverityChange} 
+              required
+            >
               <MenuItem value="low">Low</MenuItem>
               <MenuItem value="medium">Medium</MenuItem>
               <MenuItem value="high">High</MenuItem>
             </Select>
           </Grid>
-
-          <Grid item xs={12} sm={12}> {/* Move the message text box to a lower index */}
-          <InputLabel id="message-label">Message</InputLabel>
-            <TextareaAutosize
+          
+          {/** MESSAGE TEXT BOX */}
+          <Grid item xs={12} sm={12}>
+            <InputLabel id="message-label">Message</InputLabel>
+              <TextareaAutosize
               id="message"
+              required
               value={message}
               onChange={handleMessageChange}
-              inputProps={{ maxLength: 400 }}
-              style={{ minWidth: '100%', maxWidth: '100%', height: '100px', minHeight: '100px', maxHeight: '200px', fontSize: 20 }}
+              inputprops={{ maxLength: 400 }}
+              style={{
+                overflow: 'auto',
+                resize: 'vertical',
+                paddingLeft: '10px',
+                minWidth: '99%',
+                maxWidth: '99%',
+                minHeight: '100px',
+                maxHeight: '200px',
+                fontSize: 20,
+              }}
               aria-label="message"
             />
+            <div style={{marginTop: '5px', fontSize: '14px', marginBottom: '20px'}}>
+                {message.length}/400
+            </div>
           </Grid>
         </Grid>
       </form>
@@ -157,24 +206,7 @@ const CreateNotification = () => {
         Submit Notification
       </Button>
     </Box>
-  </Grid>
-
-
-      <Grid item xs={6}>
-        <Box>
-          something here
-        </Box>
-      </Grid>
-    </Grid>
   )
 }
 
 export default CreateNotification
-
-
-//Message: (text box)
-//Severity: low/medium/high
-//To: (class list, teachers list)
-//date to activate: calendar option
-//date to delete: calendar option past activation date
-//box to see active notifications and notifications on hold
