@@ -5,7 +5,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useLocation, useNavigate } from 'react-router-dom';
-import  { adminMenuOptions, teacherMenuOptions, guardianMenuOptions, studentMenuOptions }  from '../utils/menuOptions';
+import  { adminMenuOptions, teacherMenuOptions, guardianMenuOptions, studentMenuOptions }  from '../menuOptions';
 
 
 

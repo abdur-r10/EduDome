@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Grid, Menu, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { adminMenuOptions } from '../utils/menuOptions';
+import { adminMenuOptions } from '../menuOptions';
 import UserAppBar from '../components/UserAppBar';
 
 export default function AdminUI() {

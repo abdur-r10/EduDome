@@ -1,6 +1,6 @@
 import React from 'react'
 import { Paper, Grid, TextField, Button, Typography } from '@mui/material'
-import Logo from '../utils/EduDome-1.png';
+import Logo from '../assets/EduDome-1.png';
 
 /*
 //!USE THIS FOR WHEN HANDLING LOGGING IN
