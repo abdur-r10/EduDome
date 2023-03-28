@@ -5,8 +5,8 @@ import LogInPage from './pages/LogInPage';
 import Loading from './components/Loading';
 
 
-const AdminUI = lazy(() => import ('./UIs/AdminUI'));
-const TeacherUI = lazy(() => import('./UIs/TeacherUI'));
+const AdminUI = lazy(() => import ('./pages/For_Admin/AdminUI'));
+const TeacherUI = lazy(() => import('./pages/For_Teacher/TeacherUI'));
 const StudentUI = lazy(() => import('./UIs/StudentUI'));
 const AddStaff = lazy(() => import('./pages/For_Admin/AddStaff'));
 const EditStaff = lazy(() => import('./pages/For_Admin/EditStaff'));

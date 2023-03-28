@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { Box } from '@mui/system'
 import { Grid, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
-import HomeworkCentre from '../components/HomeworkCentre'
-import DetentionCentre from '../components/DetentionCentre'
-import NotificationCentre from '../components/NotificationCenter'
-import FormApBp from '../components/FormApBp'
-import FormAttenPunct from '../components/FormAttenPunct'
-import TeacherSchedule from '../components/TeacherSchedule'
-import UserAppBar from '../components/UserAppBar';
+import HomeworkCentre from '../../components/HomeworkCentre'
+import DetentionCentre from '../../components/DetentionCentre'
+import NotificationCentre from '../../components/NotificationCenter'
+import FormApBp from '../../components/FormApBp'
+import FormAttenPunct from '../../components/FormAttenPunct'
+import TeacherSchedule from '../../components/TeacherSchedule'
+import UserAppBar from '../../components/UserAppBar';
 
 
 //! Make API Call to get Homework, Detention, Form AP/BP, Form Atten/Punct, Notifications, timetable

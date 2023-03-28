@@ -109,6 +109,7 @@ const EditStudent = () => {
       }
     ]
     }
+  ]
   */
 
   const handleSearch = (searchQuery) => {
