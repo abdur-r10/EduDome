@@ -16,6 +16,9 @@ const AddRoom = lazy(() => import('./pages/For_Admin/AddRoom'));
 const EditRoom = lazy(() => import('./pages/For_Admin/EditRoom'));
 const CreateAndTrackNotifications = lazy(() => import('./pages/For_Teacher/CreateAndTrackNotifications'))
 const MessageGuardian = lazy(() => import('./pages/For_Teacher/MessageGuardian'))
+const MessageByClass = lazy(() => import('./pages/For_Teacher/MessageByClass'))
+const MessageByForm = lazy(() => import('./pages/For_Teacher/MessageByForm'))
+const MessageIndividuals = lazy(() => import('./pages/For_Teacher/MessageIndividuals'))
 
 /* 
 sampleData = {
@@ -53,6 +56,9 @@ function App() {
             <Route path='/editRoom' element={<EditRoom />}/>
             <Route path='/create-and-track-notifications' element={<CreateAndTrackNotifications />}/>
             <Route path='/request-to-message-guardian' element={<MessageGuardian />}/>
+            <Route path='/message-subject-class' element={<MessageByClass />}/>
+            <Route path='/message-form-group' element={<MessageByForm />}/>
+            <Route path='/message-individuals' element={<MessageIndividuals />}/>
           </Routes>
         </Suspense>
       </BrowserRouter>

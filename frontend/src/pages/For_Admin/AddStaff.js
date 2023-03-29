@@ -9,11 +9,11 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { generatePassword } from "../../generatePassword"; // a function that generates a random password
-import { schoolAddress, schoolNumber } from "../../schoolInfo";
+import { generatePassword } from "../../utils/generatePassword"; // a function that generates a random password
+import { schoolAddress, schoolNumber } from "../../utils/schoolInfo";
 import UserAppBar from "../../components/UserAppBar";
 import {useLocation} from 'react-router-dom';
-import { generateId } from "../../generateUUID";
+import { generateId } from "../../utils/generateUUID";
 
 
 

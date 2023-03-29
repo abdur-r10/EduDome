@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Grid, Typography, TextField, Button, Select, MenuItem, FormControl, InputLabel, FormHelperText, IconButton, FormControlLabel, Checkbox } from "@mui/material";
-import { generatePassword } from "../../generatePassword"; // a function that generates a random password
+import { generatePassword } from "../../utils/generatePassword"; // a function that generates a random password
 import { styled } from "@mui/system"
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useLocation} from 'react-router-dom';
-import { generateId } from "../../generateUUID";
+import { generateId } from "../../utils/generateUUID";
 import UserAppBar from "../../components/UserAppBar";
 import GuardianSearchPopUp from "../../components/GuardianSearchPopUp";
 
