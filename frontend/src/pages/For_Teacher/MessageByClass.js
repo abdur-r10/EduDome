@@ -1,146 +1,209 @@
-import React, { useState } from 'react'
-import { Grid, FormControlLabel, Checkbox, Box, TextareaAutosize} from '@mui/material';
-import ClassesCheckboxSelect from '../../components/ClassesCheckboxSelect';
+import React, { useState } from "react";
+import {
+  Grid,
+  FormControlLabel,
+  Checkbox,
+  Box,
+  TextareaAutosize,
+  Typography,
+  IconButton,
+  Button,
+} from "@mui/material";
+import ClassesCheckboxSelect from "../../components/ClassesCheckboxSelect";
+import UserAppBar from "../../components/UserAppBar";
+import CloseIcon from "@mui/icons-material/Close";
 
-const MessageByClass = () => {
-    const [methods, setMethods] = useState([]);
-    const [message, setMessage] = useState('');
-    
+const MessageByClass = ({data}) => {
+  const [methods, setMethods] = useState([]);
+  const [message, setMessage] = useState("");
+  const [selectedClasses, setSelectedClasses] = useState([]);
 
-    const handleMethodChange = (event) => {
-        const { value, checked } = event.target;
-      if (checked) {
-        setMethods([...methods, value]);
-      } else {
-        setMethods(methods.filter((m) => m !== value));
-      }
-    };
+  const handleMethodChange = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setMethods([...methods, value]);
+    } else {
+      setMethods(methods.filter((m) => m !== value));
+    }
+  };
 
-    const handleMessageChange = (event) => {
-        const value = event.target.value;
-        if (value.length <= 400) {
-          setMessage(value);
-        }
-    };
+  const handleMessageChange = (event) => {
+    const value = event.target.value;
+    setMessage(value);
+  };
 
+  const handleRemove = (item) => {
+    setSelectedClasses((prevSelected) =>
+      prevSelected.filter((selectedItem) => selectedItem !== item)
+    );
+    const checkbox = document.getElementById(item);
+    if (checkbox) {
+      checkbox.checked = false;
+    }
+  };
 
-    return(
-    <Grid container spacing={2} display='flex' justifyContent="center" alignItems="center">
-        <Grid item xs={12} sm={6} width='40%'>
-            <ClassesCheckboxSelect />
-        </Grid>
-        <Grid item xs={12} sm={6}width='40%'>
-            <Grid container spacing={2} direction='column'>
-                <Grid item xs={12} sm={6}>
-                    <Box>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                checked={methods.includes('text')}
-                                onChange={handleMethodChange}
-                                value={'text'}
-                                />
-                            }
-                            label={'Text'}
-                        />
+  const handleSubmit = () => {
+    //!MAKE API CALL TO BACKEND HERE
+    console.log({
+      methods: methods,
+      message: message,
+      selectedClasses: selectedClasses,
+    });
+  };
 
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                checked={methods.includes('e-mail')}
-                                onChange={handleMethodChange}
-                                value={'e-mail'}
-                                />
-                            }
-                            label={'E-mail'}
-                        />
+  const sortedArr = selectedClasses.sort((a, b) => {
+    // Extract the year, subject, and set from each item
+    const [, aYear, aSubject, aSet] = a.match(/^(\d+)([a-z]+)(\d+)$/);
+    const [, bYear, bSubject, bSet] = b.match(/^(\d+)([a-z]+)(\d+)$/);
 
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                checked={methods.includes('letter')}
-                                onChange={handleMethodChange}
-                                value={'letter'}
-                                />
-                            }
-                            label={'Letter'}
-                        />
-                    </Box>
-                </Grid>
+    // Sort by year, then by subject alphabetically, then by set
+    if (aSubject !== bSubject) {
+      return aSubject.localeCompare(bSubject);
+    } else if (aYear !== bYear) {
+      return parseInt(aYear) - parseInt(bYear);
+    } else {
+      return parseInt(aSet) - parseInt(bSet);
+    }
+  });
 
-                <Grid item xs={12} sm={6}>
-                    <TextareaAutosize
-                        id="message"
-                        required
-                        value={message}
-                        onChange={handleMessageChange}
-                        style={{
-                            overflow: 'auto',
-                            resize: 'vertical',
-                            paddingLeft: '10px',
-                            width: '90%',
-                            minHeight: '100px',
-                            maxHeight: '200px',
-                            fontSize: 20,
-                        }}
-                        aria-label="message"
-                    />
-                </Grid>
-            </Grid>
-        </Grid>
-    </Grid>
-    )
-  }
-  
-  export default MessageByClass;
+  // Create an object to hold the classes for each subject
+  const subjects = {};
 
-/*
-object.keys(classesData).map(subjectName => 
-<div onClick={handleToggle}>{subjectName} {isOpen ? '-' : '+'}</div>
-    {isOpen && (
-    <ul>
-        {Object.keys(classesData[subjectName]).map((year) => (
-            <li key={year}>
-            year {year}
-        <ul>
-        {classesData.[subjectName][year].map((classCode) => (
-            <li key={classCode}>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={classCode}
-                        checked={selectedClasses.includes(classCode)}
-                        onChange={handleCheckboxChange}
-                    />
-                    {classCode}
-                </label>
-            </li>
+  sortedArr.forEach((item) => {
+    // Extract the subject from the item
+    const [, , subject] = item.match(/^(\d+)([a-z]+)(\d+)$/);
+
+    // Add the item to the appropriate subject's array
+    if (!subjects[subject]) {
+      subjects[subject] = [item];
+    } else {
+      subjects[subject].push(item);
+    }
+  });
+
+  // Map over the subjects object to render each subject's classes as a list
+  const displayRecivers = Object.keys(subjects).map((subject) => (
+    <div key={subject}>
+      <Typography variant="h6">{subject.toUpperCase()}</Typography>
+      <Grid container spacing={1}>
+        {subjects[subject].map((item) => (
+          <Grid item key={item}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                padding: "5px",
+                borderRadius: "5px",
+                backgroundColor: "#f2f2f2",
+              }}
+            >
+              <Typography style={{ marginRight: "5px" }}>{item}</Typography>
+              <IconButton size="small" onClick={() => handleRemove(item)}>
+                <CloseIcon />
+              </IconButton>
+            </div>
+          </Grid>
         ))}
-        </ul>
-        </li>
-    ))}
-    </ul>
-    )}
-</div>
-            )
-*/
+      </Grid>
+    </div>
+  ));
 
+  return (
+    <Grid
+      container
+      spacing={2}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      {/**------------------------------------App Bar---------------------------- */}
+      <UserAppBar user={"teacher"} />
 
-/*
-<Grid container spacing={2}>
-    <Grid item xs={12} sm={6}>
-        //checkboxes for classes
-    </Grid>
-    <Grid item xs={12} sm={6}>
-        <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-            //check boxes for type of message
-            </Grid>
-            <Grid item xs={12} sm={6}>
-            //textbox for message
-            </Grid>
+      {/**------------------------------------class checkboxes by subject---------------------------- */}
+      <Grid item xs={12} sm={6} width="40%">
+        <ClassesCheckboxSelect
+          selectedClasses={selectedClasses}
+          setSelectedClasses={setSelectedClasses}
+        />
+      </Grid>
+
+      {/**------------------------------------display selcted classes, method of sending the message and text box for message---------------------------- */}
+      <Grid item xs={12} sm={6} width="40%">
+        <Grid container spacing={2} direction="column" mb="30px">
+          {/**------------------------------------Display selcted classes---------------------------- */}
+          <Grid item xs={12} sm={6}>
+            <Typography variant="h5">
+              To:
+              {displayRecivers}
+            </Typography>
+          </Grid>
+
+          {/**------------------------------------Method of sending the message---------------------------- */}
+          <Grid item xs={12} sm={6}>
+            <Box>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={methods.includes("text")}
+                    onChange={handleMethodChange}
+                    value={"text"}
+                  />
+                }
+                label={"Text"}
+              />
+
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={methods.includes("e-mail")}
+                    onChange={handleMethodChange}
+                    value={"e-mail"}
+                  />
+                }
+                label={"E-mail"}
+              />
+
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={methods.includes("letter")}
+                    onChange={handleMethodChange}
+                    value={"letter"}
+                  />
+                }
+                label={"Letter"}
+              />
+            </Box>
+          </Grid>
+
+          {/**------------------------------------Text box for message---------------------------- */}
+          <Grid item xs={12} sm={6}>
+            <TextareaAutosize
+              id="message"
+              required
+              value={message}
+              onChange={handleMessageChange}
+              style={{
+                overflow: "auto",
+                resize: "vertical",
+                paddingLeft: "10px",
+                width: "90%",
+                minHeight: "100px",
+                maxHeight: "650px",
+                fontSize: 20,
+              }}
+              aria-label="message"
+            />
+          </Grid>
         </Grid>
+
+        {/**------------------------------------Submit button---------------------------- */}
+        <Button variant="contained" color="primary" onClick={handleSubmit}>
+          Send Message
+        </Button>
+      </Grid>
     </Grid>
-</Grid>
-    
-*/
+  );
+};
+
+export default MessageByClass;

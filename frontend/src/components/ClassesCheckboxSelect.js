@@ -8,9 +8,8 @@ import {
   Grid,
 } from "@mui/material";
 
-const ClassesCheckboxSelect = () => {
+const ClassesCheckboxSelect = ({ selectedClasses, setSelectedClasses }) => {
   const [isOpen, setIsOpen] = useState({});
-  const [selectedClasses, setSelectedClasses] = useState([]);
 
   const handleToggle = (subject, event) => {
     // Check if the clicked element is a checkbox
@@ -24,43 +23,54 @@ const ClassesCheckboxSelect = () => {
   const handleCheckboxChange = (event) => {
     event.stopPropagation(); // Stop the event from propagating to parent elements
     const { value, checked } = event.target;
-    if (checked) {
-      setSelectedClasses([...selectedClasses, value]);
-    } else {
-      setSelectedClasses(selectedClasses.filter((c) => c !== value));
-    }
+    setSelectedClasses((prevState) => {
+      const newState = checked
+        ? [...prevState, value]
+        : prevState.filter((c) => c !== value);
+      console.log(newState);
+      return newState;
+    });
   };
 
   const handleSelectAllYear = (subject, yearGroup, event) => {
-    event.stopPropagation(); // Stop the event from propagating to parent elements
+    event.stopPropagation();
     const yearClasses = classesData[subject][yearGroup];
-    console.log(yearClasses);
     const allYearClassesSelected = yearClasses.every((className) =>
       selectedClasses.includes(className)
     );
+    let newSelectedClasses = [...selectedClasses];
     if (allYearClassesSelected) {
-      setSelectedClasses(
-        selectedClasses.filter((c) => !yearClasses.includes(c))
+      newSelectedClasses = newSelectedClasses.filter(
+        (c) => !yearClasses.includes(c)
       );
     } else {
-      setSelectedClasses([...selectedClasses, ...yearClasses]);
+      newSelectedClasses = [...newSelectedClasses, ...yearClasses];
     }
+    setSelectedClasses(newSelectedClasses);
+    console.log(newSelectedClasses);
   };
 
   const handleSelectAllSubject = (subject, event) => {
-    event.stopPropagation(); // Stop the event from propagating to parent elements
+    event.stopPropagation();
     const subjectClasses = Object.values(classesData[subject]).flat();
-    console.log(subjectClasses);
     const allSubjectClassesSelected = subjectClasses.every((className) =>
       selectedClasses.includes(className)
     );
+    let newSelectedClasses = [...selectedClasses];
     if (allSubjectClassesSelected) {
-      setSelectedClasses(
-        selectedClasses.filter((c) => !subjectClasses.includes(c))
+      newSelectedClasses = newSelectedClasses.filter(
+        (c) => !subjectClasses.includes(c)
       );
     } else {
-      setSelectedClasses([...selectedClasses, ...subjectClasses]);
+      newSelectedClasses = [
+        ...newSelectedClasses,
+        ...subjectClasses.filter(
+          (className) => !newSelectedClasses.includes(className)
+        ),
+      ];
     }
+    setSelectedClasses(newSelectedClasses);
+    console.log(newSelectedClasses);
   };
 
   return (
