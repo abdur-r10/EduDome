@@ -63,13 +63,18 @@ const UserAppBar = ({ user }) => {
   const displayMenuItems = menuOptions[user].map(({ key, name, link, options }, index) => {
   const showNestedMenu = nestedMenuStates[index];
   if (options === undefined) { // if no options (don't want nested)
-    return (
-      <div key={key}>
-        <ListItem component="a" href={link} onClick={handleMenuClose} style={{ color: 'black' }}>
-          {name}
-        </ListItem>
-      </div>
-    );
+    if(location.pathname !== link){
+      return (
+        <div key={key}>
+          <ListItem component="a" href={link} onClick={handleMenuClose} style={{ color: 'black' }}>
+            {name}
+          </ListItem>
+        </div>
+      );
+    }
+    else {
+      return null
+    }
   } else { // if other links with nested options
     return (
       <div key={key}>
@@ -90,7 +95,6 @@ const UserAppBar = ({ user }) => {
                   );
                 }
                 return null //don't show the link to the current page
-                
                 
               }
               return null

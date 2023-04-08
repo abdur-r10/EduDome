@@ -52,7 +52,6 @@ export default function TeacherUI() {
     </Grid>
 
     {/**---------------------------------------------------NOTIFICATION AND FORM STATS----------------------------------------------------- */}
-
     <Grid item xs={6} container sx={{ justifyContent: 'center', alignItems: 'center' }}>
       <Box sx={{ border: '5px solid black', padding: '8px', borderRadius: '4px', overflow: 'auto', resize: 'vertical', height: '600px', minHeight: '600px', maxHeight: '970px', width: '722px'}}>
         <Button variant="contained" onClick={handleNotificationPopupToggle}><OpenInFullIcon/></Button>
@@ -96,10 +95,10 @@ export default function TeacherUI() {
             </DialogActions>
           </Dialog>
       </Box>
-      </Grid>
+    </Grid>
 
       {/**----------------------------------------------------------HOMEWORK------------------------------------------------------------ */}
-      <Grid item xs={6} container sx={{ justifyContent: 'center', alignItems: 'center' }}>
+    <Grid item xs={6} container sx={{ justifyContent: 'center', alignItems: 'center' }}>
         <Box sx={{ padding: '8px', borderRadius: '4px', width: 'auto' }}>
           <Button variant="contained" onClick={handleHomeworkPopupToggle}><OpenInFullIcon/></Button>
           <HomeworkCentre popup={false}/>
@@ -114,11 +113,10 @@ export default function TeacherUI() {
           <Button onClick={handleHomeworkPopupToggle}>Close</Button>
         </DialogActions>
       </Dialog>
-      </Grid>
-
+    </Grid>
       
       {/**----------------------------------------------------------DETENTION------------------------------------------------------------ */}
-      <Grid item xs={6} container sx={{ justifyContent: 'center', alignItems: 'center' }}>
+    <Grid item xs={6} container sx={{ justifyContent: 'center', alignItems: 'center' }}>
         <Box sx={{padding: '8px', borderRadius: '4px', width: 'auto'}}>
           <Button variant="contained" onClick={handleDetentionPopupToggle}><OpenInFullIcon/></Button>
           <DetentionCentre popup={false}/>
@@ -133,8 +131,7 @@ export default function TeacherUI() {
             <Button onClick={handleDetentionPopupToggle}>Close</Button>
           </DialogActions>
         </Dialog>
-      </Grid>
-
+    </Grid>
   </Grid>
   )
 }

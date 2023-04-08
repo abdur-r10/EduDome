@@ -7,15 +7,13 @@ import {
   TextareaAutosize,
   Typography,
   IconButton,
-  Button
+  Button,
 } from "@mui/material";
-import ClassesCheckboxSelect from "../../components/ClassesCheckboxSelect";
-import UserAppBar from "../../components/UserAppBar";
+import ClassesCheckboxSelect from "./ClassesCheckboxSelect";
+import UserAppBar from "./UserAppBar";
 import CloseIcon from "@mui/icons-material/Close";
-import { classes as data } from "../../utils/classesData";
 
-
-const MessageByClass = () => {
+const CreateMessage = ({ data, typeOfData }) => {
   const [methods, setMethods] = useState([]);
   const [message, setMessage] = useState("");
   const [selectedClasses, setSelectedClasses] = useState([]);
@@ -34,7 +32,6 @@ const MessageByClass = () => {
     setMessage(value);
   };
 
-  //TODO: 
   const handleRemove = (item) => {
     setSelectedClasses((prevSelected) =>
       prevSelected.filter((selectedItem) => selectedItem !== item)
@@ -56,41 +53,68 @@ const MessageByClass = () => {
 
   const sortedArr = selectedClasses.sort((a, b) => {
     //TODO: change here
-    // Extract the year, subject, and set from each item
-    const [, aYear, aSubject, aSet] = a.match(/^(\d+)([a-z]+)(\d+)$/);
-    const [, bYear, bSubject, bSet] = b.match(/^(\d+)([a-z]+)(\d+)$/);
+    if (typeOfData === "subjects") {
+      // Extract the year, subject, and set from each item
+      const [, aYear, aSubject, aSet] = a.match(/^(\d+)([a-z]+)(\d+)$/);
+      const [, bYear, bSubject, bSet] = b.match(/^(\d+)([a-z]+)(\d+)$/);
 
-    // Sort by year, then by subject alphabetically, then by set
-    if (aSubject !== bSubject) {
-      return aSubject.localeCompare(bSubject);
-    } else if (aYear !== bYear) {
-      return parseInt(aYear) - parseInt(bYear);
-    } else {
-      return parseInt(aSet) - parseInt(bSet);
+      // Sort by year, then by subject alphabetically, then by set
+      if (aSubject !== bSubject) {
+        return aSubject.localeCompare(bSubject);
+      } else if (aYear !== bYear) {
+        return parseInt(aYear) - parseInt(bYear);
+      } else {
+        return parseInt(aSet) - parseInt(bSet);
+      }
+    } else if (typeOfData === "forms") {
+      const [aYear, aForm] = a.match(/^(\d+)([a-zA-Z]+)$/).slice(1);
+      const [bYear, bForm] = b.match(/^(\d+)([a-zA-Z]+)$/).slice(1);
+
+      // Sort by year group, then by band, then by form
+      if (aYear !== bYear) {
+        return parseInt(aYear) - parseInt(bYear);
+      } else {
+        return aForm.localeCompare(bForm);
+      }
     }
+    return null;
   });
 
   // Create an object to hold the classes for each subject
-  const subjects = {};
+  const sortedHeadings = {};
   //TODO: change here
   sortedArr.forEach((item) => {
-    // Extract the subject from the item
+
+    if(typeOfData === "subjects"){
+        // Extract the subject from the item
     const [, , subject] = item.match(/^(\d+)([a-z]+)(\d+)$/);
 
     // Add the item to the appropriate subject's array
-    if (!subjects[subject]) {
-      subjects[subject] = [item];
+    if (!sortedHeadings[subject]) {
+        sortedHeadings[subject] = [item];
     } else {
-      subjects[subject].push(item);
+        sortedHeadings[subject].push(item);
     }
+    }
+    else if(typeOfData === "forms"){
+        const [yearGroup] = item.match(/^(\d+)([a-zA-Z]+)$/).slice(1);
+
+    // Add the item to the appropriate subject's array
+    if (!sortedHeadings[yearGroup]) {
+        sortedHeadings[yearGroup] = [item];
+    } else {
+        sortedHeadings[yearGroup].push(item);
+    }
+    }
+    return null
   });
 
   // Map over the subjects object to render each subject's classes as a list
-  const displayRecivers = Object.keys(subjects).map((subject) => (
+  const displayRecivers = Object.keys(sortedHeadings).map((subject) => (
     <div key={subject}>
       <Typography variant="h6">{subject.toUpperCase()}</Typography>
       <Grid container spacing={1}>
-        {subjects[subject].map((item) => (
+        {sortedHeadings[subject].map((item) => (
           <Grid item key={item}>
             <div
               style={{
@@ -129,7 +153,7 @@ const MessageByClass = () => {
           selectedClasses={selectedClasses}
           setSelectedClasses={setSelectedClasses}
           data={data}
-          typeOfData={'subjects'}
+          typeOfData={"subjects"}
         />
       </Grid>
 
@@ -212,4 +236,4 @@ const MessageByClass = () => {
   );
 };
 
-export default MessageByClass;
+export default CreateMessage;

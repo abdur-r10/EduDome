@@ -2,11 +2,13 @@ import React  from 'react'
 import { Grid } from '@mui/material'
 import CreateNotification from '../../components/CreateNotification'
 import TrackNotifications from '../../components/TrackNotifications'
+import UserAppBar from '../../components/UserAppBar'
 
 const CreateAndTrackNotifications = () => {
 
   return (
   <Grid container width='100%' spacing={2}>
+    <UserAppBar user='teacher' />
     <Grid width='50%' item xs={12} sm={6}>
       <CreateNotification/>
     </Grid>

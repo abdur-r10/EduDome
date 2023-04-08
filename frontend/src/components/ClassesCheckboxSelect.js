@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { classes as classesData } from "../utils/classesData";
 import {
   FormControlLabel,
   Checkbox,
@@ -8,7 +7,7 @@ import {
   Grid,
 } from "@mui/material";
 
-const ClassesCheckboxSelect = ({ selectedClasses, setSelectedClasses }) => {
+const ClassesCheckboxSelect = ({ selectedClasses, setSelectedClasses, data, typeOfData }) => {
   const [isOpen, setIsOpen] = useState({});
 
   const handleToggle = (subject, event) => {
@@ -23,6 +22,7 @@ const ClassesCheckboxSelect = ({ selectedClasses, setSelectedClasses }) => {
   const handleCheckboxChange = (event) => {
     event.stopPropagation(); // Stop the event from propagating to parent elements
     const { value, checked } = event.target;
+
     setSelectedClasses((prevState) => {
       const newState = checked
         ? [...prevState, value]
@@ -32,9 +32,9 @@ const ClassesCheckboxSelect = ({ selectedClasses, setSelectedClasses }) => {
     });
   };
 
-  const handleSelectAllYear = (subject, yearGroup, event) => {
+  const handleSelectAllSubCategory = (subject, yearGroup, event) => {
     event.stopPropagation();
-    const yearClasses = classesData[subject][yearGroup];
+    const yearClasses = data[subject][yearGroup];
     const allYearClassesSelected = yearClasses.every((className) =>
       selectedClasses.includes(className)
     );
@@ -50,9 +50,9 @@ const ClassesCheckboxSelect = ({ selectedClasses, setSelectedClasses }) => {
     console.log(newSelectedClasses);
   };
 
-  const handleSelectAllSubject = (subject, event) => {
+  const handleSelectAllCategory = (subject, event) => {
     event.stopPropagation();
-    const subjectClasses = Object.values(classesData[subject]).flat();
+    const subjectClasses = Object.values(data[subject]).flat();
     const allSubjectClassesSelected = subjectClasses.every((className) =>
       selectedClasses.includes(className)
     );
@@ -75,7 +75,7 @@ const ClassesCheckboxSelect = ({ selectedClasses, setSelectedClasses }) => {
 
   return (
     <Grid container spacing={2}>
-      {Object.keys(classesData).map((subject) => (
+      {Object.keys(data).map((subject) => (
         <Grid item xs={12} sm={6} md={4} key={subject}>
           <Paper elevation={3} sx={{ p: 2 }}>
             <Typography
@@ -86,28 +86,28 @@ const ClassesCheckboxSelect = ({ selectedClasses, setSelectedClasses }) => {
             </Typography>
             {isOpen[subject] && (
               <Grid container spacing={1} sx={{ mt: 2 }}>
-                {Object.keys(classesData[subject]).map((yearGroup) => (
+                {Object.keys(data[subject]).map((yearGroup) => (
                   <Grid item xs={12} key={`${subject}-year${yearGroup}`}>
                     <Typography variant="subtitle1">
                       <strong>Year {yearGroup}:</strong>
                       <Checkbox
                         checked={
                           selectedClasses.some((c) =>
-                            classesData[subject][yearGroup].includes(c)
+                          data[subject][yearGroup].includes(c)
                           ) &&
-                          classesData[subject][yearGroup].every((c) =>
+                          data[subject][yearGroup].every((c) =>
                             selectedClasses.includes(c)
                           )
                         }
                         onChange={(event) =>
-                          handleSelectAllYear(subject, yearGroup, event)
+                          handleSelectAllSubCategory(subject, yearGroup, event)
                         }
                       />
                       Select all classes for year {yearGroup}
                     </Typography>
                     <div>
                       <Grid container spacing={1}>
-                        {classesData[subject][yearGroup].map((className) => (
+                        {data[subject][yearGroup].map((className) => (
                           <Grid item key={className}>
                             <FormControlLabel
                               control={
@@ -129,13 +129,13 @@ const ClassesCheckboxSelect = ({ selectedClasses, setSelectedClasses }) => {
                   <Typography variant="subtitle1">
                     <strong>Shortcut</strong>
                     <Checkbox
-                      checked={Object.values(classesData[subject])
+                      checked={Object.values(data[subject])
                         .flat()
                         .every((className) =>
                           selectedClasses.includes(className)
                         )}
                       onChange={(event) =>
-                        handleSelectAllSubject(subject, event)
+                        handleSelectAllCategory(subject, event)
                       }
                     />
                     Select all {subject} classes
