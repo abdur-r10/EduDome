@@ -66,7 +66,8 @@ const CreateMessage = ({ data, typeOfData }) => {
       } else {
         return parseInt(aSet) - parseInt(bSet);
       }
-    } else if (typeOfData === "forms") {
+    } 
+    else if (typeOfData === "forms") {
       const [aYear, aForm] = a.match(/^(\d+)([a-zA-Z]+)$/).slice(1);
       const [bYear, bForm] = b.match(/^(\d+)([a-zA-Z]+)$/).slice(1);
 
