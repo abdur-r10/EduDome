@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import {
   TextField,
   Checkbox,
@@ -9,17 +9,16 @@ import {
   ListItem,
   ListItemText,
   TextareaAutosize,
-  Button
-} from '@mui/material';
-
+  Button,
+} from "@mui/material";
 
 const sampleSearchData = [
   {
     id: 1,
-    firstName:  "Abz",
+    firstName: "Abz",
     middleName: "Abdi",
     lastName: "Abdi",
-    joinDate: '2023-10-01',
+    joinDate: "2023-10-01",
     yearGroup: 7,
     email: "something@hotmail.com",
     password: "9PLAced",
@@ -28,47 +27,46 @@ const sampleSearchData = [
     studentImage: null,
     contacts: {
       guardians: [
-      {
-        title: "Mr",
-        firstName: "A",
-        middleName: "A",
-        lastName: "A",
-        relationToChild: "Father",
-        email: "a@hotmail.com",
-        telephoneNumber: "911",
-        mobileNumber: "911",
-        address: "3 something Road",
-        firstLineOfContact: true
-      },
-      {
-        title: "Mrs",
-        firstName: "B",
-        middleName: "B",
-        lastName: "B",
-        relationToChild: "Mother",
-        email: "b@hotmail.com",
-        telephoneNumber: "911",
-        mobileNumber: "911",
-        address: "3 something Road",
-        firstLineOfContact: false
-      }
-    ]
-    ,
-    emergencyContacts: [
-      {
-        name: "Random Person",
-        relationship: "Aunty",
-        telephoneNumber: "911"
-      }
-    ]
-  }
+        {
+          title: "Mr",
+          firstName: "A",
+          middleName: "A",
+          lastName: "A",
+          relationToChild: "Father",
+          email: "a@hotmail.com",
+          telephoneNumber: "911",
+          mobileNumber: "911",
+          address: "3 something Road",
+          firstLineOfContact: true,
+        },
+        {
+          title: "Mrs",
+          firstName: "B",
+          middleName: "B",
+          lastName: "B",
+          relationToChild: "Mother",
+          email: "b@hotmail.com",
+          telephoneNumber: "911",
+          mobileNumber: "911",
+          address: "3 something Road",
+          firstLineOfContact: false,
+        },
+      ],
+      emergencyContacts: [
+        {
+          name: "Random Person",
+          relationship: "Aunty",
+          telephoneNumber: "911",
+        },
+      ],
+    },
   },
   {
     id: 2,
-    firstName:  "Abz",
-    middleName: "Abdi",
-    lastName: "Abdi",
-    joinDate: '2020-09-01',
+    firstName: "Bob",
+    middleName: "Peter",
+    lastName: "Peter",
+    joinDate: "2020-09-01",
     yearGroup: 10,
     email: "something@hotmail.com",
     password: "9PLAced",
@@ -77,190 +75,182 @@ const sampleSearchData = [
     studentImage: null,
     contacts: {
       guardians: [
-      {
-        title: "Mr",
-        firstName: "C",
-        middleName: "C",
-        lastName: "C",
-        relationToChild: "Father",
-        email: "c@hotmail.com",
-        telephoneNumber: "911",
-        mobileNumber: "911",
-        address: "3 random Road",
-        firstLineOfContact: true
-      },
-      {
-        title: "Mrs",
-        firstName: "D",
-        middleName: "D",
-        lastName: "D",
-        relationToChild: "Mother",
-        email: "d@hotmail.com",
-        telephoneNumber: "911",
-        mobileNumber: "911",
-        address: "3 random Road",
-        firstLineOfContact: false
-      }
-    ]
-    ,
-    emergencyContacts: [
-      {
-        name: "Random Person",
-        relationship: "Aunty",
-        telephoneNumber: "911"
-      }
-    ]
-  }
-  }
-]
-
+        {
+          title: "Mr",
+          firstName: "C",
+          middleName: "C",
+          lastName: "C",
+          relationToChild: "Father",
+          email: "c@hotmail.com",
+          telephoneNumber: "911",
+          mobileNumber: "911",
+          address: "3 random Road",
+          firstLineOfContact: true,
+        },
+        {
+          title: "Mrs",
+          firstName: "D",
+          middleName: "D",
+          lastName: "D",
+          relationToChild: "Mother",
+          email: "d@hotmail.com",
+          telephoneNumber: "911",
+          mobileNumber: "911",
+          address: "3 random Road",
+          firstLineOfContact: false,
+        },
+      ],
+      emergencyContacts: [
+        {
+          name: "Random Person",
+          relationship: "Aunty",
+          telephoneNumber: "911",
+        },
+      ],
+    },
+  },
+];
 
 const MessageIndividuals = ({ searchData }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedStudent, setSelectedStudent] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedStudents, setSelectedStudents] = useState([]);
   const [selectedSendMethods, setSelectedSendMethods] = useState([]);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleStudentClick = (student) => {
-    setSelectedStudent((prevStudents) => {
-      if(prevStudents.length > 0) {
-        const newSelectedStudents = [...prevStudents]
-        return newSelectedStudents.push(student)
-      }
-      else {
-        return [student]
-      }
-      
-    });
-  };
-
-  const handleSendMethodChange = (event) => {
-    const method = event.target.name;
-    const isChecked = event.target.checked;
-
-    if (isChecked) {
-      setSelectedSendMethods([...selectedSendMethods, method]);
+  const handleStudentSelection = (student) => {
+    if (selectedStudents.includes(student)) {
+      setSelectedStudents(selectedStudents.filter((s) => s !== student));
     } else {
-      setSelectedSendMethods(selectedSendMethods.filter((m) => m !== method));
+      setSelectedStudents([...selectedStudents, student]);
     }
   };
 
-  const handleMessageChange = (event) => {
-    setMessage(event.target.value);
+  const handleSendMethodSelection = (method) => {
+    if (selectedSendMethods.includes(method)) {
+      setSelectedSendMethods(selectedSendMethods.filter((m) => m !== method));
+    } else {
+      setSelectedSendMethods([...selectedSendMethods, method]);
+    }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  //!use useEffect to make the API call for search and the results. This should be carried out whgen user searches a term which should return filtered results
+
+  const handleSendMessage = () => {
+    //!MAKE AN API CALL TO BACKEND HERE
     console.log({
-      to: selectedStudent,
       message: message,
-      method: selectedSendMethods
-  })
-    //!!!handle form submission logic here
+      to: selectedStudents,
+      methods: selectedSendMethods,
+    });
   };
 
-
-  const filteredSearchData =
-    searchTerm !== ''
-      ? sampleSearchData.filter((student) => {
-          const fullName = `${student.firstName} ${student.middleName} ${student.lastName}`;
-          return fullName.toLowerCase().includes(searchTerm.toLowerCase());
-        })
-      : [];
+  const filteredSearchData = searchTerm !== ""
+  ? sampleSearchData.filter((student) => {
+    const fullName = `${student.firstName} ${student.middleName} ${student.lastName}`;
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    const lowerCaseFullName = fullName.toLowerCase();
+    return lowerCaseFullName.includes(lowerCaseSearchTerm);
+  })
+  : [];
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center'}}>
-    <Box display="flex" flexDirection="column" width="80%">
-      <TextField
-        id="searchTerm"
-        label="Search for student whose parents you want to send the message to"
-        value={searchTerm}
-        onChange={handleSearchTermChange}
-        variant="outlined"
-        margin="normal"
-      />
-
-    
-      {selectedStudent.length > 0 && (
-        <Box>
-          <Box display="flex">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={selectedSendMethods.includes('text')}
-                  onChange={handleSendMethodChange}
-                  name="text"
-                />
-              }
-              label="Text"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={selectedSendMethods.includes('email')}
-                  onChange={handleSendMethodChange}
-                  name="email"
-                />
-              }
-              label="Email"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={selectedSendMethods.includes('letter')}
-                  onChange={handleSendMethodChange}
-                  name="letter"
-                />
-              }
-              label="Letter"
-            />
-          </Box>
-          <TextareaAutosize
-            value={message}
-            onChange={handleMessageChange}
-            placeholder="Type your message here..."
-            style={{
-              overflow: 'auto',
-              resize: 'vertical',
-              paddingLeft: '10px',
-              width: '50%',
-              minHeight: '100px',
-              maxHeight: '350px',
-              fontSize: 17,
-            }}
-          /> <br/>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
-          Send
-          </Button>
-          </Box>
-      )}
-
-      {filteredSearchData.length > 0 && (
-          <Box>
-            <Typography variant="h6">Search results:</Typography>
-            <List>
-              {filteredSearchData.map((student) => (
-                <ListItem
-                  key={student.id}
-                  button
-                  onClick={() => handleStudentClick(student)}
-                  selected={selectedStudent?.id === student.id}
-                >
-                  <ListItemText
-                    primary={`${student.firstName} ${student.middleName} ${student.lastName}`}
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-        )}
+    <Box>
+      <Typography variant="h4">Message Individuals</Typography>
+      <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+        <TextField
+          label="Search"
+          variant="outlined"
+          onChange={handleSearchTermChange}
+        />
+        <Button variant="contained" sx={{ ml: 2 }}>
+          Search
+        </Button>
       </Box>
-      </div>
-);
+      {filteredSearchData.length > 0 && (
+        <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+          <Typography variant="subtitle1" sx={{ mr: 2 }}>
+            Select students to message:
+          </Typography>
+          <List>
+            {filteredSearchData.map((student) => (
+              <ListItem
+                key={student.id}
+                button
+                onClick={() => handleStudentSelection(student)}
+              >
+                <ListItemText
+                  primary={`${student.firstName} ${student.lastName}`}
+                />
+                <Checkbox checked={selectedStudents.includes(student)} />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      )}
+      <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+        <Typography variant="subtitle1" sx={{ mr: 2 }}>
+          Select methods to send message:
+        </Typography>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={selectedSendMethods.includes("email")}
+              onChange={() => handleSendMethodSelection("email")}
+            />
+          }
+          label="Email"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={selectedSendMethods.includes("textMessage")}
+              onChange={() => handleSendMethodSelection("textMessage")}
+            />
+          }
+          label="Text Message"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={selectedSendMethods.includes("letter")}
+              onChange={() => handleSendMethodSelection("letter")}
+            />
+          }
+          label="Letter"
+        />
+      </Box>
+      <Box sx={{ mt: 2 }}>
+        <Typography variant="subtitle1">Message:</Typography>
+        <TextareaAutosize
+          id="message"
+          required
+          value={message}
+          onChange={(event) => setMessage(event.target.value)}
+          style={{
+            overflow: "auto",
+            resize: "vertical",
+            paddingLeft: "3px",
+            width: "35%",
+            minHeight: "100px",
+            maxHeight: "650px",
+            fontSize: 20,
+          }}
+          aria-label="message"
+        />
+      </Box>
+      <Button variant="contained" sx={{ mt: 2 }} onClick={handleSendMessage}>
+        Send Message
+      </Button>
+    </Box>
+  );
+};
+
+MessageIndividuals.defaultProps = {
+  searchData: sampleSearchData,
 };
 
 export default MessageIndividuals;
