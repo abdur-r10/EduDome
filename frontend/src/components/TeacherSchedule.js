@@ -123,6 +123,7 @@ const TeacherSchedule = () => {
             slotLaneContent={customSlotLaneContent} // set custom slot lane content
             eventContent={customEventContent}
             events={lessons}
+            eventColor="#e87121"
             eventClick={handleEventClick} // set the click handler for events
           />
         </div>

@@ -53,21 +53,21 @@ const NotificationDisplayCard = ({ notification, onSave, onDelete }) => {
     'padding': '5px',
     'margin': '5px',
     'backgroundColor': '#2196F3',
-    'color': 'white',
+    'color': 'black',
   }
 
   const mediumSeverityStyle = {
     'padding': '5px',
     'margin': '5px',
-    'backgroundColor': '#ff9800',
-    'color': 'white',
+    'backgroundColor': '#FFC107',
+    'color': 'black',
   }
 
   const highSeverityStyle = {
     'padding': '5px',
     'margin': '5px',
-    'backgroundColor': '#f44336',
-    'color': 'white',
+    'backgroundColor': '#F44336',
+    'color': 'black',
   }
   
 const style = (severity) => {

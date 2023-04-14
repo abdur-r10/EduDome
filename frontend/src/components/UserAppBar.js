@@ -107,11 +107,27 @@ const UserAppBar = ({ user }) => {
   }
 });
 
+function getCurrentLocationName() {
+  if(location.pathname.includes('dashboard')){
+    const name = location.pathname.split("/").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
+    return `EduDome ${name}`
+  }
+  else if(user === 'admin'){
+    return location.pathname.match(/[A-Z][a-z]+|[a-z]+/g).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
+
+  }
+  else if(user === 'teacher'){
+    return location.pathname.substring(1).split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
+  }
+}
+
+const currentLocationName = getCurrentLocationName()
+
 
   return (
      <Box sx={{ width: '100%', mb:'20px' }}>
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="static" sx={{backgroundColor: '#e87121'}}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'center' }}>
           {showMenu && (
             <div>
           <IconButton
@@ -136,7 +152,10 @@ const UserAppBar = ({ user }) => {
           </div>
           )}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            EduDome {user.charAt(0).toUpperCase() + user.slice(1)} Dashboard
+            User name
+          </Typography>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            {currentLocationName}
           </Typography>
           {auth && (
             <div>

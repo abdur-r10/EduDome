@@ -14,7 +14,7 @@ export const teacherMenuOptions = [
     {key: 1, name: 'Create and track notifications', colour: '#1b5e20', link: '/create-and-track-notifications', componentName: 'CreateAndTrackNotifications'},
     {key: 2, name: 'Send Message To Guardian', colour: '#e65100', link: '/request-to-message-guardian', componentName: 'MessageGuardian'},
     {key: 3, name: 'Search For Teacher', colour: '#1b5e20', link: '/search-for-teacher', componentName: 'SearchForTeacher'},
-    {key: 4, name: 'Search For Student', colour: '#1b5e20', link: '/search-for-sudent', componentName: 'SearchForSudent'},
+    {key: 4, name: 'Search For Student', colour: '#1b5e20', link: '/search-for-student', componentName: 'SearchForSudent'},
     {key: 5, name: 'Parents Evening Schedule', colour: '#1b5e20', link: '/parents-evening-schedule', componentName: 'ParentsEveningSchedule'},
     {key: 6, name: 'Back To Dashboard', colour: '#1b5e20', link: '/teacher/dashboard', componentName: 'TeacherUi' }
 ]

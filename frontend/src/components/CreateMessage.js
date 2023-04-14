@@ -229,7 +229,7 @@ const CreateMessage = ({ data, typeOfData }) => {
         </Grid>
 
         {/**------------------------------------Submit button---------------------------- */}
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
+        <Button variant="contained" color="primary" onClick={handleSubmit} sx={{backgroundColor: '#e87121'}}>
           Send Message
         </Button>
       </Grid>

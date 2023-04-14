@@ -14,9 +14,8 @@ const SearchContainer = styled('div')({
   },
 });
 
-function SearchBar({handleSearch}) {
-
-
+function StaffOrStudentSearchBar({handleSearch, searchFor}) {
+  //!use searchFor prop for logic of making API call to DB of Staff or Student
   const [searchQuery, setSearchQuery] = useState({
     firstName: '',
     lastName: '',
@@ -76,5 +75,5 @@ function SearchBar({handleSearch}) {
   );
 }
 
-export default SearchBar;
+export default StaffOrStudentSearchBar;
 

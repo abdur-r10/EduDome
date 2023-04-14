@@ -202,7 +202,7 @@ const CreateNotification = () => {
           </Grid>
         </Grid>
       </form>
-      <Button variant="contained" color="primary" onClick={handleSubmit}>
+      <Button variant="contained" color="primary" onClick={handleSubmit} sx={{backgroundColor: '#e87121'}}>
         Submit Notification
       </Button>
     </Box>

@@ -22,6 +22,11 @@ const StyledFormControl = styled(FormControl)({
   const StyledButton = styled(Button)({
     margin: (theme) => theme.spacing(1),
   });
+
+  const StyledSubmitButton = styled(Button)({
+    margin: (theme) => theme.spacing(1),
+    backgroundColor: '#e87121'
+  });
   
 
 const AddStudent= () => {
@@ -560,22 +565,22 @@ required
     </Grid>
     <Grid item xs={12} sm={6}>
   {student ? 
-  <StyledButton
+  <StyledSubmitButton
     variant="contained"
     color="primary"
     type="submit"
     onClick={(e) => handleAddStudentToDB(e)}
     >
     Save Changes
-    </StyledButton>
-  : <StyledButton
+    </StyledSubmitButton>
+  : <StyledSubmitButton
     variant="contained"
     color="primary"
     type="submit"
     onClick={(e) => handleEditStudentInDB(e)}
   >
     Add Student
-  </StyledButton>}
+  </StyledSubmitButton>}
   </Grid>
   </Grid>
 </form>

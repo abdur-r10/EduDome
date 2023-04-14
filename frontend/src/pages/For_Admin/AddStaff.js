@@ -403,6 +403,7 @@ const AddStaff = () => {
             type="submit"
             variant="contained"
             color="primary"
+            sx={{backgroundColor: '#e87121'}}
             onClick={(e) => handleEditStaffInDB(e)}
           >
             Save changes
@@ -411,6 +412,7 @@ const AddStaff = () => {
             type="submit"
             variant="contained"
             color="primary"
+            sx={{backgroundColor: '#e87121'}}
             onClick={(e) => handleAddStaffToDB(e)}
           >
             Add Staff

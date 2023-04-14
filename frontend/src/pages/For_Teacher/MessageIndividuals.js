@@ -11,6 +11,7 @@ import {
   TextareaAutosize,
   Button,
 } from "@mui/material";
+import UserAppBar from "../../components/UserAppBar";
 
 const sampleSearchData = [
   {
@@ -159,6 +160,7 @@ const MessageIndividuals = ({ searchData }) => {
 
   return (
     <Box>
+      <UserAppBar user={'teacher'}/>
       <Typography variant="h4">Message Individuals</Typography>
       <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
         <TextField

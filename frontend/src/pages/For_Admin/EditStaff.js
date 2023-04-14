@@ -81,7 +81,7 @@ const EditStaff = () => {
   return (
     <div>
        <UserAppBar user={'admin'} />
-       <SearchBar handleSearch={handleSearch} />
+       <SearchBar handleSearch={handleSearch} searchFor={'staff'}/>
       {results.length > 0 && 
       <Table>
       <TableHead>

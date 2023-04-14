@@ -19,6 +19,8 @@ const MessageGuardian = lazy(() => import('./pages/For_Teacher/MessageGuardian')
 const MessageByClass = lazy(() => import('./pages/For_Teacher/MessageByClass'))
 const MessageByForm = lazy(() => import('./pages/For_Teacher/MessageByForm'))
 const MessageIndividuals = lazy(() => import('./pages/For_Teacher/MessageIndividuals'))
+const SearchForTeachers = lazy(() => import('./pages/For_Teacher/SearchForTeachers'))
+const SearchForStudents = lazy(() => import('./pages/For_Teacher/SearchForStudents'))
 
 /* 
 sampleData = {
@@ -59,6 +61,8 @@ function App() {
             <Route path='/message-subject-class' element={<MessageByClass />}/>
             <Route path='/message-form-group' element={<MessageByForm />}/>
             <Route path='/message-individuals' element={<MessageIndividuals />}/>
+            <Route path='/search-for-teacher' element={<SearchForTeachers />} />
+            <Route path='/search-for-student' element={<SearchForStudents />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

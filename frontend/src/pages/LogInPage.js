@@ -73,6 +73,7 @@ export default function LogInPage() {
                 fullWidth
                 variant="contained"
                 color="primary"
+                sx={{backgroundColor: '#e87121'}}
                 style={submitStyle}
               >
                 Sign In

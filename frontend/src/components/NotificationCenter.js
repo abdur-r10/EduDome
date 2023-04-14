@@ -44,29 +44,29 @@ sampleData = {
 */
 
 const lowSeverityStyle = {
-    'padding': '20px',
+    'padding': '5px',
     'margin': '5px',
     'backgroundColor': '#2196F3',
-    'color': 'white',
-}
+    'color': 'black',
+  }
 
-const mediumSeverityStyle = {
-    'padding': '20px',
+  const mediumSeverityStyle = {
+    'padding': '5px',
     'margin': '5px',
-    'backgroundColor': '#ff9800',
-    'color': 'white',
-}
+    'backgroundColor': '#FFC107',
+    'color': 'black',
+  }
 
-const highSeverityStyle = {
-    'padding': '20px',
+  const highSeverityStyle = {
+    'padding': '5px',
     'margin': '5px',
-    'backgroundColor': '#f44336',
-    'color': 'white',
-}
+    'backgroundColor': '#F44336',
+    'color': 'black',
+  }
 
 const NotificationCentre = ({popup}) => {
   return (
-    <Box sx={{border: '2px solid black', overflow: 'auto', height: popup ? '500px': '300px', width: popup ? '1000px' : '700px', resize: popup ? '' : 'vertical', minHeight: '300px', maxHeight: '500px' }}>
+    <Box sx={{border: '2px solid black', overflow: 'auto', height: popup ? '500px': '300px', width: popup ? '1000px' : '727px', resize: popup ? '' : 'vertical', minHeight: '300px', maxHeight: '500px' }}>
         <Typography variant="h6" align="center">Notification Centre</Typography>
         <div style={lowSeverityStyle}>
         <strong>20/02/2023</strong><br/>
