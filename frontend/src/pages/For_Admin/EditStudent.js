@@ -73,6 +73,7 @@ const EditStudent = () => {
     lastName: "Abdi",
     joinDate: '2023-10-01',
     yearGroup: 7,
+    form: '7L',
     email: "something@hotmail.com",
     password: "9PLAced",
     dateOfBirth: "2001-01-01",

@@ -4,7 +4,6 @@ import { Box } from '@mui/material'
 import LogInPage from './pages/LogInPage';
 import Loading from './components/Loading';
 
-
 const AdminUI = lazy(() => import ('./pages/For_Admin/AdminUI'));
 const TeacherUI = lazy(() => import('./pages/For_Teacher/TeacherUI'));
 const StudentUI = lazy(() => import('./UIs/StudentUI'));
@@ -21,6 +20,7 @@ const MessageByForm = lazy(() => import('./pages/For_Teacher/MessageByForm'))
 const MessageIndividuals = lazy(() => import('./pages/For_Teacher/MessageIndividuals'))
 const SearchForTeachers = lazy(() => import('./pages/For_Teacher/SearchForTeachers'))
 const SearchForStudents = lazy(() => import('./pages/For_Teacher/SearchForStudents'))
+const StudentCard = lazy(() => import('./pages/StudentCard'))
 
 /* 
 sampleData = {
@@ -63,6 +63,7 @@ function App() {
             <Route path='/message-individuals' element={<MessageIndividuals />}/>
             <Route path='/search-for-teacher' element={<SearchForTeachers />} />
             <Route path='/search-for-student' element={<SearchForStudents />} />
+            <Route path='/studentCard' element={<StudentCard />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
