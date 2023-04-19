@@ -20,7 +20,7 @@ const MessageByForm = lazy(() => import('./pages/For_Teacher/MessageByForm'))
 const MessageIndividuals = lazy(() => import('./pages/For_Teacher/MessageIndividuals'))
 const SearchForTeachers = lazy(() => import('./pages/For_Teacher/SearchForTeachers'))
 const SearchForStudents = lazy(() => import('./pages/For_Teacher/SearchForStudents'))
-const StudentCard = lazy(() => import('./pages/StudentCard'))
+const StudentInfo = lazy(() => import('./pages/StudentInfo'))
 
 /* 
 sampleData = {
@@ -63,7 +63,7 @@ function App() {
             <Route path='/message-individuals' element={<MessageIndividuals />}/>
             <Route path='/search-for-teacher' element={<SearchForTeachers />} />
             <Route path='/search-for-student' element={<SearchForStudents />} />
-            <Route path='/studentCard' element={<StudentCard />} />
+            <Route path='/studentInfo' element={<StudentInfo />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

@@ -58,7 +58,7 @@ export default function TeacherUI() {
           <NotificationCentre popup={false}/>
           <br />
         <Button variant="contained" onClick={handleFormApBpPopupToggle}> <OpenInFullIcon/> </Button>
-          <FormApBp popup={false}/>
+          <FormApBp popup={false} type={'Form'}/>
           <br />
         <Button variant="contained" onClick={handleFormAttenPunctPopupToggle}><OpenInFullIcon/></Button>
           <FormAttenPunct popup={false}/>

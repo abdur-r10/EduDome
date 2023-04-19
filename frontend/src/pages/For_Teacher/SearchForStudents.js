@@ -60,6 +60,7 @@ const SearchForStudents = () => {
         ],
         emergencyContacts: [
           {
+            id: 1,
             name: "Random Person",
             relationship: "Aunty",
             telephoneNumber: "911",
@@ -87,8 +88,8 @@ const SearchForStudents = () => {
               id: "G67hlp8",
               title: "Mr",
               firstName: "A",
-              middleName: "A",
-              lastName: "A",
+              middleName: "Very Extremely",
+              lastName: "Long Name",
               relationToChild: "Father",
               email: "a@hotmail.com",
               telephoneNumber: "911",
@@ -112,6 +113,7 @@ const SearchForStudents = () => {
           ],
           emergencyContacts: [
             {
+              id: 1,
               name: "Random Person",
               relationship: "Aunty",
               telephoneNumber: "911",
@@ -142,7 +144,7 @@ const SearchForStudents = () => {
  const handleRowClick = (result) => {
     console.log(result)
     //!navigate to TeacherCard
-    navigate("/studentCard", { state: { student: result } });
+    navigate("/studentInfo", { state: { student: result } });
   };
 
   return (
