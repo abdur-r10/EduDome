@@ -86,7 +86,7 @@ const StudentCard = ({student}) => {
 
   return (
     <Box sx={{ border: '5px solid black', display: 'inline-block' }}>
-      <Box>
+      <Box sx={{padding: '10px'}}>
         <img src={student.img} alt='student img' style={{ marginBottom: '5px' }}/>
         <Typography mb='5px'><strong>Name:</strong> {`${student.firstName} ${student.middleName} ${student.lastName}`}</Typography>
         <Typography mb='5px'><strong>Age:</strong> {age}</Typography>
