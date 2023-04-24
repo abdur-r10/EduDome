@@ -24,7 +24,7 @@ const StudentInfo = () => {
     return (
         <Grid container spacing={0} >
           <UserAppBar user={'teacher'} />
-          <Grid item xs={12} sx={{ mb: '30px' }}>
+          <Grid item xs={12} sx={{ mb: '20px' }}>
             <Typography variant="h4"> Student Info</Typography>
           </Grid>
     
