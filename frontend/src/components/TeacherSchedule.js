@@ -6,7 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import momentPlugin from '@fullcalendar/moment';
 import { Link } from "react-router-dom";
 
-
+//!MAKE THIS DYNAMIC SO IT SHOULD APPEAR REGARDLESS OF THE TEACHER
 const lessons = [
     {
       id: "lesson1",

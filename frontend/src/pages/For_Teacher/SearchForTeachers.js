@@ -10,21 +10,30 @@ import {
 import UserAppBar from "../../components/UserAppBar";
 import StaffOrStudentSearchBar from "../../components/StaffOrStudentSearchBar";
 
-
 const SearchForTeachers = () => {
   const navigate = useNavigate();
 
   const [results, setResults] = useState([
     {
+      id: 1,
+      img: "linkToImage1",
       firstName: "Abz1",
       lastName: "Anwar1",
       form: "10S",
+      dateOfBirth: "1996-03-01",
+      joinDate: "2020-09-01",
+      email: "exampleEmail1@hotmail.com",
     },
     {
-        firstName: "Abz2",
-        lastName: "Anwar2",
-        form: "10X", 
-    }
+      id: 2,
+      img: "linkToImage2",
+      firstName: "Abz2",
+      lastName: "Anwar2",
+      form: "10X",
+      dateOfBirth: "1990-09-01",
+      joinDate: "2016-07-01",
+      email: "exampleEmail2@hotmail.com",
+    },
   ]);
 
   const handleSearch = (searchQuery) => {
@@ -47,7 +56,7 @@ const SearchForTeachers = () => {
 
   const handleRowClick = (result) => {
     //!navigate to TeacherCard
-    navigate("/addStudent", { state: { student: result } });
+    navigate("/teacherInfo", { state: { teacher: result } });
   };
 
   return (

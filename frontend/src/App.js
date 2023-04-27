@@ -21,6 +21,7 @@ const MessageIndividuals = lazy(() => import('./pages/For_Teacher/MessageIndivid
 const SearchForTeachers = lazy(() => import('./pages/For_Teacher/SearchForTeachers'))
 const SearchForStudents = lazy(() => import('./pages/For_Teacher/SearchForStudents'))
 const StudentInfo = lazy(() => import('./pages/StudentInfo'))
+const TeacherInfo = lazy(() => import('./pages/TeacherInfo'))
 
 /* 
 sampleData = {
@@ -64,6 +65,7 @@ function App() {
             <Route path='/search-for-teacher' element={<SearchForTeachers />} />
             <Route path='/search-for-student' element={<SearchForStudents />} />
             <Route path='/studentInfo' element={<StudentInfo />} />
+            <Route path='/teacherInfo' element={<TeacherInfo />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
