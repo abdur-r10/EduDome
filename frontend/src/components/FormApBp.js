@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box } from "@mui/system";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Table,
   TableBody,
@@ -10,6 +11,13 @@ import {
   Paper,
   TablePagination,
   Typography,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Checkbox,
 } from "@mui/material";
 
 const columns = [
@@ -19,7 +27,14 @@ const columns = [
   { id: "from", label: "From" },
 ];
 
-const FormApBp = ({ popup, type }) => {
+const FormApBp = ({
+  popup,
+  type,
+  data,
+  setData,
+  selectedRows,
+  setSelectedRows,
+}) => {
   if (type === "Form") {
     const toIndex = columns.findIndex((column) => column.id === "to");
     if (toIndex === -1) {
@@ -27,58 +42,51 @@ const FormApBp = ({ popup, type }) => {
     }
   }
 
-  const data = [
-    {
-      id: "AP1",
-      date: "2023-02-01",
-      reason: "some reason",
-      details:
-        "Vestibulum sit amet dui commodo, lacinia ex eu, vestibulum odio. Suspendisse potenti.",
-      "ap/bp": "AP",
-      from: "t1",
-      to: "s1",
-    },
-    {
-      id: "BP1",
-      date: "2023-02-04",
-      reason: "some reason",
-      details:
-        "Vestibulum sit amet dui commodo, lacinia ex eu, vestibulum odio. Suspendisse potenti.",
-      "ap/bp": "BP",
-      from: "t2",
-      to: "s1",
-    },
-    {
-      id: "AP2",
-      date: "2023-02-02",
-      reason: "some reason",
-      details:
-        "Vestibulum sit amet dui commodo, lacinia ex eu, vestibulum odio. Suspendisse potenti.",
-      "ap/bp": "AP",
-      from: "t3",
-      to: "s3",
-    },
-    {
-      id: "BP2",
-      date: "2023-02-04",
-      reason: "some reason",
-      details:
-        "Vestibulum sit amet dui commodo, lacinia ex eu, vestibulum odio. Suspendisse potenti.",
-      "ap/bp": "BP",
-      from: "t4",
-      to: "s4",
-    },
-    {
-      id: "AP3",
-      date: "2023-02-03",
-      reason: "some reason",
-      details:
-        "Vestibulum sit amet dui commodo, lacinia ex eu, vestibulum odio. Suspendisse potenti.",
-      "ap/bp": "AP",
-      from: "t5",
-      to: "s5",
-    },
-  ];
+  const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+
+  const handleRowClick = (rowId) => {
+    if (isRowSelected(rowId)) {
+      setSelectedRows(selectedRows.filter((id) => id !== rowId));
+    } else {
+      setSelectedRows([...selectedRows, rowId]);
+    }
+  };
+
+  const isRowSelected = (rowId) => selectedRows.includes(rowId);
+
+  const toggleRowSelection = (rowId) => {
+    if (isRowSelected(rowId)) {
+      setSelectedRows(selectedRows.filter((id) => id !== rowId));
+    } else {
+      setSelectedRows([...selectedRows, rowId]);
+    }
+  };
+
+  const isAllRowsSelected =
+    data.length > 0 && selectedRows.length === data.length;
+
+  const toggleAllRowsSelection = () => {
+    if (isAllRowsSelected) {
+      setSelectedRows([]);
+    } else {
+      setSelectedRows(data.map((row) => row.id));
+    }
+  };
+
+  const handleDeleteConfirmation = () => {
+    const updatedData = data.filter((row) => !selectedRows.includes(row.id));
+    setData(updatedData);
+    setSelectedRows([]);
+    setDeleteConfirmationOpen(false);
+  };
+
+  const handleDeleteCancel = (rowId) => {
+    setDeleteConfirmationOpen(false);
+  };
+
+  const handleDelete = (rowId) => {
+    setDeleteConfirmationOpen(true);
+  };
 
   //-------------------------PAGE PAGINATION FUNCTION-------------------------
   const [page, setPage] = useState(0);
@@ -96,6 +104,7 @@ const FormApBp = ({ popup, type }) => {
   //-------------------------DATE SORT FUNCTION------------------------------
   const [orderBy, setOrderBy] = useState("date_set");
   const [order, setOrder] = useState("desc");
+
   const handleSort = (columnId) => {
     if (orderBy === columnId) {
       setOrder(order === "desc" ? "asc" : "desc");
@@ -119,20 +128,43 @@ const FormApBp = ({ popup, type }) => {
     return 0;
   });
 
-  const tableRows = sortedData
-    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-    .map((row) => (
-      <TableRow
-        key={row.id}
-        sx={{ backgroundColor: row["ap/bp"] === "AP" ? "green" : "red" }}
-      >
-        {columns.map((column) => (
-          <TableCell key={column.id} sx={{ color: "white" }}>
-            {row[column.id]}
-          </TableCell>
-        ))}
+  const tableRows =
+    sortedData.length === 0 ? (
+      <TableRow>
+        <TableCell colSpan={columns.length + 2}>
+          No Items In AP/BP Centre
+        </TableCell>
       </TableRow>
-    ));
+    ) : (
+      sortedData
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .map((row) => (
+          <TableRow
+            key={row.id}
+            sx={{
+              backgroundColor: row["ap/bp"] === "AP" ? "green" : "red",
+              cursor: "pointer",
+              "&:hover": {
+                backgroundColor: row["ap/bp"] === "AP" ? "#90EE90" : "#E6676B",
+              },
+              ...(isRowSelected(row.id) && { backgroundColor: "#5A5A5A" }),
+            }}
+            onClick={() => handleRowClick(row.id)}
+          >
+            <TableCell padding="checkbox">
+              <Checkbox
+                checked={isRowSelected(row.id)}
+                onChange={() => toggleRowSelection(row.id)}
+              />
+            </TableCell>
+            {columns.map((column) => (
+              <TableCell key={column.id} sx={{ color: "white" }}>
+                {row[column.id]}
+              </TableCell>
+            ))}
+          </TableRow>
+        ))
+    );
 
   return (
     <Box
@@ -147,30 +179,45 @@ const FormApBp = ({ popup, type }) => {
       }}
     >
       <Typography variant="h6" align="center">
-        {type} AP/BP
+        {type === "Form" ? "Form AP/BP" : "Ap/BP"}
       </Typography>
       <TableContainer component={Paper}>
-        <Table aria-label="simple table" stickyHeader>
+        <Table
+          aria-label="simple table"
+          stickyHeader
+          sx={{ border: "1px solid gray" }}
+        >
           <TableHead>
             <TableRow>
+              <TableCell padding="checkbox">
+                <Checkbox
+                  checked={isAllRowsSelected}
+                  onChange={toggleAllRowsSelection}
+                />
+                <IconButton color="error" onClick={handleDelete}>
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
               {columns.map((column) => (
                 <TableCell
-                  sx={
-                    column.id !== "description"
-                      ? { width: "200px" }
-                      : { width: "500px" }
-                  }
                   key={column.id}
+                  sx={{
+                    width: column.id !== "reason" ? "200px" : "500px",
+                    fontWeight: "bold",
+                    backgroundColor: "#F5F5F5", // Unique color for table header
+                  }}
                   onClick={() => handleSort(column.id)}
                 >
                   {column.label}
                 </TableCell>
               ))}
+              {type === "Centre" && <TableCell />}
             </TableRow>
           </TableHead>
           <TableBody>{tableRows}</TableBody>
         </Table>
       </TableContainer>
+
       <TablePagination
         rowsPerPageOptions={[4, 8, 12]}
         component="div"
@@ -180,6 +227,26 @@ const FormApBp = ({ popup, type }) => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+
+      <Dialog
+        open={deleteConfirmationOpen}
+        onClose={handleDeleteCancel}
+        aria-labelledby="delete-dialog-title"
+        aria-describedby="delete-dialog-description"
+      >
+        <DialogTitle id="delete-dialog-title">
+          Are you sure you want to delete?
+        </DialogTitle>
+        <DialogContent>
+          <Typography variant="body1" id="delete-dialog-description">
+            This action cannot be undone.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteCancel}>Cancel</Button>
+          <Button onClick={handleDeleteConfirmation}>Delete</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

@@ -1,207 +1,210 @@
-import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-
+import React, { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TablePagination,
+  Typography,
+  IconButton,
+  Checkbox,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+} from "@mui/material";
+import { Box } from "@mui/system";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const columns = [
-  { id: 'date_set', label: 'Date set' },
-  { id: 'from', label: 'From' },
-  { id: 'title', label: 'Title' },
-  { id: 'description', label: 'Description' },
-  { id: 'document', label: 'Documents' },
-  { id: 'due', label: 'Date Due' },
+  { id: "date_set", label: "Date set" },
+  { id: "from", label: "From" },
+  { id: "title", label: "Title" },
+  { id: "description", label: "Description" },
+  { id: "document", label: "Documents" },
+  { id: "due", label: "Date Due" },
 ];
 
-const HomeworkCentre = ({popup}) => {
+const HomeworkCentre = ({
+  popup,
+  data,
+  setData,
+  selectedRows,
+  setSelectedRows,
+}) => {
+  const [orderBy, setOrderBy] = useState("date_set");
+  const [order, setOrder] = useState("desc");
 
-    const data = [
-        {
-            'id': 'homework1',
-            'from': 't1',
-            'to': 's1',
-            'title': 'Example Homework1',
-            'description': 'Vestibulum sit amet dui commodo, lacinia ex eu, vestibulum odio. Suspendisse potenti.',
-            'document': 'some document',
-            'date_set': '2023-02-01',
-            'due': '2023-02-27',
-            'deletion_date': '2023-03-06',
-        },
-        {
-            'id': 'homework2',
-            'from': 't1',
-            'to': 's1',
-            'title': 'Example Homework2',
-            'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo turpis non leo venenatis tristique.',
-            'document': 'some document',
-            'date_set': '2023-02-02',
-            'due': '2023-02-27',
-            'deletion_date': '2023-03-06',
-        },
-        {
-            'id': 'homework3',
-            'from': 't1',
-            'to': 's1',
-            'title': 'Example Homework3',
-            'description': 'Sed feugiat laoreet mi, sed ornare nibh gravida a.',
-            'document': 'some document',
-            'date_set': '2023-02-03',
-            'due': '2023-02-27',
-            'deletion_date': '2023-03-06',
-        },
-        {
-            'id': 'homework4',
-            'from': 't1',
-            'to': 's1',
-            'title': 'Example Homework4',
-            'description': 'Phasellus euismod tellus nec ex lobortis, sit amet elementum nisl fermentum.',
-            'document': 'some document',
-            'date_set': '2023-02-04',
-            'due': '2023-02-27',
-            'deletion_date': '2023-03-06',
-        },
-        {
-            'id': 'homework5',
-            'from': 't1',
-            'to': 's1',
-            'title': 'Example Homework5',
-            'description': 'Nulla nec faucibus mauris, sed vestibulum diam.',
-            'document': 'some document',
-            'date_set': '2023-02-05',
-            'due': '2023-02-27',
-            'deletion_date': '2023-03-06',
-        },
-        {
-            'id': 'homework6',
-            'from': 't1',
-            'to': 's1',
-            'title': 'Example Homework6',
-            'description': 'Maecenas tristique, odio quis malesuada commodo, sapien orci imperdiet nibh, sed lobortis enim velit quis nisi.',
-            'document': 'some document',
-            'date_set': '2023-02-06',
-            'due': '2023-02-27',
-            'deletion_date': '2023-03-06',
-        },
-        {
-            'id': 'homework7',
-            'from': 't1',
-            'to': 's1',
-            'title': 'Example Homework7',
-            'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-            'document': 'some document',
-            'date_set': '2023-02-07',
-            'due': '2023-02-27',
-            'deletion_date': '2023-03-06',
-        },
-        {
-            'id': 'homework8',
-            'from': 't1',
-            'to': 's1',
-            'title': 'Example Homework8',
-            'description': 'It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-            'document': 'some document',
-            'date_set': '2023-02-08',
-            'due': '2023-02-27',
-            'deletion_date': '2023-03-06',
-        },
-        {
-            'id': 'homework9',
-            'from': 't1',
-            'to': 's1',
-            'title': 'Example Homework9',
-            'description': 'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-            'document': 'some document',
-            'date_set': '2023-02-09',
-            'due': '2023-02-31',
-            'deletion_date': '2023-03-06',
-        },
-        {
-            'id': 'homework10',
-            'from': 't1',
-            'to': 's1',
-            'title': 'Example Homework10',
-            'description': 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-            'document': 'some document',
-            'date_set': '2023-02-10',
-            'due': '2023-02-27',
-            'deletion_date': '2023-03-06',
-        }
-    ]
-
-    //-------------------------PAGE PAGINATION FUNCTION-------------------------
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(4);
-    
-  
-    const handleChangePage = (event, newPage) => {
-      setPage(newPage);
-    };
-  
-    const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(+event.target.value);
-      setPage(0);
-    };
-
-    //-------------------------DATE SORT FUNCTION------------------------------
-    const [orderBy, setOrderBy] = useState('date_set');
-    const [order, setOrder] = useState('desc');
-    const handleSort = (columnId) => {
-      if (orderBy === columnId) {
-        setOrder(order === 'desc' ? 'asc' : 'desc');
-      } else {
-        setOrderBy(columnId);
-        setOrder('desc');
-      }
-    };
-  
-    const sortedData = data.sort((a, b) => {
-        const orderValue = order === 'desc' ? -1 : 1;
-        if (orderBy === 'date_set' || orderBy === 'due') {
-            if (a[orderBy] < b[orderBy]) {
-            return -1 * orderValue;
-            }
-            if (a[orderBy] > b[orderBy]) {
-            return 1 * orderValue;
-            }
-            return 0;
-        }
-        return 0;
-    });
-
-      //-----------------------ROW HIGHLIGHT ON CLICK FUNCTION----------------
-    const [selectedRows, setSelectedRows] = useState([]);
-
-    const handleRowClick = (row) => {
+  const handleRowClick = (row) => {
     if (selectedRows.includes(row.id)) {
-        setSelectedRows(selectedRows.filter((id) => id !== row.id));
+      setSelectedRows(selectedRows.filter((id) => id !== row.id));
     } else {
-        setSelectedRows([...selectedRows, row.id]);
+      setSelectedRows([...selectedRows, row.id]);
     }
-    };
-      //----------------------------------------------------------------------
+  };
 
-  
-    const tableRows = sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-      <TableRow key={row.id} sx={{ backgroundColor: selectedRows.includes(row.id) ? 'lightgray' : 'white' }} onClick={() => handleRowClick(row)}>
-        {columns.map((column) => (
-          <TableCell key={column.id}>{row[column.id]}</TableCell>
-        ))}
+  const sortedData = data.sort((a, b) => {
+    const orderValue = order === "desc" ? -1 : 1;
+    if (orderBy === "date_set" || orderBy === "due") {
+      if (a[orderBy] < b[orderBy]) {
+        return -1 * orderValue;
+      }
+      if (a[orderBy] > b[orderBy]) {
+        return 1 * orderValue;
+      }
+      return 0;
+    }
+    return 0;
+  });
+
+  const handleSort = (columnId) => {
+    if (orderBy === columnId) {
+      setOrder(order === "desc" ? "asc" : "desc");
+    } else {
+      setOrderBy(columnId);
+      setOrder("desc");
+    }
+  };
+
+  const handleDelete = (rowId) => {
+    setDeleteConfirmationOpen(true);
+  };
+
+  const isRowSelected = (rowId) => selectedRows.includes(rowId);
+
+  const toggleRowSelection = (rowId) => {
+    if (isRowSelected(rowId)) {
+      setSelectedRows(selectedRows.filter((id) => id !== rowId));
+    } else {
+      setSelectedRows([...selectedRows, rowId]);
+    }
+  };
+
+  const isAllRowsSelected =
+    data.length > 0 && selectedRows.length === data.length;
+
+  const toggleAllRowsSelection = () => {
+    if (isAllRowsSelected) {
+      setSelectedRows([]);
+    } else {
+      setSelectedRows(data.map((row) => row.id));
+    }
+  };
+
+  const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+
+  const handleDeleteConfirmation = () => {
+    const updatedData = data.filter((row) => !selectedRows.includes(row.id));
+    setData(updatedData);
+    setSelectedRows([]);
+    setDeleteConfirmationOpen(false);
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteConfirmationOpen(false);
+  };
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(4);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const tableRows =
+    data.length === 0 ? (
+      <TableRow>
+        <TableCell colSpan={columns.length + 2}>
+          No Items In Homework Centre
+        </TableCell>
       </TableRow>
-    ));
-  
-    return (
-    <Box sx={{ border: '5px solid #04AA6D', overflow: 'auto', height: popup ? '500px': '300px', width: popup ? '1000px' : '722px', resize: popup ? '' : 'vertical', minHeight: '300px', maxHeight: '500px'}}>
-        <Typography variant="h6" align="center">Homework Centre</Typography>
-        <TableContainer component={Paper}>
-          <Table aria-label="simple table" stickyHeader sx={{ border: '1px solid gray' }}>
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell sx={column.id !== 'description' ? { width: '200px' } : {width: '500px'}} key={column.id} onClick={() => handleSort(column.id)}>
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
+    ) : (
+      sortedData
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .map((row) => (
+          <TableRow
+            key={row.id}
+            sx={{
+              backgroundColor: isRowSelected(row.id) ? "#e87121" : "white",
+              cursor: "pointer",
+              "&:hover": {
+                backgroundColor: "#e87121",
+              },
+            }}
+            onClick={() => handleRowClick(row)}
+          >
+            <TableCell padding="checkbox">
+              <Checkbox
+                checked={isRowSelected(row.id)}
+                onChange={() => toggleRowSelection(row.id)}
+              />
+            </TableCell>
+            <TableCell>{row.date_set}</TableCell>
+            <TableCell>{row.from}</TableCell>
+            <TableCell>{row.title}</TableCell>
+            <TableCell>{row.description}</TableCell>
+            <TableCell>{row.document}</TableCell>
+            <TableCell>{row.due}</TableCell>
+          </TableRow>
+        ))
+    );
+
+  return (
+    <Box
+      sx={{
+        border: "5px solid #04AA6D",
+        overflow: "auto",
+        height: popup ? "500px" : "300px",
+        width: popup ? "1000px" : "722px",
+        resize: popup ? "" : "vertical",
+        minHeight: "300px",
+        maxHeight: "500px",
+      }}
+    >
+      <Typography variant="h6" align="center">
+        Homework Centre
+      </Typography>
+      <TableContainer component={Paper} sx={{ marginTop: "10px" }}>
+        <Table
+          aria-label="simple table"
+          stickyHeader
+          sx={{ border: "1px solid gray" }}
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell padding="checkbox">
+                <Checkbox
+                  checked={isAllRowsSelected}
+                  onChange={toggleAllRowsSelection}
+                />
+                <IconButton color="error" onClick={handleDelete}>
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  sx={{
+                    width: column.id !== "description" ? "200px" : "500px",
+                    fontWeight: "bold",
+                    backgroundColor: "#F5F5F5", // Unique color for table header
+                  }}
+                  onClick={() => handleSort(column.id)}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
           <TableBody>{tableRows}</TableBody>
         </Table>
       </TableContainer>
@@ -214,6 +217,27 @@ const HomeworkCentre = ({popup}) => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={deleteConfirmationOpen}
+        onClose={handleDeleteCancel}
+        aria-labelledby="delete-dialog-title"
+        aria-describedby="delete-dialog-description"
+      >
+        <DialogTitle id="delete-dialog-title">
+          Are you sure you want to delete?
+        </DialogTitle>
+        <DialogContent>
+          <Typography variant="body1" id="delete-dialog-description">
+            This action cannot be undone.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteCancel}>Cancel</Button>
+          <Button onClick={handleDeleteConfirmation}>Delete</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

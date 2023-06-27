@@ -63,10 +63,51 @@ const lowSeverityStyle = {
     'backgroundColor': '#F44336',
     'color': 'black',
   }
+  const severityKeyContainerStyle = {
+    display: 'flex',
+    alignItems: 'center'
+  };
+  
+  const severityLabelStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    marginRight: '10px',
+  };
+  
+  const severityBoxStyle = {
+    width: '20px',
+    height: '20px',
+    marginRight: '5px',
+  };
+  
+  const severityLevels = [
+    { label: 'Low', color: '#2196F3' },
+    { label: 'Medium', color: '#FFC107' },
+    { label: 'High', color: '#F44336' },
+  ]
+
+const Key = () => {
+  return (
+    <Box sx={severityKeyContainerStyle}>
+      <Typography variant="subtitle1" component="span">
+        Severity Key:
+      </Typography>
+      {severityLevels.map((level) => (
+        <React.Fragment key={level.label}>
+          <Box sx={{ ...severityBoxStyle, backgroundColor: level.color }}></Box>
+          <Typography variant="subtitle2" component="span" sx={severityLabelStyle}>
+            {level.label}
+          </Typography>
+        </React.Fragment>
+      ))}
+    </Box>
+  );
+};
 
 const NotificationCentre = ({popup}) => {
   return (
     <Box sx={{border: '2px solid black', overflow: 'auto', height: popup ? '500px': '300px', width: popup ? '1000px' : '727px', resize: popup ? '' : 'vertical', minHeight: '300px', maxHeight: '500px' }}>
+        <Key/>
         <Typography variant="h6" align="center">Notification Centre</Typography>
         <div style={lowSeverityStyle}>
         <strong>20/02/2023</strong><br/>

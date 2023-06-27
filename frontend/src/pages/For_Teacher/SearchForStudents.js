@@ -17,9 +17,9 @@ const SearchForStudents = () => {
   const [results, setResults] = useState([
     {
       id: 1,
-      firstName: "Abz",
-      middleName: "Abdi",
-      lastName: "Abdi",
+      firstName: "Bob",
+      middleName: "Billy",
+      lastName: "Bingo",
       joinDate: "2023-10-01",
       yearGroup: 7,
       form: '7L',
@@ -134,7 +134,7 @@ const SearchForStudents = () => {
    }
    */
    console.log(searchQuery)
-   //!make an query with db in backedn and get the results here and set the results state to that
+   //!make an query with db in backend and get the results here and set the results state to that
    //!each result in table should allow you to click on it which will allow you to navigate to that component with the result state passed with it
    //!you can do that by navigate('/addStudent', { state: { student: studentData } })
 
@@ -156,6 +156,7 @@ const SearchForStudents = () => {
           <TableHead>
             <TableRow>
               <TableCell>First Name</TableCell>
+              <TableCell>Middle Name</TableCell>
               <TableCell>Last Name</TableCell>
               <TableCell>Form</TableCell>
             </TableRow>
@@ -168,6 +169,7 @@ const SearchForStudents = () => {
                 onClick={() => handleRowClick(result)}
               >
                 <TableCell>{result.firstName}</TableCell>
+                <TableCell>{result.middleName}</TableCell>
                 <TableCell>{result.lastName}</TableCell>
                 <TableCell>{result.form}</TableCell>
               </TableRow>

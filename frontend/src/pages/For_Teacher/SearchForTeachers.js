@@ -18,6 +18,7 @@ const SearchForTeachers = () => {
       id: 1,
       img: "linkToImage1",
       firstName: "Abz1",
+      middleName: "Random",
       lastName: "Anwar1",
       form: "10S",
       dateOfBirth: "1996-03-01",
@@ -71,8 +72,9 @@ const SearchForTeachers = () => {
           <TableHead>
             <TableRow>
               <TableCell>First Name</TableCell>
+              <TableCell>Middle Name</TableCell>
               <TableCell>Last Name</TableCell>
-              <TableCell>Form</TableCell>
+              <TableCell>Form Tutor Of</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -83,6 +85,7 @@ const SearchForTeachers = () => {
                 onClick={() => handleRowClick(result)}
               >
                 <TableCell>{result.firstName}</TableCell>
+                <TableCell>{result.middleName}</TableCell>
                 <TableCell>{result.lastName}</TableCell>
                 <TableCell>{result.form}</TableCell>
               </TableRow>

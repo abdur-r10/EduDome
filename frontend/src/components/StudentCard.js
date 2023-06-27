@@ -93,7 +93,7 @@ const StudentCard = ({student}) => {
         <Typography mb='5px'><strong>Address:</strong> {`${student.address}, ${student.postcode}`}</Typography>
         <Typography mb='5px'><strong>Form:</strong> {student.form}</Typography>
         <Typography mb='5px'><strong>Join Date:</strong> {student.joinDate}</Typography>
-        <Typography mb='5px'><strong>Timetable:</strong> <a href="path/to/timetable.pdf">open as PDF</a></Typography>
+        <Typography mb='5px'><strong>Timetable Doc:</strong> <a href="path/to/timetable.pdf">open as PDF</a></Typography>
         <Typography><strong>Guardians:</strong> </Typography>
         <TableContainer sx={{ mb: 2,  border: '1px solid black' }}>
           <Table ref={guardiansTableRef} sx={{ '& .MuiTableCell-root': { padding: '8px 16px' } }}>
